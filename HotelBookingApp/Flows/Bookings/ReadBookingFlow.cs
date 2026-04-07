@@ -56,7 +56,7 @@ namespace HotelBookingApp.Flows.Bookings
 
         private void ReadByDate()
         {
-            var date = InputHelper.ReadDateOnly("Enter booking date:");
+            var date = InputHelper.ReadDateOnly("Enter booking date (yyyy-MM-dd):");
             List<Booking> bookingsOnDate = _bookingService.GetByDate(date);
 
             BookingPrinter.PrintBookings(bookingsOnDate);

@@ -24,7 +24,7 @@ namespace HotelBookingApp.Flows.Bookings
                 return;
             }
             BookingPrinter.PrintBooking(booking);
-            if (InputHelper.WaitForYesOrNo("Are you sure you want to delete?"))
+            if (InputHelper.WaitForYesOrNo("Are you sure you want to delete? Y/N"))
             {
                 bool deleted = _bookingService.DeleteBooking(id); 
 
@@ -38,7 +38,6 @@ namespace HotelBookingApp.Flows.Bookings
                 }
             }
             InputHelper.WaitForBack();
-            return;
         }
     }
 }

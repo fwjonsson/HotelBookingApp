@@ -3,6 +3,7 @@ using HotelBookingApp.Menus.Bookings;
 using HotelBookingApp.Services;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Models;
+using HotelBookingApp.Enums;
 
 namespace HotelBookingApp.Flows.Bookings
 {
@@ -18,8 +19,8 @@ namespace HotelBookingApp.Flows.Bookings
         }
         internal void Run()
         {
-            var id = InputHelper.ReadInt("Enter booking ID: ");
-            Booking? booking = _bookingService.GetById(id);
+            var bookingId = InputHelper.ReadInt("Enter booking ID: ");
+            Booking? booking = _bookingService.GetById(bookingId);
             if (booking == null)
             {
                 Console.WriteLine("No booking with that ID found.");
@@ -52,7 +53,7 @@ namespace HotelBookingApp.Flows.Bookings
                         newCustomerId = InputHelper.ReadInt("New customer ID: ");
                         break;
                     case UpdateBookingMenuOption.Save:
-                        _bookingService.UpdateBooking(booking, newStartDate, newEndDate, newRoomId, newCustomerId);
+                        SaveChanges(bookingId, newStartDate, newEndDate, newRoomId, newCustomerId);
                         _updateBookingMenu.ResetIndex();
                         return;
                     case UpdateBookingMenuOption.Back:
@@ -61,6 +62,27 @@ namespace HotelBookingApp.Flows.Bookings
 
                 }
             }
+        }
+        private void SaveChanges(int bookingId, DateOnly newStartDate, DateOnly newEndDate, int newRoomId, int newCustomerId)
+        {
+            BookingResult result = _bookingService.UpdateBooking(bookingId, newStartDate, newEndDate, newRoomId, newCustomerId);
+            
+            switch (result)
+            {
+                case BookingResult.Success:
+                    Console.WriteLine("Changes saved.");
+                    break;
+                case BookingResult.BookingNotFound:
+                    Console.WriteLine("Booking not found.");
+                    break;
+                case BookingResult.InvalidDateRange:
+                    Console.WriteLine("End date must be after start date.");
+                    break;
+                case BookingResult.RoomUnavailable:
+                    Console.WriteLine("Room unavailable these dates.");
+                    break;
+            }
+            InputHelper.WaitForBack();
         }
     }
 }

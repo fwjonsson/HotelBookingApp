@@ -1,4 +1,5 @@
-﻿using HotelBookingApp.Services;
+﻿using HotelBookingApp.Enums;
+using HotelBookingApp.Services;
 using HotelBookingApp.Utilities;
 
 namespace HotelBookingApp.Flows.Bookings
@@ -18,7 +19,21 @@ namespace HotelBookingApp.Flows.Bookings
             DateOnly startDate = InputHelper.ReadDateOnly("Enter start date (yyyy-MM-dd): ");
             DateOnly endDate = InputHelper.ReadDateOnly("Enter end date (yyyy-MM-dd): ");
 
-            _bookingService.CreateBooking(customerId, roomId, startDate, endDate);
+            BookingResult result = _bookingService.CreateBooking(customerId, roomId, startDate, endDate);
+            
+            switch (result)
+            {
+                case BookingResult.Success:
+                    Console.WriteLine("Booking created.");
+                    break;
+                case BookingResult.InvalidDateRange:
+                    Console.WriteLine("End date must be after start date.");
+                    break;
+                case BookingResult.RoomUnavailable:
+                    Console.WriteLine("Room is unavailable these dates.");
+                    break;
+            }
+            InputHelper.WaitForBack();
         }
     }
 }
