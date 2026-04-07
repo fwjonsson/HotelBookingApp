@@ -6,6 +6,7 @@
         private readonly List<MenuChoice<T>> _choices;
         private int _index = 0;
 
+
         internal ConsoleMenu(string title, List<MenuChoice<T>> choices)
         {
             _title = title;

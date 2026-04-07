@@ -1,8 +1,8 @@
 ﻿using HotelBookingApp.Enums.Menus.Bookings;
 using HotelBookingApp.Menus.Bookings;
+using HotelBookingApp.Models;
 using HotelBookingApp.Services;
 using HotelBookingApp.Utilities;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HotelBookingApp.Flows.Bookings
 {
@@ -35,10 +35,10 @@ namespace HotelBookingApp.Flows.Bookings
                         ReadById();
                         break;
                     case ReadBookingMenuOption.ReadByRoomId:
-                        _bookingService.GetByRoomId(int roomId);
+                        ReadByRoomId();
                         break;
                     case ReadBookingMenuOption.ReadByCustomerId:
-                        _bookingService.GetByCustomerId(int customerId);
+                        ReadByCustomerId();
                         break;
                     case ReadBookingMenuOption.Back:
                         _readBookingMenu.ResetIndex();
@@ -48,26 +48,49 @@ namespace HotelBookingApp.Flows.Bookings
         }
         private void ReadAll()
         {
-            _bookingService.ListAll();
+            List<Booking> allBookings = _bookingService.ListAll();
+
+            BookingPrinter.PrintBookings(allBookings);
+            BookingPrinter.WaitForBack();
         }
+
         private void ReadByDate()
         {
             var date = InputHelper.ReadDateOnly("Enter booking date:");
-            _bookingService.GetByDate(DateOnly date);
+            List<Booking> bookingsOnDate = _bookingService.GetByDate(date);
+
+            BookingPrinter.PrintBookings(bookingsOnDate);
+            BookingPrinter.WaitForBack();
         }
+
         private void ReadById()
         {
             int id = InputHelper.ReadInt("Enter booking id:");
-            _bookingService.GetById(id);
+            Booking? booking = _bookingService.GetById(id);
+            if (booking == null)
+            {
+                Console.WriteLine("No booking with that ID");
+                BookingPrinter.WaitForBack();
+                return;
+            }
+            BookingPrinter.PrintBooking(booking);
+            BookingPrinter.WaitForBack();
         }
+
         private void ReadByRoomId()
         {
-
+            int id = InputHelper.ReadInt("Enter room ID:");
+            List<Booking> bookingsOnRoom = _bookingService.GetByRoomId(id);
+            BookingPrinter.PrintBookings(bookingsOnRoom);
+            BookingPrinter.WaitForBack();
         }
+
         private void ReadByCustomerId()
         {
-
+            int id = InputHelper.ReadInt("Enter customer ID:");
+            List<Booking> bookingsByCustomer = _bookingService.GetByCustomerId(id);
+            BookingPrinter.PrintBookings(bookingsByCustomer);
+            BookingPrinter.WaitForBack();
         }
-
     }
 }

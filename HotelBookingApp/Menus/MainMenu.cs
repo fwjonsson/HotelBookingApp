@@ -23,7 +23,7 @@ namespace HotelBookingApp.Menus
         }
         internal void ResetIndex()
         {
-            _menu._index = 0;
+            _menu.ResetIndex();
         }
     }
 }
