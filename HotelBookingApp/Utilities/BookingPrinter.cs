@@ -31,11 +31,6 @@ namespace HotelBookingApp.Utilities
                 }
             }
         }
-        internal static void WaitForBack()
-        {
-            Console.WriteLine();
-            Console.WriteLine("Press any key to go back");
-            Console.ReadKey(true);
-        }
+
     }
 }

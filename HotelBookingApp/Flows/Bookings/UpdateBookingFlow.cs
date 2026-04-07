@@ -23,7 +23,7 @@ namespace HotelBookingApp.Flows.Bookings
             if (booking == null)
             {
                 Console.WriteLine("No booking with that ID found.");
-                BookingPrinter.WaitForBack();
+                InputHelper.WaitForBack();
                 return;
             }
 

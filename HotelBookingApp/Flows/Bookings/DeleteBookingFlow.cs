@@ -20,12 +20,14 @@ namespace HotelBookingApp.Flows.Bookings
             if (booking == null)
             {
                 Console.WriteLine("No booking found");
+                InputHelper.WaitForBack();
                 return;
             }
             if (InputHelper.WaitForYesOrNo("Are you sure you want to delete?"))
             {
-                _bookingService.DeleteBooking();
+                _bookingService.DeleteBooking(id); //Deletebooking writes if successful or not
             }
+            InputHelper.WaitForBack();
             return;
         }
     }

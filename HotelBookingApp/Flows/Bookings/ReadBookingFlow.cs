@@ -51,7 +51,7 @@ namespace HotelBookingApp.Flows.Bookings
             List<Booking> allBookings = _bookingService.ListAll();
 
             BookingPrinter.PrintBookings(allBookings);
-            BookingPrinter.WaitForBack();
+            InputHelper.WaitForBack();
         }
 
         private void ReadByDate()
@@ -60,7 +60,7 @@ namespace HotelBookingApp.Flows.Bookings
             List<Booking> bookingsOnDate = _bookingService.GetByDate(date);
 
             BookingPrinter.PrintBookings(bookingsOnDate);
-            BookingPrinter.WaitForBack();
+            InputHelper.WaitForBack();
         }
 
         private void ReadById()
@@ -70,11 +70,11 @@ namespace HotelBookingApp.Flows.Bookings
             if (booking == null)
             {
                 Console.WriteLine("No booking with that ID");
-                BookingPrinter.WaitForBack();
+                InputHelper.WaitForBack();
                 return;
             }
             BookingPrinter.PrintBooking(booking);
-            BookingPrinter.WaitForBack();
+            InputHelper.WaitForBack();
         }
 
         private void ReadByRoomId()
@@ -82,7 +82,7 @@ namespace HotelBookingApp.Flows.Bookings
             int id = InputHelper.ReadInt("Enter room ID:");
             List<Booking> bookingsOnRoom = _bookingService.GetByRoomId(id);
             BookingPrinter.PrintBookings(bookingsOnRoom);
-            BookingPrinter.WaitForBack();
+            InputHelper.WaitForBack();
         }
 
         private void ReadByCustomerId()
@@ -90,7 +90,7 @@ namespace HotelBookingApp.Flows.Bookings
             int id = InputHelper.ReadInt("Enter customer ID:");
             List<Booking> bookingsByCustomer = _bookingService.GetByCustomerId(id);
             BookingPrinter.PrintBookings(bookingsByCustomer);
-            BookingPrinter.WaitForBack();
+            InputHelper.WaitForBack();
         }
     }
 }

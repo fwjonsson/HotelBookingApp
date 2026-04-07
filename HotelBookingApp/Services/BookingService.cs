@@ -15,19 +15,15 @@ namespace HotelBookingApp.Services
         {
             _dbContext = dbContext;
         }
-        internal void CreateBooking()
+        internal void CreateBooking(int customerId, int roomId, DateOnly startDate, DateOnly endDate)
         {
-
-        }
-        internal void ReadBooking()
-        {
-
+            throw new NotImplementedException();
         }
         internal void UpdateBooking(Booking booking, DateOnly? newStartDate, DateOnly? newEndDate, int? newRoomId, int? newCustomerId)
         {
             
         }
-        internal void DeleteBooking()
+        internal void DeleteBooking(int id)
         {
 
         }
@@ -57,6 +53,6 @@ namespace HotelBookingApp.Services
             throw new NotImplementedException();
         }
 
-        
+
     }
 }
