@@ -61,7 +61,7 @@ namespace HotelBookingApp.Services
             if (!RoomExists(newRoomId))
                 return BookingResult.RoomNotFound;
 
-            if (!IsRoomAvailable(newRoomId,newStartDate,newEndDate,bookingId))
+            if (!IsRoomAvailable(newRoomId, newStartDate, newEndDate, bookingId))
                 return BookingResult.RoomUnavailable;
 
             booking.StartDate = newStartDate;
@@ -103,7 +103,7 @@ namespace HotelBookingApp.Services
             throw new NotImplementedException();
         }
 
-        private bool IsRoomAvailable(int roomId, DateOnly startDate, DateOnly endDate,int? bookingIdToExclude = null)
+        private bool IsRoomAvailable(int roomId, DateOnly startDate, DateOnly endDate, int? bookingIdToExclude = null)
         {
             return !_dbContext.Bookings.Any(b =>
                 (bookingIdToExclude == null || b.Id != bookingIdToExclude) &&
