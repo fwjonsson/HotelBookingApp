@@ -8,7 +8,6 @@ namespace HotelBookingApp.Utilities
         {
             while (true)
             {
-                Console.Clear();
                 Console.WriteLine(prompt);
                 string? input = Console.ReadLine()?.Trim();
 
@@ -23,7 +22,6 @@ namespace HotelBookingApp.Utilities
         {
             while (true)
             {
-                Console.Clear();
                 Console.WriteLine(prompt);
                 string? input = Console.ReadLine()?.Trim();
 
@@ -35,7 +33,6 @@ namespace HotelBookingApp.Utilities
         }
         internal static bool WaitForYesOrNo(string prompt)
         {
-            Console.Clear();
             Console.WriteLine(prompt);
             while (true)
             {

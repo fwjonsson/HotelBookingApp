@@ -23,7 +23,7 @@ namespace HotelBookingApp.Services
         {
             
         }
-        internal void DeleteBooking(int id)
+        internal bool DeleteBooking(int id)
         {
 
         }

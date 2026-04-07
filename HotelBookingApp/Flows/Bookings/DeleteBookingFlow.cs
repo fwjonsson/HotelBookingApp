@@ -23,9 +23,19 @@ namespace HotelBookingApp.Flows.Bookings
                 InputHelper.WaitForBack();
                 return;
             }
+            BookingPrinter.PrintBooking(booking);
             if (InputHelper.WaitForYesOrNo("Are you sure you want to delete?"))
             {
-                _bookingService.DeleteBooking(id); //Deletebooking writes if successful or not
+                bool deleted = _bookingService.DeleteBooking(id); 
+
+                if (deleted)
+                {
+                    Console.WriteLine("Booking deleted.");
+                }
+                else
+                {
+                    Console.WriteLine("Could not delete booking.");
+                }
             }
             InputHelper.WaitForBack();
             return;
