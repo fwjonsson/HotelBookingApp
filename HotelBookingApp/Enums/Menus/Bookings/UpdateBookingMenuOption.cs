@@ -8,8 +8,8 @@ namespace HotelBookingApp.Enums.Menus.Bookings
     {
         StartDate,
         EndDate,
-        CustomerId,
         RoomId,
+        CustomerId,
         Save,
         Back
     }

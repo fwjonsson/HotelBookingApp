@@ -9,10 +9,12 @@ namespace HotelBookingApp.Flows.Bookings
     internal class UpdateBookingFlow
     {
         private readonly BookingService _bookingService;
+        private readonly UpdateBookingMenu _updateBookingMenu;
 
         internal UpdateBookingFlow(BookingService bookingService)
         {
             _bookingService = bookingService;
+            _updateBookingMenu = new UpdateBookingMenu();
         }
         internal void Run()
         {
@@ -25,20 +27,40 @@ namespace HotelBookingApp.Flows.Bookings
                 return;
             }
 
-            DateOnly? newStartDate = booking.StartDate;
-            DateOnly? newEndDate = booking.EndDate;
-            int? newRoomId = booking.RoomId;
-            int? newCustomerId = booking.CustomerId;
-
-                InputHelper.ReadDateOnly("New start date (yyyy-MM-dd): ");
+            DateOnly newStartDate = booking.StartDate;
+            DateOnly newEndDate = booking.EndDate;
+            int newCustomerId = booking.CustomerId;
+            int newRoomId = booking.RoomId;
             
-                InputHelper.ReadDateOnly("New end date (yyyy-MM-dd): ");
-            
-                InputHelper.ReadInt("New room ID: ");
-             
-                InputHelper.ReadInt("New customer ID: ");
 
-            _bookingService.UpdateBooking(booking, newStartDate, newEndDate, newRoomId, newCustomerId);
+            while (true)
+            {
+                UpdateBookingMenuOption choice = _updateBookingMenu.Show(newStartDate, newEndDate, newRoomId, newCustomerId);
+
+                switch (choice)
+                {
+                    case UpdateBookingMenuOption.StartDate:
+                        newStartDate = InputHelper.ReadDateOnly("New start date (yyyy-MM-dd): ");
+                        break;
+                    case UpdateBookingMenuOption.EndDate:
+                        newEndDate = InputHelper.ReadDateOnly("New end date (yyyy-MM-dd): ");
+                        break;
+                    case UpdateBookingMenuOption.RoomId:
+                        newRoomId = InputHelper.ReadInt("New room ID: ");
+                        break;
+                    case UpdateBookingMenuOption.CustomerId:
+                        newCustomerId = InputHelper.ReadInt("New customer ID: ");
+                        break;
+                    case UpdateBookingMenuOption.Save:
+                        _bookingService.UpdateBooking(booking, newStartDate, newEndDate, newRoomId, newCustomerId);
+                        _updateBookingMenu.ResetIndex();
+                        return;
+                    case UpdateBookingMenuOption.Back:
+                        _updateBookingMenu.ResetIndex();
+                        return;
+
+                }
+            }
         }
     }
 }

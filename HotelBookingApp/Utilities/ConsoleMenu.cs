@@ -12,6 +12,17 @@
             _title = title;
             _choices = choices;
         }
+
+        internal void SetChoices(List<MenuChoice<T>> choices)
+        {
+            _choices.Clear();
+            _choices.AddRange(choices);
+
+            if (_index >= _choices.Count)
+            {
+                _index = 0;
+            }
+        }
         internal T Show()
         {
             while (true)
