@@ -33,6 +33,22 @@ namespace HotelBookingApp.Utilities
                 Console.ReadKey(true);
             }
         }
+        internal static bool WaitForYesOrNo(string prompt)
+        {
+            Console.Clear();
+            Console.WriteLine(prompt);
+            while (true)
+            {
+                var key = Console.ReadKey(true).Key;
+                switch (key)
+                {
+                    case ConsoleKey.Y:
+                        return true;
+                    case ConsoleKey.N:
+                        return false;
+                }
+            }
+        }
         
     }
 }
