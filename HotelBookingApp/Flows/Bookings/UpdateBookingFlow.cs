@@ -53,9 +53,13 @@ namespace HotelBookingApp.Flows.Bookings
                         newCustomerId = InputHelper.ReadInt("New customer ID: ");
                         break;
                     case UpdateBookingMenuOption.Save:
-                        SaveChanges(bookingId, newStartDate, newEndDate, newRoomId, newCustomerId);
-                        _updateBookingMenu.ResetIndex();
-                        return;
+                        BookingResult result = SaveChanges(bookingId, newStartDate, newEndDate, newRoomId, newCustomerId);
+                        if (result == BookingResult.Success)
+                        {
+                            _updateBookingMenu.ResetIndex();
+                            return;
+                        }
+                        break;
                     case UpdateBookingMenuOption.Back:
                         _updateBookingMenu.ResetIndex();
                         return;
@@ -63,7 +67,7 @@ namespace HotelBookingApp.Flows.Bookings
                 }
             }
         }
-        private void SaveChanges(int bookingId, DateOnly newStartDate, DateOnly newEndDate, int newRoomId, int newCustomerId)
+        private BookingResult SaveChanges(int bookingId, DateOnly newStartDate, DateOnly newEndDate, int newRoomId, int newCustomerId)
         {
             BookingResult result = _bookingService.UpdateBooking(bookingId, newStartDate, newEndDate, newRoomId, newCustomerId);
             
@@ -71,30 +75,25 @@ namespace HotelBookingApp.Flows.Bookings
             {
                 case BookingResult.Success:
                     Console.WriteLine("Changes saved.");
-                    InputHelper.WaitForBack();
                     break;
                 case BookingResult.BookingNotFound:
                     Console.WriteLine("Booking not found.");
-                    InputHelper.WaitForBack();
                     break;
                 case BookingResult.InvalidDateRange:
                     Console.WriteLine("End date must be after start date.");
-                    InputHelper.WaitForBack();
                     break;
                 case BookingResult.CustomerNotFound:
                     Console.WriteLine("Customer not found.");
-                    InputHelper.WaitForBack();
                     break;
                 case BookingResult.RoomNotFound:
                     Console.WriteLine("Room not found.");
-                    InputHelper.WaitForBack();
                     break;
                 case BookingResult.RoomUnavailable:
                     Console.WriteLine("Room unavailable these dates.");
-                    InputHelper.WaitForBack();
                     break;
             }
             InputHelper.WaitForBack();
+            return result;
         }
     }
 }

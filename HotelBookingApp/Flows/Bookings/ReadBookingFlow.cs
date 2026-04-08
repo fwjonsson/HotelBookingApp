@@ -44,6 +44,7 @@ namespace HotelBookingApp.Flows.Bookings
                         _readBookingMenu.ResetIndex();
                         return;
                 }
+                InputHelper.WaitForBack();
             }
         }
         private void ReadAll()
@@ -53,11 +54,9 @@ namespace HotelBookingApp.Flows.Bookings
             if (allBookings.Count == 0)
             {
                 Console.WriteLine("No bookings found.");
-                InputHelper.WaitForBack();
                 return;
             }
             BookingPrinter.PrintBookings(allBookings);
-            InputHelper.WaitForBack();
         }
 
         private void ReadByDate()
@@ -67,12 +66,10 @@ namespace HotelBookingApp.Flows.Bookings
             if (bookingsOnDate.Count == 0)
             {
                 Console.WriteLine("No bookings found.");
-                InputHelper.WaitForBack();
                 return;
             }
 
             BookingPrinter.PrintBookings(bookingsOnDate);
-            InputHelper.WaitForBack();
         }
 
         private void ReadById()
@@ -82,11 +79,9 @@ namespace HotelBookingApp.Flows.Bookings
             if (booking == null)
             {
                 Console.WriteLine("No booking with that ID");
-                InputHelper.WaitForBack();
                 return;
             }
             BookingPrinter.PrintBooking(booking);
-            InputHelper.WaitForBack();
         }
 
         private void ReadByRoomId()
@@ -96,11 +91,9 @@ namespace HotelBookingApp.Flows.Bookings
             if (bookingsOnRoom.Count == 0)
             {
                 Console.WriteLine("No bookings found.");
-                InputHelper.WaitForBack();
                 return;
             }
             BookingPrinter.PrintBookings(bookingsOnRoom);
-            InputHelper.WaitForBack();
         }
 
         private void ReadByCustomerId()
@@ -110,11 +103,9 @@ namespace HotelBookingApp.Flows.Bookings
             if (bookingsByCustomer.Count == 0)
             {
                 Console.WriteLine("No bookings found.");
-                InputHelper.WaitForBack();
                 return;
             }
             BookingPrinter.PrintBookings(bookingsByCustomer);
-            InputHelper.WaitForBack();
         }
     }
 }
