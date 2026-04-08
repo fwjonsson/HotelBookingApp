@@ -50,6 +50,12 @@ namespace HotelBookingApp.Flows.Bookings
         {
             List<Booking> allBookings = _bookingService.ListAll();
 
+            if (allBookings.Count == 0)
+            {
+                Console.WriteLine("No bookings found.");
+                InputHelper.WaitForBack();
+                return;
+            }
             BookingPrinter.PrintBookings(allBookings);
             InputHelper.WaitForBack();
         }
@@ -58,6 +64,12 @@ namespace HotelBookingApp.Flows.Bookings
         {
             var date = InputHelper.ReadDateOnly("Enter booking date (yyyy-MM-dd):");
             List<Booking> bookingsOnDate = _bookingService.GetByDate(date);
+            if (bookingsOnDate.Count == 0)
+            {
+                Console.WriteLine("No bookings found.");
+                InputHelper.WaitForBack();
+                return;
+            }
 
             BookingPrinter.PrintBookings(bookingsOnDate);
             InputHelper.WaitForBack();
@@ -81,6 +93,12 @@ namespace HotelBookingApp.Flows.Bookings
         {
             int id = InputHelper.ReadInt("Enter room ID:");
             List<Booking> bookingsOnRoom = _bookingService.GetByRoomId(id);
+            if (bookingsOnRoom.Count == 0)
+            {
+                Console.WriteLine("No bookings found.");
+                InputHelper.WaitForBack();
+                return;
+            }
             BookingPrinter.PrintBookings(bookingsOnRoom);
             InputHelper.WaitForBack();
         }
@@ -89,6 +107,12 @@ namespace HotelBookingApp.Flows.Bookings
         {
             int id = InputHelper.ReadInt("Enter customer ID:");
             List<Booking> bookingsByCustomer = _bookingService.GetByCustomerId(id);
+            if (bookingsByCustomer.Count == 0)
+            {
+                Console.WriteLine("No bookings found.");
+                InputHelper.WaitForBack();
+                return;
+            }
             BookingPrinter.PrintBookings(bookingsByCustomer);
             InputHelper.WaitForBack();
         }

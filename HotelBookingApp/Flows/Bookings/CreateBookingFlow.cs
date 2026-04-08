@@ -25,12 +25,23 @@ namespace HotelBookingApp.Flows.Bookings
             {
                 case BookingResult.Success:
                     Console.WriteLine("Booking created.");
+                    InputHelper.WaitForBack();
                     break;
                 case BookingResult.InvalidDateRange:
                     Console.WriteLine("End date must be after start date.");
+                    InputHelper.WaitForBack();
                     break;
                 case BookingResult.RoomUnavailable:
                     Console.WriteLine("Room is unavailable these dates.");
+                    InputHelper.WaitForBack();
+                    break;
+                case BookingResult.CustomerNotFound:
+                    Console.WriteLine("Customer not found.");
+                    InputHelper.WaitForBack();
+                    break;
+                case BookingResult.RoomNotFound:
+                    Console.WriteLine("Room not found.");
+                    InputHelper.WaitForBack();
                     break;
             }
             InputHelper.WaitForBack();

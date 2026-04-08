@@ -86,9 +86,9 @@ namespace HotelBookingApp.Services
             return BookingResult.Success;
         }
 
-        internal List<Booking>ListAll()
+        internal List<Booking> ListAll()
         {
-            return dbContext.Bookings.ToList();
+            return _dbContext.Bookings.ToList();
         }
 
         internal List<Booking> GetByDate(DateOnly date)
