@@ -1,6 +1,7 @@
 ﻿using HotelBookingApp.Data;
 using HotelBookingApp.Enums;
 using HotelBookingApp.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -73,34 +74,41 @@ namespace HotelBookingApp.Services
             return BookingResult.Success;
 
         }
-        internal bool DeleteBooking(int id)
+        internal BookingResult DeleteBooking(int bookingId)
         {
+            Booking? booking = _dbContext.Bookings.FirstOrDefault(b => b.Id == bookingId);
 
+            if (booking == null)
+                return BookingResult.BookingNotFound;
+
+            _dbContext.Bookings.Remove(booking);
+            _dbContext.SaveChanges();
+            return BookingResult.Success;
         }
 
-        internal List<Booking> ListAll()
+        internal List<Booking>ListAll()
         {
-            throw new NotImplementedException();
+            return dbContext.Bookings.ToList();
         }
 
         internal List<Booking> GetByDate(DateOnly date)
         {
-            throw new NotImplementedException();
+            return _dbContext.Bookings.Where(b => b.StartDate <= date && b.EndDate > date).ToList();
         }
 
-        internal Booking? GetById(int id)
+        internal Booking? GetById(int bookingId)
         {
-            throw new NotImplementedException();
+            return _dbContext.Bookings.FirstOrDefault(b => b.Id == bookingId);
         }
 
-        internal List<Booking> GetByRoomId(int id)
+        internal List<Booking> GetByRoomId(int roomId)
         {
-            throw new NotImplementedException();
+            return _dbContext.Bookings.Where(b => b.RoomId == roomId).ToList();
         }
 
-        internal List<Booking> GetByCustomerId(int id)
+        internal List<Booking> GetByCustomerId(int customerId)
         {
-            throw new NotImplementedException();
+            return _dbContext.Bookings.Where(b => b.CustomerId == customerId).ToList();
         }
 
         private bool IsRoomAvailable(int roomId, DateOnly startDate, DateOnly endDate, int? bookingIdToExclude = null)
