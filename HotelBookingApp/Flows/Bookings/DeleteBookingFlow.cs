@@ -27,18 +27,22 @@ namespace HotelBookingApp.Flows.Bookings
             BookingPrinter.PrintBooking(booking);
             if (InputHelper.WaitForYesOrNo("Are you sure you want to delete? Y/N"))
             {
-                BookingResult result = _bookingService.DeleteBooking(bookingId); 
+                BookingResult result = _bookingService.DeleteBooking(bookingId);
 
-                if (result == BookingResult.Success)
+                switch (result)
                 {
-                    Console.WriteLine("Booking deleted.");
+                    case BookingResult.Success:
+                        Console.WriteLine("Booking deleted.");
+                        break;
+                    case BookingResult.BookingNotFound:
+                        Console.WriteLine("No booking with that ID found");
+                        break;
+                    default:
+                        Console.WriteLine("Could not delete booking.");
+                        break;
                 }
-                else
-                {
-                    Console.WriteLine("Could not delete booking.");
-                }
+                InputHelper.WaitForBack();
             }
-            InputHelper.WaitForBack();
         }
     }
 }
