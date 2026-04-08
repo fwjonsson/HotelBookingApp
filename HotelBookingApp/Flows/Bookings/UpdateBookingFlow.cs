@@ -84,7 +84,7 @@ namespace HotelBookingApp.Flows.Bookings
                         }
                         if (!result.RoomAvailable)
                         {
-                            Console.WriteLine("Room unavailable.");
+                            Console.WriteLine("Room unavailable at these dates.");
                         }
                         if (result.Success)
                         {

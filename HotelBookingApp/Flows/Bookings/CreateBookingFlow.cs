@@ -2,6 +2,7 @@
 using HotelBookingApp.Enums.Menus.Bookings;
 using HotelBookingApp.Menus.Bookings;
 using HotelBookingApp.Services;
+using HotelBookingApp.Services.Bookings;
 using HotelBookingApp.Utilities;
 
 namespace HotelBookingApp.Flows.Bookings
@@ -42,8 +43,39 @@ namespace HotelBookingApp.Flows.Bookings
                         endDate = InputHelper.ReadDateOnly("Enter end date (yyyy-MM-dd): ");
                         continue;
                     case CreateBookingMenuOption.Create:
-                        BookingResult result = _bookingService.CreateBooking(customerId, roomId, startDate, endDate);
-                        _createBookingMenu.ResetIndex();
+                        if(customerId is not int cId ||
+                            roomId is not int rId ||
+                            startDate is not DateOnly sDate ||
+                            endDate is not DateOnly eDate)
+                        {
+                            Console.WriteLine("You must fill in all values before creating.");
+                            InputHelper.WaitForBack();
+                            continue;
+                        }
+                        BookingValidationResult result = _bookingService.CreateBooking(cId, rId, sDate, eDate);
+                        if (!result.CustomerFound)
+                        {
+                            Console.WriteLine("Customer not found.");
+                        }
+                        if (!result.RoomFound)
+                        {
+                            Console.WriteLine("Room not found.");
+                        }
+                        if (!result.ValidDateRange)
+                        {
+                            Console.WriteLine("Invalid date range");
+                        }
+                        if (!result.RoomAvailable)
+                        {
+                            Console.WriteLine("Room unavailable at these dates.");
+                        }
+                        if (result.Success)
+                        {
+                            Console.WriteLine("Booking created successfully");
+                            _createBookingMenu.ResetIndex();
+                            InputHelper.WaitForBack();
+                            return;
+                        }
                         break;
                     case CreateBookingMenuOption.Cancel:
                         _createBookingMenu.ResetIndex();
