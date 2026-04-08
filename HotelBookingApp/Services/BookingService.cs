@@ -19,19 +19,23 @@ namespace HotelBookingApp.Services
             _dbContext = dbContext;
         }
 
-        internal BookingResult CreateBooking(int customerId, int roomId, DateOnly startDate, DateOnly endDate)
+        internal BookingValidationResult CreateBooking(int customerId, int roomId, DateOnly startDate, DateOnly endDate)
         {
+            var result = new BookingValidationResult();
             if (endDate <= startDate)
-                return BookingResult.InvalidDateRange;
+                result.ValidDateRange = false;
 
             if (!CustomerExists(customerId))
-                return BookingResult.CustomerNotFound;
+                result.CustomerFound = false;
 
             if (!RoomExists(roomId))
-                return BookingResult.RoomNotFound;
+                result.RoomFound = false;
 
             if (!IsRoomAvailable(roomId, startDate, endDate))
-                return BookingResult.RoomUnavailable;
+                result.RoomAvailable = false;
+
+            if (!result.Success) 
+                return result;
 
             Booking booking = new Booking
             {
@@ -44,7 +48,7 @@ namespace HotelBookingApp.Services
             _dbContext.Bookings.Add(booking);
             _dbContext.SaveChanges();
 
-            return BookingResult.Success;
+            return result;
         }
 
         internal BookingValidationResult UpdateBooking(int bookingId, DateOnly newStartDate, DateOnly newEndDate, int newRoomId, int newCustomerId)
@@ -68,10 +72,8 @@ namespace HotelBookingApp.Services
             if (!IsRoomAvailable(newRoomId, newStartDate, newEndDate, bookingId))
                 result.RoomAvailable = false;
 
-            if(!result.BookingFound || !result.ValidDateRange || !result.CustomerFound || !result.RoomFound || !result.RoomAvailable)
-            {
+            if(!result.Success)
                 return result;
-            }
 
             booking!.StartDate = newStartDate;
             booking.EndDate = newEndDate;

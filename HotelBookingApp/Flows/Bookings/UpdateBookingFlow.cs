@@ -85,9 +85,6 @@ namespace HotelBookingApp.Flows.Bookings
                         if (!result.RoomAvailable)
                         {
                             Console.WriteLine("Room unavailable.");
-                            newStartDate = booking.StartDate;
-                            newEndDate = booking.EndDate;
-                            newRoomId = booking.RoomId;
                         }
                         if (result.Success)
                         {
