@@ -74,8 +74,8 @@ namespace HotelBookingApp.Flows.Bookings
 
         private void ReadById()
         {
-            int id = InputHelper.ReadInt("Enter booking ID:");
-            Booking? booking = _bookingService.GetById(id);
+            int bookingId = InputHelper.ReadInt("Enter booking ID:");
+            Booking? booking = _bookingService.GetById(bookingId);
             if (booking == null)
             {
                 Console.WriteLine("No booking with that ID");
@@ -98,8 +98,8 @@ namespace HotelBookingApp.Flows.Bookings
 
         private void ReadByCustomerId()
         {
-            int id = InputHelper.ReadInt("Enter customer ID:");
-            List<Booking> bookingsByCustomer = _bookingService.GetByCustomerId(id);
+            int customerId = InputHelper.ReadInt("Enter customer ID:");
+            List<Booking> bookingsByCustomer = _bookingService.GetByCustomerId(customerId);
             if (bookingsByCustomer.Count == 0)
             {
                 Console.WriteLine("No bookings found.");

@@ -11,6 +11,7 @@ namespace HotelBookingApp.Enums
         InvalidDateRange,
         RoomUnavailable,
         RoomNotFound,
-        CustomerNotFound
+        CustomerNotFound,
+        Fail
     }
 }

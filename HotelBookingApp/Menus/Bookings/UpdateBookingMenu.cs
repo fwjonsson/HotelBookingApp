@@ -1,4 +1,5 @@
 ﻿using HotelBookingApp.Enums.Menus.Bookings;
+using HotelBookingApp.Models;
 using HotelBookingApp.Utilities;
 using System;
 using System.Collections.Generic;

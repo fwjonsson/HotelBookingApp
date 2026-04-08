@@ -4,6 +4,7 @@ using HotelBookingApp.Services;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Models;
 using HotelBookingApp.Enums;
+using HotelBookingApp.Services.Bookings;
 
 namespace HotelBookingApp.Flows.Bookings
 {
@@ -32,68 +33,79 @@ namespace HotelBookingApp.Flows.Bookings
             DateOnly newEndDate = booking.EndDate;
             int newCustomerId = booking.CustomerId;
             int newRoomId = booking.RoomId;
-            
+
+            var result = new BookingValidationResult();
 
             while (true)
             {
+                booking = _bookingService.GetById(bookingId);
+                if (booking == null)
+                {
+                    Console.WriteLine("No booking with that ID found.");
+                    InputHelper.WaitForBack();
+                    return;
+                }
                 UpdateBookingMenuOption choice = _updateBookingMenu.Show(newStartDate, newEndDate, newRoomId, newCustomerId);
-
+                
                 switch (choice)
                 {
                     case UpdateBookingMenuOption.StartDate:
                         newStartDate = InputHelper.ReadDateOnly("New start date (yyyy-MM-dd): ");
-                        break;
+                        continue;
                     case UpdateBookingMenuOption.EndDate:
                         newEndDate = InputHelper.ReadDateOnly("New end date (yyyy-MM-dd): ");
-                        break;
+                        continue;
                     case UpdateBookingMenuOption.RoomId:
                         newRoomId = InputHelper.ReadInt("New room ID: ");
-                        break;
+                        continue;
                     case UpdateBookingMenuOption.CustomerId:
                         newCustomerId = InputHelper.ReadInt("New customer ID: ");
-                        break;
+                        continue;
                     case UpdateBookingMenuOption.Save:
-                        BookingResult result = SaveChanges(bookingId, newStartDate, newEndDate, newRoomId, newCustomerId);
-                        if (result == BookingResult.Success)
-                        {
-                            _updateBookingMenu.ResetIndex();
-                            return;
-                        }
+                        result = new BookingValidationResult();
+                        result = _bookingService.UpdateBooking(bookingId, newStartDate, newEndDate, newRoomId, newCustomerId);
                         break;
                     case UpdateBookingMenuOption.Back:
                         _updateBookingMenu.ResetIndex();
                         return;
-
                 }
-            }
-        }
-        private BookingResult SaveChanges(int bookingId, DateOnly newStartDate, DateOnly newEndDate, int newRoomId, int newCustomerId)
-        {
-            BookingResult result = _bookingService.UpdateBooking(bookingId, newStartDate, newEndDate, newRoomId, newCustomerId);
-            
-            switch (result)
-            {
-                case BookingResult.Success:
-                    Console.WriteLine("Changes saved.");
-                    break;
-                case BookingResult.BookingNotFound:
+                if (!result.BookingFound)
+                {
                     Console.WriteLine("Booking not found.");
-                    break;
-                case BookingResult.InvalidDateRange:
-                    Console.WriteLine("End date must be after start date.");
-                    break;
-                case BookingResult.CustomerNotFound:
+                }
+                if (!result.ValidDateRange)
+                {
+                    Console.WriteLine("Invalid date range.");
+                    newStartDate = booking.StartDate;
+                    newEndDate = booking.EndDate;
+                }
+                if (!result.CustomerFound)
+                {
                     Console.WriteLine("Customer not found.");
-                    break;
-                case BookingResult.RoomNotFound:
+                    newCustomerId = booking.CustomerId;
+                }
+                if (!result.RoomFound)
+                {
                     Console.WriteLine("Room not found.");
-                    break;
-                case BookingResult.RoomUnavailable:
-                    Console.WriteLine("Room unavailable these dates.");
-                    break;
+                    newRoomId = booking.RoomId;
+                }
+                if (!result.RoomAvailable)
+                {
+                    Console.WriteLine("Room unavailable.");
+                    newStartDate = booking.StartDate;
+                    newEndDate = booking.EndDate;
+                    newRoomId = booking.RoomId;
+                }
+                if (result.Success)
+                {
+                    Console.WriteLine("Changes saved.");
+                    InputHelper.WaitForBack();
+                    _updateBookingMenu.ResetIndex();
+                    return;
+                }
+
+                InputHelper.WaitForBack();
             }
-            InputHelper.WaitForBack();
-            return result;
         }
     }
 }

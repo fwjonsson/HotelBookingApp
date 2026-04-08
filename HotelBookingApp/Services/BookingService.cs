@@ -1,6 +1,7 @@
 ﻿using HotelBookingApp.Data;
 using HotelBookingApp.Enums;
 using HotelBookingApp.Models;
+using HotelBookingApp.Services.Bookings;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -46,32 +47,39 @@ namespace HotelBookingApp.Services
             return BookingResult.Success;
         }
 
-        internal BookingResult UpdateBooking(int bookingId, DateOnly newStartDate, DateOnly newEndDate, int newRoomId, int newCustomerId)
+        internal BookingValidationResult UpdateBooking(int bookingId, DateOnly newStartDate, DateOnly newEndDate, int newRoomId, int newCustomerId)
         {
             Booking? booking = _dbContext.Bookings.FirstOrDefault(b => b.Id == bookingId);
 
+            var result = new BookingValidationResult();
+
             if (booking == null)
-                return BookingResult.BookingNotFound;
+                result.BookingFound = false;
 
             if (newEndDate <= newStartDate)
-                return BookingResult.InvalidDateRange;
+                result.ValidDateRange = false;
 
             if (!CustomerExists(newCustomerId))
-                return BookingResult.CustomerNotFound;
+                result.CustomerFound = false;
 
             if (!RoomExists(newRoomId))
-                return BookingResult.RoomNotFound;
+                result.RoomFound = false;
 
             if (!IsRoomAvailable(newRoomId, newStartDate, newEndDate, bookingId))
-                return BookingResult.RoomUnavailable;
+                result.RoomAvailable = false;
 
-            booking.StartDate = newStartDate;
+            if(!result.BookingFound || !result.ValidDateRange || !result.CustomerFound || !result.RoomFound || !result.RoomAvailable)
+            {
+                return result;
+            }
+
+            booking!.StartDate = newStartDate;
             booking.EndDate = newEndDate;
             booking.RoomId = newRoomId;
             booking.CustomerId = newCustomerId;
 
             _dbContext.SaveChanges();
-            return BookingResult.Success;
+            return result;
 
         }
         internal BookingResult DeleteBooking(int bookingId)
