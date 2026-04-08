@@ -1,4 +1,5 @@
 ﻿
+using HotelBookingApp.Enums;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services;
 using HotelBookingApp.Utilities;
@@ -15,8 +16,8 @@ namespace HotelBookingApp.Flows.Bookings
         }
         internal void Run()
         {
-            var id = InputHelper.ReadInt("Enter booking ID: ");
-            Booking? booking = _bookingService.GetById(id);
+            var bookingId = InputHelper.ReadInt("Enter booking ID: ");
+            Booking? booking = _bookingService.GetById(bookingId);
             if (booking == null)
             {
                 Console.WriteLine("No booking found");
@@ -26,9 +27,9 @@ namespace HotelBookingApp.Flows.Bookings
             BookingPrinter.PrintBooking(booking);
             if (InputHelper.WaitForYesOrNo("Are you sure you want to delete? Y/N"))
             {
-                bool deleted = _bookingService.DeleteBooking(id); 
+                BookingResult result = _bookingService.DeleteBooking(bookingId); 
 
-                if (deleted)
+                if (result == BookingResult.Success)
                 {
                     Console.WriteLine("Booking deleted.");
                 }

@@ -63,11 +63,11 @@ namespace HotelBookingApp.Flows.Bookings
                         }
                         if (!result.ValidDateRange)
                         {
-                            Console.WriteLine("Invalid date range");
+                            Console.WriteLine("End date must be after start date");
                         }
                         if (!result.RoomAvailable)
                         {
-                            Console.WriteLine("Room unavailable at these dates.");
+                            Console.WriteLine("Room unavailable for those dates.");
                         }
                         if (result.Success)
                         {
