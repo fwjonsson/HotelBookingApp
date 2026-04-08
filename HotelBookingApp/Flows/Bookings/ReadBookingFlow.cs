@@ -77,7 +77,7 @@ namespace HotelBookingApp.Flows.Bookings
 
         private void ReadById()
         {
-            int id = InputHelper.ReadInt("Enter booking id:");
+            int id = InputHelper.ReadInt("Enter booking ID:");
             Booking? booking = _bookingService.GetById(id);
             if (booking == null)
             {
