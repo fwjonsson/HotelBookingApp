@@ -55,7 +55,7 @@ namespace HotelBookingApp.Flows.Bookings
 
         private void ReadByDate()
         {
-            var date = InputHelper.ReadDateOnly("Enter booking date (yyyy-MM-dd):");
+            var date = InputHelper.ReadDateOnly("Booking date (yyyy-MM-dd):");
             List<Booking> bookingsOnDate = _bookingService.GetByDate(date);
 
             BookingPrinter.PrintBookings(bookingsOnDate);
@@ -63,11 +63,11 @@ namespace HotelBookingApp.Flows.Bookings
 
         private void ReadById()
         {
-            int bookingId = InputHelper.ReadInt("Enter booking ID:");
+            int bookingId = InputHelper.ReadInt("Booking ID:");
             Booking? booking = _bookingService.GetById(bookingId);
             if (booking == null)
             {
-                Console.WriteLine("No booking with that ID");
+                Console.WriteLine("No booking with that ID found.");
                 return;
             }
             BookingPrinter.PrintBooking(booking);
@@ -75,14 +75,14 @@ namespace HotelBookingApp.Flows.Bookings
 
         private void ReadByRoomId()
         {
-            int id = InputHelper.ReadInt("Enter room ID:");
+            int id = InputHelper.ReadInt("Room ID:");
             List<Booking> bookingsOnRoom = _bookingService.GetByRoomId(id);
             BookingPrinter.PrintBookings(bookingsOnRoom);
         }
 
         private void ReadByCustomerId()
         {
-            int customerId = InputHelper.ReadInt("Enter customer ID:");
+            int customerId = InputHelper.ReadInt("Customer ID:");
             List<Booking> bookingsByCustomer = _bookingService.GetByCustomerId(customerId);
             BookingPrinter.PrintBookings(bookingsByCustomer);
         }

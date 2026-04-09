@@ -70,7 +70,7 @@ namespace HotelBookingApp.Flows.Customers
                 Console.WriteLine("No customer with that ID found.");
                 return;
             }
-            CustomerPrinter.PrintCustomerAndTheirBookings(customer); //Make sure EF brings correct bookings
+            CustomerPrinter.PrintCustomerAndTheirBookings(customer); 
         }
         private void ReadByFullName()
         {
@@ -90,7 +90,7 @@ namespace HotelBookingApp.Flows.Customers
                 return;
             }
 
-            CustomerPrinter.PrintCustomerAndTheirBookings(customer); //Make sure EF brings correct bookings
+            CustomerPrinter.PrintCustomerAndTheirBookings(customer);
         }
         private void ReadByPhoneNumber()
         {
@@ -102,7 +102,7 @@ namespace HotelBookingApp.Flows.Customers
                 Console.WriteLine("No customer with that phone number found.");
                 return;
             }
-            CustomerPrinter.PrintCustomerAndTheirBookings(customer); //Make sure EF brings correct bookings
+            CustomerPrinter.PrintCustomerAndTheirBookings(customer); 
         }
         private void ReadByBookingId()
         {
@@ -114,7 +114,7 @@ namespace HotelBookingApp.Flows.Customers
                 Console.WriteLine("No customer with that booking ID found.");
                 return;
             }
-            CustomerPrinter.PrintCustomerAndTheirBookings(customer); //Make sure EF brings correct bookings
+            CustomerPrinter.PrintCustomerAndTheirBookings(customer);
         }
     }
 }

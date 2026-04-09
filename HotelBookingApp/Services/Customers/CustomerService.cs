@@ -42,6 +42,31 @@ namespace HotelBookingApp.Services.Customers
             _dbContext.SaveChanges();
             return result;
         }
+        internal List<Customer> ListAll()
+        {
+            return _dbContext.Customers.ToList();
+        }
+        internal Customer GetById(int customerId)
+        {
+            return _dbContext.Customers.Include(c => c.Bookings).FirstOrDefault(c => c.Id == customerId);
+        }
+        internal List<Customer> GetByFullName(string fullName)
+        {
+            return _dbContext.Customers.Where(c => c.FullName == fullName).ToList();
+        }
+        internal Customer GetByEmail(string email)
+        {
+            return _dbContext.Customers.Include(c => c.Bookings).FirstOrDefault(c => c.Email == email);
+        }
+        internal Customer GetByPhoneNumber(string phoneNumber)
+        {
+            return _dbContext.Customers.Include(c => c.Bookings).FirstOrDefault(c => c.PhoneNumber == phoneNumber);
+        }
+        internal Customer GetByBookingId(int bookingId)
+        {
+            return _dbContext.Customers.Include(c=> c.Bookings).FirstOrDefault(c => c.BookingId == bookingId);
+        }
+
         private bool EmailAvailable(string email)
         {
             return !_dbContext.Customers.Any(c => c.Email == email);
