@@ -12,10 +12,10 @@ namespace HotelBookingApp.Menus.Bookings
             _menu = new ConsoleMenu<ReadBookingMenuOption>("Read Booking Menu", new List<MenuChoice<ReadBookingMenuOption>>
             {
                 new(ReadBookingMenuOption.ReadAll, "Show all bookings"),
-                new(ReadBookingMenuOption.ReadByDate, "Show booking by date"),
-                new(ReadBookingMenuOption.ReadById, "Show booking by ID"),
-                new(ReadBookingMenuOption.ReadByRoomId, "Show booking by room ID"),
-                new(ReadBookingMenuOption.ReadByCustomerId, "Show booking by customer ID"),
+                new(ReadBookingMenuOption.ReadByDate, "Find booking by date"),
+                new(ReadBookingMenuOption.ReadById, "Find booking by ID"),
+                new(ReadBookingMenuOption.ReadByRoomId, "Find booking by room ID"),
+                new(ReadBookingMenuOption.ReadByCustomerId, "Find booking by customer ID"),
                 new(ReadBookingMenuOption.Back, "Back")
             });
         }

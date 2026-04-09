@@ -34,16 +34,16 @@ namespace HotelBookingApp.Flows.Customers
                 {
                     case CreateCustomerMenuOption.FullName:
                         fullName = InputHelper.ReadFullName("Enter customers full name: ");
-                        break;
+                        continue;
                     case CreateCustomerMenuOption.Birthdate:
                         birthDate = InputHelper.ReadDateOnly("Enter customers birth date (yyyy-MM-dd): ");
-                        break;
+                        continue;
                     case CreateCustomerMenuOption.Email:
                         email = InputHelper.ReadEmail("Enter customer email: ");
-                        break;
+                        continue;
                     case CreateCustomerMenuOption.PhoneNumber:
                         phoneNumber = InputHelper.ReadPhoneNumber("Enter customer phone number: ");
-                        break;
+                        continue;
                     case CreateCustomerMenuOption.Create:
                         if (fullName is not string fName ||
                             birthDate is not DateOnly bDate ||
