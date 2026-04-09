@@ -58,11 +58,6 @@ namespace HotelBookingApp.Flows.Customers
         {
             List<Customer> allCustomers = _customerService.ListAll();
 
-            if (allCustomers.Count == 0)
-            {
-                Console.WriteLine("No customers found");
-                return;
-            }
             CustomerPrinter.PrintCustomers(allCustomers);
         }
         private void ReadById()
@@ -72,59 +67,54 @@ namespace HotelBookingApp.Flows.Customers
 
             if (customer == null)
             {
-                Console.WriteLine("No customer with that ID");
+                Console.WriteLine("No customer with that ID found.");
                 return;
             }
             CustomerPrinter.PrintCustomerAndTheirBookings(customer); //Make sure EF brings correct bookings
         }
         private void ReadByFullName()
         {
-            var fullName = InputHelper.ReadFullName("Enter customer's full name: ");
-            Customer? customer = _customerService.GetByFullName(fullName);
+            var fullName = InputHelper.ReadFullName("Full name: ");
+            List<Customer> customer = _customerService.GetByFullName(fullName);
 
-            if (customer == null)
-            {
-                Console.WriteLine("No customer with that name.");
-                return;
-            }
-            CustomerPrinter.PrintCustomerAndTheirBookings(customer);
+            CustomerPrinter.PrintCustomers(customer);
         }
         private void ReadByEmail()
         {
-            var email = InputHelper.ReadEmail("Enter customer's email: ");
+            var email = InputHelper.ReadEmail("Email: ");
             Customer? customer = _customerService.GetByEmail(email);
 
             if (customer == null)
             {
-                Console.WriteLine("No customer with that email.");
+                Console.WriteLine("No customer with that email found.");
                 return;
             }
 
-            CustomerPrinter.PrintCustomerAndTheirBookings(customer);
+            CustomerPrinter.PrintCustomerAndTheirBookings(customer); //Make sure EF brings correct bookings
         }
         private void ReadByPhoneNumber()
         {
-            var phoneNumber = InputHelper.ReadPhoneNumber("Enter customer's phone number: ");
+            var phoneNumber = InputHelper.ReadPhoneNumber("Phone number: ");
             Customer? customer = _customerService.GetByPhoneNumber(phoneNumber);
 
             if (customer == null)
             {
-                Console.WriteLine("No customer with that phone number.");
+                Console.WriteLine("No customer with that phone number found.");
                 return;
             }
-            CustomerPrinter.PrintCustomerAndTheirBookings(customer);
+            CustomerPrinter.PrintCustomerAndTheirBookings(customer); //Make sure EF brings correct bookings
         }
         private void ReadByBookingId()
         {
-            var bookingId = InputHelper.ReadInt("Enter customer's booking ID: ");
+            var bookingId = InputHelper.ReadInt("Booking ID: ");
             Customer? customer = _customerService.GetByBookingId(bookingId);
 
             if (customer == null)
             {
-                Console.WriteLine("No customer with that booking ID.");
+                Console.WriteLine("No customer with that booking ID found.");
                 return;
             }
-            CustomerPrinter.PrintCustomerAndTheirBookings(customer);
+            CustomerPrinter.PrintCustomerAndTheirBookings(customer); //Make sure EF brings correct bookings
         }
     }
 }
