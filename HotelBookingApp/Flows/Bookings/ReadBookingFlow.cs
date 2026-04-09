@@ -1,7 +1,7 @@
 ﻿using HotelBookingApp.Enums.Menus.Bookings;
 using HotelBookingApp.Menus.Bookings;
 using HotelBookingApp.Models;
-using HotelBookingApp.Services;
+using HotelBookingApp.Services.Bookings;
 using HotelBookingApp.Utilities;
 
 namespace HotelBookingApp.Flows.Bookings
@@ -44,7 +44,7 @@ namespace HotelBookingApp.Flows.Bookings
                         _readBookingMenu.ResetIndex();
                         return;
                 }
-                InputHelper.WaitForBack();
+                InputHelper.WaitForContinue();
             }
         }
         private void ReadAll()

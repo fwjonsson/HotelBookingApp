@@ -20,7 +20,7 @@ namespace HotelBookingApp.Utilities
         {
             if (bookings.Count == 0)
             {
-                Console.WriteLine("No bookings found");
+                Console.WriteLine("No bookings found.");
             }
 
             else

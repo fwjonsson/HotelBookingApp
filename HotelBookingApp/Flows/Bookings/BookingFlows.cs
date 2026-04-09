@@ -1,6 +1,6 @@
 ﻿using HotelBookingApp.Enums.Menus.Bookings;
 using HotelBookingApp.Menus.Bookings;
-using HotelBookingApp.Services;
+using HotelBookingApp.Services.Bookings;
 
 namespace HotelBookingApp.Flows.Bookings
 {

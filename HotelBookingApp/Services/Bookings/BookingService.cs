@@ -1,13 +1,12 @@
 ﻿using HotelBookingApp.Data;
 using HotelBookingApp.Enums;
 using HotelBookingApp.Models;
-using HotelBookingApp.Services.Bookings;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HotelBookingApp.Services
+namespace HotelBookingApp.Services.Bookings
 {
 
     internal class BookingService
@@ -37,7 +36,7 @@ namespace HotelBookingApp.Services
             if (!result.Success) 
                 return result;
 
-            Booking booking = new Booking
+            Booking newBooking = new Booking
             {
                 CustomerId = customerId,
                 RoomId = roomId,
@@ -45,7 +44,7 @@ namespace HotelBookingApp.Services
                 EndDate = endDate
             };
 
-            _dbContext.Bookings.Add(booking);
+            _dbContext.Bookings.Add(newBooking);
             _dbContext.SaveChanges();
 
             return result;

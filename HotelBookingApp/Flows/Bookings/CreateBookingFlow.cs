@@ -1,7 +1,6 @@
 ﻿using HotelBookingApp.Enums;
 using HotelBookingApp.Enums.Menus.Bookings;
 using HotelBookingApp.Menus.Bookings;
-using HotelBookingApp.Services;
 using HotelBookingApp.Services.Bookings;
 using HotelBookingApp.Utilities;
 
@@ -49,7 +48,7 @@ namespace HotelBookingApp.Flows.Bookings
                             endDate is not DateOnly eDate)
                         {
                             Console.WriteLine("You must fill in all values before creating.");
-                            InputHelper.WaitForBack();
+                            InputHelper.WaitForContinue();
                             continue;
                         }
                         BookingValidationResult result = _bookingService.CreateBooking(cId, rId, sDate, eDate);
@@ -71,9 +70,9 @@ namespace HotelBookingApp.Flows.Bookings
                         }
                         if (result.Success)
                         {
-                            Console.WriteLine("Booking created successfully");
+                            Console.WriteLine("Booking created successfully.");
                             _createBookingMenu.ResetIndex();
-                            InputHelper.WaitForBack();
+                            InputHelper.WaitForContinue();
                             return;
                         }
                         break;
@@ -81,8 +80,7 @@ namespace HotelBookingApp.Flows.Bookings
                         _createBookingMenu.ResetIndex();
                         return;
                 }
-                
-                InputHelper.WaitForBack();
+                InputHelper.WaitForContinue();
             }
         }
     }

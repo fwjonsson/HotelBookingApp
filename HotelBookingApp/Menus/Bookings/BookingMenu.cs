@@ -11,8 +11,8 @@ namespace HotelBookingApp.Menus.Bookings
         {
             _menu = new ConsoleMenu<BookingMenuOption>("Booking Menu", new List<MenuChoice<BookingMenuOption>>
             {
-                new(BookingMenuOption.Create, "Create Booking"),
-                new(BookingMenuOption.Read, "Read Booking"),
+                new(BookingMenuOption.Create, "Create New Booking"),
+                new(BookingMenuOption.Read, "Read Bookings"),
                 new(BookingMenuOption.Update, "Update Booking"),
                 new(BookingMenuOption.Delete, "Delete Booking"),
                 new(BookingMenuOption.Back, "Back")

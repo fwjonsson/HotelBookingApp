@@ -1,6 +1,5 @@
 ﻿using HotelBookingApp.Enums.Menus.Bookings;
 using HotelBookingApp.Menus.Bookings;
-using HotelBookingApp.Services;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Models;
 using HotelBookingApp.Enums;
@@ -25,7 +24,7 @@ namespace HotelBookingApp.Flows.Bookings
             if (booking == null)
             {
                 Console.WriteLine("No booking with that ID found.");
-                InputHelper.WaitForBack();
+                InputHelper.WaitForContinue();
                 return;
             }
 
@@ -41,7 +40,7 @@ namespace HotelBookingApp.Flows.Bookings
                 if (booking == null)
                 {
                     Console.WriteLine("No booking with that ID found.");
-                    InputHelper.WaitForBack();
+                    InputHelper.WaitForContinue();
                     return;
                 }
                 UpdateBookingMenuOption choice = _updateBookingMenu.Show(newStartDate, newEndDate, newRoomId, newCustomerId);
@@ -89,7 +88,7 @@ namespace HotelBookingApp.Flows.Bookings
                         if (result.Success)
                         {
                             Console.WriteLine("Changes saved.");
-                            InputHelper.WaitForBack();
+                            InputHelper.WaitForContinue();
                             _updateBookingMenu.ResetIndex();
                             return;
                         }
@@ -98,7 +97,7 @@ namespace HotelBookingApp.Flows.Bookings
                         _updateBookingMenu.ResetIndex();
                         return;
                 }
-                InputHelper.WaitForBack();
+                InputHelper.WaitForContinue();
             }
         }
     }
