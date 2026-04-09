@@ -13,8 +13,8 @@ namespace HotelBookingApp.Menus.Bookings
         internal UpdateBookingMenu()
         {
             _menu = new ConsoleMenu<UpdateBookingMenuOption>(
-                "Update Booking", 
-                new List<MenuChoice<UpdateBookingMenuOption>>());
+                "Update Booking"
+                , new List<MenuChoice<UpdateBookingMenuOption>>());
         }
         internal UpdateBookingMenuOption Show(DateOnly startDate, DateOnly endDate, int roomId, int customerId)
         {
@@ -25,7 +25,7 @@ namespace HotelBookingApp.Menus.Bookings
                 new(UpdateBookingMenuOption.RoomId, $"Change room by room ID ({roomId})"),
                 new(UpdateBookingMenuOption.CustomerId, $"Change customer by customer ID ({customerId})"),
                 new(UpdateBookingMenuOption.Save, "Save changes"),
-                new(UpdateBookingMenuOption.Back, "Back")
+                new(UpdateBookingMenuOption.Cancel, "Cancel")
             });
             return _menu.Show();
         }

@@ -11,7 +11,7 @@ namespace HotelBookingApp.Utilities
         {
             Console.WriteLine($"Customer ID: {customer.Id}");
             Console.WriteLine($"Customer full name: {customer.FullName}");
-            Console.WriteLine($"Customer birth date: {customer.Birthdate:yyyy-MM-dd}");
+            Console.WriteLine($"Customer birth date: {customer.BirthDate:yyyy-MM-dd}");
             Console.WriteLine($"Customer email: {customer.Email}");
             Console.WriteLine($"Customer phone number: {customer.PhoneNumber}");
             Console.WriteLine();
@@ -37,13 +37,14 @@ namespace HotelBookingApp.Utilities
             if (customer.Bookings.Count > 0)
             {
                 Console.WriteLine();
-                Console.WriteLine("Customer's bookings: ");
+                Console.WriteLine($"{customer.FullName}'s bookings: ");
 
                 foreach (Booking booking in customer.Bookings)
                 {
                     BookingPrinter.PrintBooking(booking);
                 }
             }
+            Console.WriteLine();
         }
     }
 }

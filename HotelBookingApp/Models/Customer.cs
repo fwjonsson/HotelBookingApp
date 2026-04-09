@@ -8,7 +8,7 @@ namespace HotelBookingApp.Models
         public int Id { get; set; }
         [MaxLength(100)]
         public string FullName { get; set; } = null!;
-        public DateOnly Birthdate { get; set; }
+        public DateOnly BirthDate { get; set; }
         [EmailAddress]
         [MaxLength(255)]
         public string Email { get; set; } = null!;

@@ -38,6 +38,9 @@ namespace HotelBookingApp.Flows.Customers
                     case ReadCustomerMenuOption.ReadByFullName:
                         ReadByFullName();
                         break;
+                    case ReadCustomerMenuOption.ReadByBirthDate:
+                        ReadByBirthDate();
+                        break;
                     case ReadCustomerMenuOption.ReadByEmail:
                         ReadByEmail();
                         break;
@@ -75,9 +78,22 @@ namespace HotelBookingApp.Flows.Customers
         private void ReadByFullName()
         {
             var fullName = InputHelper.ReadFullName("Full name: ");
-            List<Customer> customer = _customerService.GetByFullName(fullName);
+            List<Customer> customers = _customerService.GetByFullName(fullName);
 
-            CustomerPrinter.PrintCustomers(customer);
+            foreach (Customer customer in customers)
+            {
+                CustomerPrinter.PrintCustomerAndTheirBookings(customer);
+            }
+        }
+        private void ReadByBirthDate()
+        {
+            var birthDate = InputHelper.ReadDateOnly("Birth date: ");
+            List<Customer> customers = _customerService.GetByBirthDate(birthDate);
+
+            foreach (var customer in customers)
+            {
+                CustomerPrinter.PrintCustomerAndTheirBookings(customer);
+            }
         }
         private void ReadByEmail()
         {

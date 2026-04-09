@@ -7,7 +7,7 @@ namespace HotelBookingApp.Enums.Menus.Customers
     internal enum CreateCustomerMenuOption
     {
         FullName,
-        Birthdate,
+        BirthDate,
         Email,
         PhoneNumber,
         Create,

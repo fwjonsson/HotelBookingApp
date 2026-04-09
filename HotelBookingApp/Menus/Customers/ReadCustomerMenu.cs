@@ -17,6 +17,7 @@ namespace HotelBookingApp.Menus.Customers
                 new(ReadCustomerMenuOption.ReadAll, "Show all customers"),
                 new(ReadCustomerMenuOption.ReadById, "Find customer by ID"),
                 new(ReadCustomerMenuOption.ReadByFullName, "Find customer by name"),
+                new(ReadCustomerMenuOption.ReadByBirthDate, "Find customer by birthdate"),
                 new(ReadCustomerMenuOption.ReadByEmail, "Find customer by email"),
                 new(ReadCustomerMenuOption.ReadByPhoneNumber, "Find customer by phone number"),
                 new(ReadCustomerMenuOption.ReadByBookingId, "Find customer by booking ID"),

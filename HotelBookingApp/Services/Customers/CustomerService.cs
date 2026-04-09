@@ -34,11 +34,12 @@ namespace HotelBookingApp.Services.Customers
             var newCustomer = new Customer
             {
                 FullName = fullName,
-                Birthdate = birthDate,
+                BirthDate = birthDate,
                 Email = email,
                 PhoneNumber = phoneNumber
             };
-            _dbContext.Customers.Add(newCustomer);
+            _dbContext.Customers
+                .Add(newCustomer);
             _dbContext.SaveChanges();
             return result;
         }
@@ -46,35 +47,58 @@ namespace HotelBookingApp.Services.Customers
         {
             return _dbContext.Customers.ToList();
         }
-        internal Customer GetById(int customerId)
+        internal Customer? GetById(int customerId)
         {
-            return _dbContext.Customers.Include(c => c.Bookings).FirstOrDefault(c => c.Id == customerId);
+            return _dbContext.Customers
+                .Include(c => c.Bookings)
+                .FirstOrDefault(c => c.Id == customerId);
         }
         internal List<Customer> GetByFullName(string fullName)
         {
-            return _dbContext.Customers.Where(c => c.FullName == fullName).ToList();
+            return _dbContext.Customers
+                .Include(c => c.Bookings)
+                .Where(c => c.FullName == fullName)
+                .ToList();
         }
-        internal Customer GetByEmail(string email)
+        internal List<Customer> GetByBirthDate(DateOnly birthDate)
         {
-            return _dbContext.Customers.Include(c => c.Bookings).FirstOrDefault(c => c.Email == email);
+            return _dbContext.Customers
+                .Include(c => c.Bookings)
+                .Where(c => c.BirthDate == birthDate)
+                .ToList();
         }
-        internal Customer GetByPhoneNumber(string phoneNumber)
+        internal Customer? GetByEmail(string email)
         {
-            return _dbContext.Customers.Include(c => c.Bookings).FirstOrDefault(c => c.PhoneNumber == phoneNumber);
+            return _dbContext.Customers
+                .Include(c => c.Bookings)
+                .FirstOrDefault(c => c.Email == email);
         }
-        internal Customer GetByBookingId(int bookingId)
+        internal Customer? GetByPhoneNumber(string phoneNumber)
         {
-            return _dbContext.Customers.Include(c=> c.Bookings).FirstOrDefault(c => c.BookingId == bookingId);
+            return _dbContext.Customers
+                .Include(c => c.Bookings)
+                .FirstOrDefault(c => c.PhoneNumber == phoneNumber);
+        }
+        internal Customer? GetByBookingId(int bookingId)
+        {
+            return _dbContext.Customers
+                .Include(c=> c.Bookings)
+                .FirstOrDefault(c => c.Bookings
+                .Any(b => b.Id == bookingId));
         }
 
         private bool EmailAvailable(string email)
         {
-            return !_dbContext.Customers.Any(c => c.Email == email);
+            return !_dbContext.Customers
+                .Any(c => c.Email == email);
         }
         private bool PhoneNumberAvailable(string phoneNumber)
         {
-            return !_dbContext.Customers.Any(c => c.PhoneNumber == phoneNumber);
+            return !_dbContext.Customers
+                .Any(c => c.PhoneNumber == phoneNumber);
             //Maybe normalize phone numbers
         }
+
+
     }
 }

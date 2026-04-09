@@ -19,7 +19,7 @@ namespace HotelBookingApp.Menus.Customers
             _menu.SetChoices(new List<MenuChoice<CreateCustomerMenuOption>>
             {
                 new(CreateCustomerMenuOption.FullName, $"Full Name: {fullName?.ToString() ?? "Not set"}"),
-                new(CreateCustomerMenuOption.Birthdate, $"Birtdate: {birthDate?.ToString("yyyy-MM-dd") ?? "Not set"}"),
+                new(CreateCustomerMenuOption.BirthDate, $"Birth date: {birthDate?.ToString("yyyy-MM-dd") ?? "Not set"}"),
                 new(CreateCustomerMenuOption.Email, $"Email: {email?.ToString() ?? "Not set"}"),
                 new(CreateCustomerMenuOption.PhoneNumber, $"Phone Number: {phoneNumber?.ToString() ?? "Not set"}"),
                 new(CreateCustomerMenuOption.Create, $"Create Customer"),

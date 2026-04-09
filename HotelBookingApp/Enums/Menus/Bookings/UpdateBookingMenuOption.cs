@@ -11,6 +11,6 @@ namespace HotelBookingApp.Enums.Menus.Bookings
         RoomId,
         CustomerId,
         Save,
-        Back
+        Cancel
     }
 }

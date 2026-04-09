@@ -93,7 +93,7 @@ namespace HotelBookingApp.Flows.Bookings
                             return;
                         }
                         break;
-                    case UpdateBookingMenuOption.Back:
+                    case UpdateBookingMenuOption.Cancel:
                         _updateBookingMenu.ResetIndex();
                         return;
                 }

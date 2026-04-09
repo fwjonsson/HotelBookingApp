@@ -9,6 +9,7 @@ namespace HotelBookingApp.Enums.Menus.Customers
         ReadAll,
         ReadById,
         ReadByFullName,
+        ReadByBirthDate,
         ReadByEmail,
         ReadByPhoneNumber,
         ReadByBookingId,

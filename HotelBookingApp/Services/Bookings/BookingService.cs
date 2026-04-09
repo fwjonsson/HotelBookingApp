@@ -85,7 +85,8 @@ namespace HotelBookingApp.Services.Bookings
         }
         internal BookingResult DeleteBooking(int bookingId)
         {
-            Booking? booking = _dbContext.Bookings.FirstOrDefault(b => b.Id == bookingId);
+            Booking? booking = _dbContext.Bookings
+                .FirstOrDefault(b => b.Id == bookingId);
 
             if (booking == null)
                 return BookingResult.BookingNotFound;
@@ -97,32 +98,41 @@ namespace HotelBookingApp.Services.Bookings
 
         internal List<Booking> ListAll()
         {
-            return _dbContext.Bookings.ToList();
+            return _dbContext.Bookings
+                .ToList();
         }
 
         internal List<Booking> GetByDate(DateOnly date)
         {
-            return _dbContext.Bookings.Where(b => b.StartDate <= date && b.EndDate > date).ToList();
+            return _dbContext.Bookings
+                .Where(b => b.StartDate <= date && b.EndDate > date)
+                .ToList();
         }
 
         internal Booking? GetById(int bookingId)
         {
-            return _dbContext.Bookings.FirstOrDefault(b => b.Id == bookingId);
+            return _dbContext.Bookings
+                .FirstOrDefault(b => b.Id == bookingId);
         }
 
         internal List<Booking> GetByRoomId(int roomId)
         {
-            return _dbContext.Bookings.Where(b => b.RoomId == roomId).ToList();
+            return _dbContext.Bookings
+                .Where(b => b.RoomId == roomId)
+                .ToList();
         }
 
         internal List<Booking> GetByCustomerId(int customerId)
         {
-            return _dbContext.Bookings.Where(b => b.CustomerId == customerId).ToList();
+            return _dbContext.Bookings
+                .Where(b => b.CustomerId == customerId)
+                .ToList();
         }
 
         private bool IsRoomAvailable(int roomId, DateOnly startDate, DateOnly endDate, int? bookingIdToExclude = null)
         {
-            return !_dbContext.Bookings.Any(b =>
+            return !_dbContext.Bookings
+                .Any(b =>
                 (bookingIdToExclude == null || b.Id != bookingIdToExclude) &&
                 b.RoomId == roomId &&
                 startDate < b.EndDate &&
@@ -130,11 +140,13 @@ namespace HotelBookingApp.Services.Bookings
         }
         private bool CustomerExists(int customerId)
         {
-            return _dbContext.Customers.Any(c => c.Id == customerId);
+            return _dbContext.Customers
+                .Any(c => c.Id == customerId);
         }
         private bool RoomExists(int roomId)
         {
-            return _dbContext.Rooms.Any(r => r.Id == roomId);
+            return _dbContext.Rooms
+                .Any(r => r.Id == roomId);
         }
     }
 }
