@@ -17,17 +17,8 @@ namespace HotelBookingApp.Flows.Bookings
             _bookingService = bookingService;
             _updateBookingMenu = new UpdateBookingMenu();
         }
-        internal void Run()
+        internal void Run(Booking booking)
         {
-            var bookingId = InputHelper.ReadInt("Enter booking ID: ");
-            Booking? booking = _bookingService.GetById(bookingId);
-            if (booking == null)
-            {
-                Console.WriteLine("No booking with that ID found.");
-                InputHelper.WaitForContinue();
-                return;
-            }
-
             DateOnly newStartDate = booking.StartDate;
             DateOnly newEndDate = booking.EndDate;
             int newCustomerId = booking.CustomerId;
@@ -36,13 +27,6 @@ namespace HotelBookingApp.Flows.Bookings
 
             while (true)
             {
-                booking = _bookingService.GetById(bookingId);
-                if (booking == null)
-                {
-                    Console.WriteLine("No booking with that ID found.");
-                    InputHelper.WaitForContinue();
-                    return;
-                }
                 UpdateBookingMenuOption choice = _updateBookingMenu.Show(newStartDate, newEndDate, newRoomId, newCustomerId);
                 
                 switch (choice)
@@ -60,7 +44,7 @@ namespace HotelBookingApp.Flows.Bookings
                         newCustomerId = InputHelper.ReadInt("New customer ID: ");
                         continue;
                     case UpdateBookingMenuOption.Save:
-                        var result = _bookingService.UpdateBooking(bookingId, newStartDate, newEndDate, newRoomId, newCustomerId);
+                        var result = _bookingService.UpdateBooking(booking.Id, newStartDate, newEndDate, newRoomId, newCustomerId);
                         if (!result.BookingFound)
                         {
                             Console.WriteLine("Booking not found.");
@@ -88,7 +72,6 @@ namespace HotelBookingApp.Flows.Bookings
                         if (result.Success)
                         {
                             Console.WriteLine("Changes saved.");
-                            InputHelper.WaitForContinue();
                             _updateBookingMenu.ResetIndex();
                             return;
                         }

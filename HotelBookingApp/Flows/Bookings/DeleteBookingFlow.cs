@@ -13,20 +13,12 @@ namespace HotelBookingApp.Flows.Bookings
         {
             _bookingService = bookingService;
         }
-        internal void Run()
+        internal void Run(Booking booking)
         {
-            var bookingId = InputHelper.ReadInt("Enter booking ID: ");
-            Booking? booking = _bookingService.GetById(bookingId);
-            if (booking == null)
-            {
-                Console.WriteLine("No booking found with that ID found.");
-                InputHelper.WaitForContinue();
-                return;
-            }
             BookingPrinter.PrintBooking(booking);
             if (InputHelper.WaitForYesOrNo("Are you sure you want to delete? Y/N"))
             {
-                BookingResult result = _bookingService.DeleteBooking(bookingId);
+                BookingResult result = _bookingService.DeleteBooking(booking.Id);
 
                 switch (result)
                 {
@@ -40,7 +32,6 @@ namespace HotelBookingApp.Flows.Bookings
                         Console.WriteLine("Could not delete booking.");
                         break;
                 }
-                InputHelper.WaitForContinue();
             }
         }
     }

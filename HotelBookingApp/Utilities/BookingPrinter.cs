@@ -36,6 +36,10 @@ namespace HotelBookingApp.Utilities
                 }
             }
         }
+        internal static string MenuFormatBooking(Booking booking)
+        {
+            return $"{booking.Id} - {booking.StartDate} - {booking.EndDate} - {booking.CustomerId} - {booking.RoomId}";
 
+        }
     }
 }

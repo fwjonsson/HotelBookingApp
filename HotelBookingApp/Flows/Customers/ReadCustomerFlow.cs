@@ -1,5 +1,6 @@
 ﻿using HotelBookingApp.Enums.Menus;
 using HotelBookingApp.Enums.Menus.Customers;
+using HotelBookingApp.Menus;
 using HotelBookingApp.Menus.Customers;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Customers;
@@ -11,8 +12,8 @@ namespace HotelBookingApp.Flows.Customers
     {
         private readonly CustomerService _customerService;
         private readonly ReadCustomerMenu _readCustomerMenu;
-        private readonly SelectCustomerMenu _selectCustomerMenu;
-        private readonly ActionMenu _customerActionMenu;
+        private readonly SelectObjectMenu _selectCustomerMenu;
+        private readonly ActionMenu<Customer> _customerActionMenu;
         private readonly UpdateCustomerFlow _updateCustomerFlow;
         private readonly DeleteCustomerFlow _deleteCustomerFlow;
 
@@ -21,8 +22,8 @@ namespace HotelBookingApp.Flows.Customers
         {
             _customerService = customerService;
             _readCustomerMenu = new ReadCustomerMenu();
-            _selectCustomerMenu = new SelectCustomerMenu();
-            _customerActionMenu = new ActionMenu();
+            _selectCustomerMenu = new SelectObjectMenu();
+            _customerActionMenu = new ActionMenu<Customer>("Customer",CustomerPrinter.FormatCustomer);
             _updateCustomerFlow = new UpdateCustomerFlow(customerService);
             _deleteCustomerFlow = new DeleteCustomerFlow(customerService);
         }
