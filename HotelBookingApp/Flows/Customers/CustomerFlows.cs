@@ -37,14 +37,26 @@ namespace HotelBookingApp.Flows.Customers
                     case CustomerMenuOption.Create:
                         _create.Run();
                         break;
-                    case CustomerMenuOption.Read:
-                        _read.Run();
+                    case CustomerMenuOption.ShowAll:
+                        _read.ReadAll();
                         break;
-                    case CustomerMenuOption.Update:
-                        _update.Run();
+                    case CustomerMenuOption.FindByID:
+                        _read.ReadById();
                         break;
-                    case CustomerMenuOption.Delete:
-                        _delete.Run();
+                    case CustomerMenuOption.FindByFullName:
+                        _read.ReadByFullName();
+                        break;
+                    case CustomerMenuOption.FindByBirthDate:
+                        _read.ReadByBirthDate();
+                        break;
+                    case CustomerMenuOption.FindByEmail:
+                        _read.ReadByEmail();
+                        break;
+                    case CustomerMenuOption.FindByPhoneNumber:
+                        _read.ReadByPhoneNumber();
+                        break;
+                    case CustomerMenuOption.FindByBookingID:
+                        _read.ReadByBookingId();
                         break;
                     case CustomerMenuOption.Back:
                         _customerMenu.ResetIndex();

@@ -13,9 +13,9 @@ namespace HotelBookingApp.Menus.Bookings
             {
                 new(ReadBookingMenuOption.ReadAll, "Show all bookings"),
                 new(ReadBookingMenuOption.ReadByDate, "Find booking by date"),
-                new(ReadBookingMenuOption.ReadById, "Find booking by ID"),
-                new(ReadBookingMenuOption.ReadByRoomId, "Find booking by room ID"),
-                new(ReadBookingMenuOption.ReadByCustomerId, "Find booking by customer ID"),
+                new(ReadBookingMenuOption.ReadByID, "Find booking by ID"),
+                new(ReadBookingMenuOption.ReadByRoomID, "Find booking by room ID"),
+                new(ReadBookingMenuOption.ReadByCustomerID, "Find booking by customer ID"),
                 new(ReadBookingMenuOption.Back, "Back")
             });
         }

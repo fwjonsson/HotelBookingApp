@@ -7,9 +7,11 @@ namespace HotelBookingApp.Enums.Menus.Bookings
     internal enum BookingMenuOption
     {
         Create,
-        Read,
-        Update,
-        Delete,
+        ShowAll,
+        FindById,
+        FindByDate,
+        FindByRoomId,
+        FindByCustomerId,
         Back
     }
 }

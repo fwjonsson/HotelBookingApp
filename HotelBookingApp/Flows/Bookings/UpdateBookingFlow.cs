@@ -44,7 +44,7 @@ namespace HotelBookingApp.Flows.Bookings
                         newCustomerId = InputHelper.ReadInt("New customer ID: ");
                         continue;
                     case UpdateBookingMenuOption.Save:
-                        var result = _bookingService.UpdateBooking(booking.Id, newStartDate, newEndDate, newRoomId, newCustomerId);
+                        BookingValidationResult result = _bookingService.UpdateBooking(booking.Id, newStartDate, newEndDate, newRoomId, newCustomerId);
                         if (!result.BookingFound)
                         {
                             Console.WriteLine("Booking not found.");

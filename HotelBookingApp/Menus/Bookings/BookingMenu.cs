@@ -12,9 +12,11 @@ namespace HotelBookingApp.Menus.Bookings
             _menu = new ConsoleMenu<BookingMenuOption>("Booking Menu", new List<MenuChoice<BookingMenuOption>>
             {
                 new(BookingMenuOption.Create, "Create New Booking"),
-                new(BookingMenuOption.Read, "Read Bookings"),
-                new(BookingMenuOption.Update, "Update Booking"),
-                new(BookingMenuOption.Delete, "Delete Booking"),
+                new(BookingMenuOption.ShowAll, "Read Bookings"),
+                new(BookingMenuOption.FindById, "Find By ID"),
+                new(BookingMenuOption.FindByDate, "Find By Date"),
+                new(BookingMenuOption.FindByRoomId, "Room ID"),
+                new(BookingMenuOption.FindByCustomerId, "Customer ID"),
                 new(BookingMenuOption.Back, "Back")
             });
         }
@@ -23,7 +25,7 @@ namespace HotelBookingApp.Menus.Bookings
             var result = _menu.Show();
             if (result.WasCancelled)
                 return BookingMenuOption.Back;
-            return _menu.Show().Value;
+            return result.Value;
         }
         internal void ResetIndex()
         {

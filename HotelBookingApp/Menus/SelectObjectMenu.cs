@@ -37,7 +37,12 @@ namespace HotelBookingApp.Menus
             choices.Add(new MenuChoice<int>(backIndex, "Back"));
 
             _menu.SetChoices(choices);
+
+            var result = _menu.Show();
+            if (result.WasCancelled)
+                return null;
             int selectedIndex = _menu.Show().Value;
+
             if (selectedIndex == backIndex)
             {
                 _menu.ResetIndex();

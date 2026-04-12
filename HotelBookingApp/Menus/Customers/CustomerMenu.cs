@@ -15,16 +15,17 @@ namespace HotelBookingApp.Menus.Customers
             _menu = new ConsoleMenu<CustomerMenuOption>("Customer menu", new List<MenuChoice<CustomerMenuOption>>
             {
                 new(CustomerMenuOption.Create, "Create New Customer"),
-                new(CustomerMenuOption.Read, "Read Customers"),
+                new(CustomerMenuOption.ShowAll, "Read Customers"),
                 new(CustomerMenuOption.Update, "Update Customer"),
-                new(CustomerMenuOption.Delete, "Delete Customer")
+                new(CustomerMenuOption.Delete, "Delete Customer"),
+                new(CustomerMenuOption.Back, "Back")
             });
         }
         internal CustomerMenuOption Show()
         {
             var result = _menu.Show();
             if (result.WasCancelled)
-                return CustomerMenuOption.Delete;
+                return CustomerMenuOption.Back;
             return result.Value;
         }
         internal void ResetIndex()

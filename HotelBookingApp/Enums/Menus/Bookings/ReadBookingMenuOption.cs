@@ -4,9 +4,9 @@
     {
         ReadAll,
         ReadByDate,
-        ReadById,
-        ReadByRoomId,
-        ReadByCustomerId,
+        ReadByID,
+        ReadByRoomID,
+        ReadByCustomerID,
         Back
     }
 }

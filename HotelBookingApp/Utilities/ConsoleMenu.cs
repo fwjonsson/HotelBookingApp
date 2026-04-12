@@ -41,7 +41,7 @@
 
                 Console.WriteLine();
                 Console.WriteLine();
-                Console.WriteLine("Use arrow keys Up/Down");
+                Console.WriteLine("Use arrow keys Up/Down, Enter to select, Esc to go back");
                 var key = Console.ReadKey(true).Key;
 
                 switch (key)
