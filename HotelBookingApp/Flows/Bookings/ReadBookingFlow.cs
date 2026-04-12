@@ -76,6 +76,8 @@ namespace HotelBookingApp.Flows.Bookings
         }
         private void ChooseAction(Booking booking)
         {
+            while (true)
+            {
                 ActionMenuOption choice = _bookingActionMenu.Show(booking);
                 switch (choice)
                 {
@@ -84,12 +86,13 @@ namespace HotelBookingApp.Flows.Bookings
                         break;
                     case ActionMenuOption.Delete:
                         _deleteBookingFlow.Run(booking);
-                        break;
+                        return;
                     case ActionMenuOption.Back:
                         _bookingActionMenu.ResetIndex();
                         return;
                 }
                 InputHelper.WaitForContinue();
+            }
         }
         internal void ReadAll() //TODO CONTINUE FINISHING THE READ METHODS
         {
