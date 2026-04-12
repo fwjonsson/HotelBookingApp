@@ -10,6 +10,10 @@ namespace HotelBookingApp.Flows.Bookings
     {
         private readonly BookingService _bookingService;
         private readonly ReadBookingMenu _readBookingMenu;
+        private readonly SelectBookingMenu _selectBookingMenu;
+        private readonly BookingActionMenu _bookingActionMenu;
+        private readonly UpdateBookingFlow _updateBookingFlow;
+        private readonly DeleteBookingFlow _deleteBookingFlow;
 
         internal ReadBookingFlow(BookingService bookingService)
         {
@@ -46,6 +50,10 @@ namespace HotelBookingApp.Flows.Bookings
                 }
                 InputHelper.WaitForContinue();
             }
+        }
+        private void SelectBookingAndChooseAction(List<Booking> bookings)
+        {
+
         }
         private void ReadAll()
         {

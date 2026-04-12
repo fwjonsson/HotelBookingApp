@@ -1,11 +1,9 @@
-﻿using HotelBookingApp.Enums.Menus.Customers;
+﻿using HotelBookingApp.Enums.Menus;
+using HotelBookingApp.Enums.Menus.Customers;
 using HotelBookingApp.Menus.Customers;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Flows.Customers
 {
@@ -13,12 +11,20 @@ namespace HotelBookingApp.Flows.Customers
     {
         private readonly CustomerService _customerService;
         private readonly ReadCustomerMenu _readCustomerMenu;
+        private readonly SelectCustomerMenu _selectCustomerMenu;
+        private readonly ActionMenu _customerActionMenu;
+        private readonly UpdateCustomerFlow _updateCustomerFlow;
+        private readonly DeleteCustomerFlow _deleteCustomerFlow;
 
 
         internal ReadCustomerFlow(CustomerService customerService)
         {
             _customerService = customerService;
             _readCustomerMenu = new ReadCustomerMenu();
+            _selectCustomerMenu = new SelectCustomerMenu();
+            _customerActionMenu = new ActionMenu();
+            _updateCustomerFlow = new UpdateCustomerFlow(customerService);
+            _deleteCustomerFlow = new DeleteCustomerFlow(customerService);
         }
 
         internal void Run()
@@ -57,11 +63,36 @@ namespace HotelBookingApp.Flows.Customers
                 InputHelper.WaitForContinue();
             }
         }
+        private void SelectCustomerAndChooseAction(List<Customer> customers)
+        {
+            Customer? selectedCustomer = _selectCustomerMenu.Show(customers);
+            if (selectedCustomer == null)
+                return;
+
+            var choice = _customerActionMenu.Show(selectedCustomer);
+
+            switch (choice)
+            {
+                case ActionMenuOption.Edit:
+                    _updateCustomerFlow.Run(selectedCustomer);
+                    break;
+                case ActionMenuOption.Delete:
+                    _deleteCustomerFlow.Run(selectedCustomer);
+                    break;
+                case ActionMenuOption.Back:
+                    return;
+            }
+        }
         private void ReadAll()
         {
             List<Customer> allCustomers = _customerService.ListAll();
 
-            CustomerPrinter.PrintCustomers(allCustomers);
+            if (allCustomers.Count == 0)
+            {
+                Console.WriteLine("No customers found");
+                return;
+            }
+            SelectCustomerAndChooseAction(allCustomers);
         }
         private void ReadById()
         {
@@ -73,7 +104,7 @@ namespace HotelBookingApp.Flows.Customers
                 Console.WriteLine("No customer with that ID found.");
                 return;
             }
-            CustomerPrinter.PrintCustomerAndTheirBookings(customer); 
+            CustomerPrinter.PrintCustomerAndTheirBookings(customer);
         }
         private void ReadByFullName()
         {
@@ -118,7 +149,7 @@ namespace HotelBookingApp.Flows.Customers
                 Console.WriteLine("No customer with that phone number found.");
                 return;
             }
-            CustomerPrinter.PrintCustomerAndTheirBookings(customer); 
+            CustomerPrinter.PrintCustomerAndTheirBookings(customer);
         }
         private void ReadByBookingId()
         {

@@ -7,13 +7,17 @@ namespace HotelBookingApp.Utilities
 {
     internal static class CustomerPrinter
     {
+        internal static string FormatCustomer(Customer customer)
+        {
+            return $"Customer ID: {customer.Id}" +
+                $"Customer full name: {customer.FullName}" +
+                $"Customer birth date: {customer.BirthDate:yyyy-MM-dd}" +
+                $"Customer email: {customer.Email}" +
+                $"Customer phone number: {customer.PhoneNumber}";
+        }
         internal static void PrintCustomer(Customer customer)
         {
-            Console.WriteLine($"Customer ID: {customer.Id}");
-            Console.WriteLine($"Customer full name: {customer.FullName}");
-            Console.WriteLine($"Customer birth date: {customer.BirthDate:yyyy-MM-dd}");
-            Console.WriteLine($"Customer email: {customer.Email}");
-            Console.WriteLine($"Customer phone number: {customer.PhoneNumber}");
+            Console.WriteLine(FormatCustomer(customer));
             Console.WriteLine();
         }
         internal static void PrintCustomers(List<Customer> customers)
@@ -37,7 +41,7 @@ namespace HotelBookingApp.Utilities
             if (customer.Bookings.Count > 0)
             {
                 Console.WriteLine();
-                Console.WriteLine($"{customer.FullName}'s bookings: ");
+                Console.WriteLine($"Bookings: ");
 
                 foreach (Booking booking in customer.Bookings)
                 {

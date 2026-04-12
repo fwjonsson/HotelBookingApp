@@ -1,8 +1,8 @@
 ﻿namespace HotelBookingApp.Utilities
 {
-    internal class ConsoleMenu<T> where T : Enum
+    internal class ConsoleMenu<T>
     {
-        private readonly string _title;
+        private string _title;
         private readonly List<MenuChoice<T>> _choices;
         private int _index = 0;
 
@@ -38,6 +38,10 @@
 
                     Console.WriteLine($"{_choices[i].Text}");
                 }
+
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("Use arrow keys Up/Down");
                 var key = Console.ReadKey(true).Key;
 
                 switch (key)
@@ -56,6 +60,10 @@
                         return _choices[_index].Value;
                 }
             }
+        }
+        internal void SetTitle(string title)
+        {
+            _title = title;
         }
         internal void ResetIndex()
         {

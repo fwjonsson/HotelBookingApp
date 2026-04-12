@@ -7,13 +7,18 @@ namespace HotelBookingApp.Utilities
 {
     internal static class BookingPrinter
     {
+        internal static string FormatBooking(Booking booking)
+        {
+            return $"Booking ID: {booking.Id}" +
+                $"Start Date: {booking.StartDate}" +
+                $"End Date: {booking.EndDate}" +
+                $"Customer ID: {booking.CustomerId}" +
+                $"Room ID: {booking.RoomId}";
+
+        }
         internal static void PrintBooking(Booking booking)
         {
-            Console.WriteLine($"Booking ID: {booking.Id}");
-            Console.WriteLine($"Start Date: {booking.StartDate}");
-            Console.WriteLine($"End Date: {booking.EndDate}");
-            Console.WriteLine($"Customer ID: {booking.CustomerId}");
-            Console.WriteLine($"Room ID: {booking.RoomId}");
+            Console.WriteLine(FormatBooking(booking));
             Console.WriteLine();
         }
         internal static void PrintBookings(List<Booking> bookings)
