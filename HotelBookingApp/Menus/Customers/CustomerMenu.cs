@@ -22,7 +22,10 @@ namespace HotelBookingApp.Menus.Customers
         }
         internal CustomerMenuOption Show()
         {
-            return _menu.Show();
+            var result = _menu.Show();
+            if (result.WasCancelled)
+                return CustomerMenuOption.Delete;
+            return result.Value;
         }
         internal void ResetIndex()
         {

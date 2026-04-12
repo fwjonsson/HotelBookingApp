@@ -25,7 +25,10 @@ namespace HotelBookingApp.Menus.Customers
                 new(CreateCustomerMenuOption.Create, $"Create Customer"),
                 new(CreateCustomerMenuOption.Cancel, "Cancel")
             });
-            return _menu.Show();
+            var result = _menu.Show();
+            if (result.WasCancelled)
+                return CreateCustomerMenuOption.Cancel;
+            return result.Value;
         }
         internal void ResetIndex()
         {

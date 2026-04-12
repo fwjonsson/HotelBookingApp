@@ -27,7 +27,10 @@ namespace HotelBookingApp.Menus.Bookings
                 new(UpdateBookingMenuOption.Save, "Save changes"),
                 new(UpdateBookingMenuOption.Cancel, "Cancel")
             });
-            return _menu.Show();
+            var result = _menu.Show();
+            if (result.WasCancelled)
+                return UpdateBookingMenuOption.Cancel;
+            return result.Value;
         }
         internal void ResetIndex()
         {

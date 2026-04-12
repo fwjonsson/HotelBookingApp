@@ -28,7 +28,11 @@ namespace HotelBookingApp.Menus
                 new(ActionMenuOption.Delete, "Delete"),
                 new(ActionMenuOption.Back, "Back")
             });
-            return _menu.Show();
+            var result = _menu.Show();
+            if (result.WasCancelled)
+                return ActionMenuOption.Back;
+
+            return result.Value;
         }
         internal void ResetIndex()
         {

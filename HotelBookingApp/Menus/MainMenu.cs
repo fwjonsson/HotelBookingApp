@@ -19,7 +19,10 @@ namespace HotelBookingApp.Menus
         }
         internal MainMenuOption Show()
         {
-            return _menu.Show();
+            var result = _menu.Show();
+            if (result.WasCancelled)
+                return MainMenuOption.Exit;
+            return result.Value;
         }
         internal void ResetIndex()
         {

@@ -26,7 +26,10 @@ namespace HotelBookingApp.Menus.Customers
         }
         internal ReadCustomerMenuOption Show()
         {
-            return _menu.Show();
+            var result = _menu.Show();
+            if (result.WasCancelled)
+                return ReadCustomerMenuOption.Back;
+            return result.Value;
         }
         internal void ResetIndex()
         {

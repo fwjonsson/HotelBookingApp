@@ -23,7 +23,7 @@
                 _index = 0;
             }
         }
-        internal T Show()
+        internal MenuResult<T> Show()
         {
             while (true)
             {
@@ -57,7 +57,10 @@
                         break;
 
                     case ConsoleKey.Enter:
-                        return _choices[_index].Value;
+                        return MenuResult<T>.Selected(_choices[_index].Value);
+
+                    case ConsoleKey.Escape:
+                        return MenuResult<T>.Cancelled();
                 }
             }
         }

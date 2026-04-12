@@ -20,7 +20,10 @@ namespace HotelBookingApp.Menus.Bookings
         }
         internal BookingMenuOption Show()
         {
-            return _menu.Show();
+            var result = _menu.Show();
+            if (result.WasCancelled)
+                return BookingMenuOption.Back;
+            return _menu.Show().Value;
         }
         internal void ResetIndex()
         {
