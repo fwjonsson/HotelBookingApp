@@ -43,7 +43,10 @@ namespace HotelBookingApp.Flows.Customers
                     case CustomerEditorMenuOption.Save:
                         bool saved = TrySave(fullName, birthDate, email, phoneNumber);
                         if (saved)
+                        {
+                            _createCustomerMenu.ResetIndex();
                             return;
+                        }
                         break;
                     case CustomerEditorMenuOption.Cancel:
                         _createCustomerMenu.ResetIndex();
@@ -71,7 +74,6 @@ namespace HotelBookingApp.Flows.Customers
             if (result.Success)
             {
                 Console.WriteLine("Customer created successfully.");
-                _createCustomerMenu.ResetIndex();
                 InputHelper.WaitForContinue();
                 return true;
             }

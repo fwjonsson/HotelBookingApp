@@ -3,6 +3,7 @@ using HotelBookingApp.Menus.Customers;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Utilities;
+using HotelBookingApp.Utilities.FlowHelpers;
 
 namespace HotelBookingApp.Flows.Customers
 {
@@ -48,8 +49,12 @@ namespace HotelBookingApp.Flows.Customers
                         break;
                     case CustomerEditorMenuOption.Save:
                         bool saved = TrySave(customer.Id, newFullName, newBirthDate, newEmail, newPhoneNumber);
+                        InputHelper.WaitForContinue();
                         if (saved)
+                        {
+                            _updateCustomerMenu.ResetIndex();
                             return;
+                        }
                         break;
                     case CustomerEditorMenuOption.Cancel:
                         _updateCustomerMenu.ResetIndex();
@@ -62,25 +67,16 @@ namespace HotelBookingApp.Flows.Customers
         {
             CustomerValidationResult result = _customerService.UpdateCustomer(customerId, newFullName, newBirthDate, newEmail, newPhoneNumber);
             if (!result.CustomerFound)
-            {
                 Console.WriteLine("Customer not found.");
-            }
             if (!result.EmailAvailable)
-            {
                 Console.WriteLine("Email is already registered.");
-            }
             if (!result.PhoneNumberAvailable)
-            {
                 Console.WriteLine("Phone number is already registered.");
-            }
             if (result.Success)
             {
                 Console.WriteLine("Changes saved.");
-                _updateCustomerMenu.ResetIndex();
-                InputHelper.WaitForContinue();
                 return true;
             }
-            InputHelper.WaitForContinue();
             return false;
         }
     }

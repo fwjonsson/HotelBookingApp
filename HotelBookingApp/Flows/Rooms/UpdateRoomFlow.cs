@@ -3,7 +3,7 @@ using HotelBookingApp.Enums.Menus.Rooms;
 using HotelBookingApp.Menus.Rooms;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Rooms;
-using HotelBookingApp.Utilities;
+using HotelBookingApp.Utilities.FlowHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,7 +38,21 @@ namespace HotelBookingApp.Flows.Rooms
 
                 switch (choice)
                 {
+                    case RoomEditorMenuOption.RoomNumber:
 
+                        break;
+                    case RoomEditorMenuOption.RoomType:
+
+                        break;
+                    case RoomEditorMenuOption.ExtraBeds:
+
+                        break;
+                    case RoomEditorMenuOption.Save:
+
+                        break;
+                    case RoomEditorMenuOption.Cancel:
+
+                        return;
                 }
             }
         }

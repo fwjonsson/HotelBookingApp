@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HotelBookingApp.Utilities
+namespace HotelBookingApp.Utilities.FlowHelpers
 {
     internal static class FlowHelper
     {
