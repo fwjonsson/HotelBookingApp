@@ -43,6 +43,23 @@ namespace HotelBookingApp.Services.Customers
             _dbContext.SaveChanges();
             return result;
         }
+        internal CustomerValidationResult UpdateCustomer(int customerId, string newFullName, DateOnly newBirthDate, string newEmail, string newPhoneNumber)
+        {
+            Customer? customer = _dbContext.Customers
+                .FirstOrDefault(c => c.Id == customerId);
+
+            var result = new CustomerValidationResult();
+
+            if (customer == null)
+                result.CustomerFound = false;
+            if (_dbContext.Customers.Any(c => c.PhoneNumber == newPhoneNumber))
+                result.PhoneNumberAvailable = false;
+        }
+
+        internal CustomerValidationResult DeleteCustomer(int id)
+        {
+            throw new NotImplementedException();
+        }
         internal List<Customer> ListAll()
         {
             return _dbContext.Customers.ToList();

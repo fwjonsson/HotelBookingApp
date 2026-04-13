@@ -52,7 +52,8 @@ namespace HotelBookingApp.Services.Bookings
 
         internal BookingValidationResult UpdateBooking(int bookingId, DateOnly newStartDate, DateOnly newEndDate, int newRoomId, int newCustomerId)
         {
-            Booking? booking = _dbContext.Bookings.FirstOrDefault(b => b.Id == bookingId);
+            Booking? booking = _dbContext.Bookings.
+                FirstOrDefault(b => b.Id == bookingId);
 
             var result = new BookingValidationResult();
 
@@ -83,17 +84,22 @@ namespace HotelBookingApp.Services.Bookings
             return result;
 
         }
-        internal BookingResult DeleteBooking(int bookingId)
+        internal BookingValidationResult DeleteBooking(int bookingId)
         {
             Booking? booking = _dbContext.Bookings
                 .FirstOrDefault(b => b.Id == bookingId);
 
+            var result = new BookingValidationResult();
+
             if (booking == null)
-                return BookingResult.BookingNotFound;
+            {
+                result.BookingFound = false;
+                return result;
+            }
 
             _dbContext.Bookings.Remove(booking);
             _dbContext.SaveChanges();
-            return BookingResult.Success;
+            return result;
         }
 
         internal List<Booking> ListAll()

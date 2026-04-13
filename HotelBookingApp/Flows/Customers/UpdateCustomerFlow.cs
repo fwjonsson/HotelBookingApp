@@ -3,9 +3,6 @@ using HotelBookingApp.Menus.Customers;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Flows.Customers
 {
@@ -20,8 +17,13 @@ namespace HotelBookingApp.Flows.Customers
             _customerService = customerService;
             _updateCustomerMenu = new UpdateCustomerMenu();
         }
-        internal void Run(Customer customer)
+        internal void Run(int customerId)
         {
+            Customer? customer = _customerService.GetById(customerId);
+            FlowHelper.EnsureFound(customer, "Customer not found");
+            if (customer == null)
+                return;
+
             string newFullName = customer.FullName;
             DateOnly newBirthDate = customer.BirthDate;
             string newEmail = customer.Email;
@@ -63,6 +65,7 @@ namespace HotelBookingApp.Flows.Customers
                         {
                             Console.WriteLine("Changes saved.");
                             _updateCustomerMenu.ResetIndex();
+                            InputHelper.WaitForContinue();
                             return;
                         }
                         break;
@@ -70,6 +73,7 @@ namespace HotelBookingApp.Flows.Customers
                         _updateCustomerMenu.ResetIndex();
                         return;
                 }
+                InputHelper.WaitForContinue();
             }
         }
     }

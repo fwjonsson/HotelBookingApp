@@ -10,8 +10,6 @@ namespace HotelBookingApp.Flows.Bookings
 
         private readonly CreateBookingFlow _create;
         private readonly ReadBookingFlow _read;
-        private readonly UpdateBookingFlow _update;
-        private readonly DeleteBookingFlow _delete;
 
         internal BookingFlows(BookingService bookingService)
         {
@@ -19,8 +17,6 @@ namespace HotelBookingApp.Flows.Bookings
 
             _create = new CreateBookingFlow(bookingService);
             _read = new ReadBookingFlow(bookingService);
-            _update = new UpdateBookingFlow(bookingService);
-            _delete = new DeleteBookingFlow(bookingService);
         }
         internal void Run()
         {

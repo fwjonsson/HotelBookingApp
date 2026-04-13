@@ -1,10 +1,6 @@
 ﻿using HotelBookingApp.Enums.Menus.Customers;
 using HotelBookingApp.Menus.Customers;
 using HotelBookingApp.Services.Customers;
-using HotelBookingApp.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Flows.Customers
 {
@@ -14,17 +10,13 @@ namespace HotelBookingApp.Flows.Customers
 
         private readonly CreateCustomerFlow _create;
         private readonly ReadCustomerFlow _read;
-        private readonly UpdateCustomerFlow _update;
-        private readonly DeleteCustomerFlow _delete;
 
-        internal CustomerFlows(CustomerService customerService,CustomerMenu customerMenu)
+        internal CustomerFlows(CustomerService customerService, CustomerMenu customerMenu)
         {
             _customerMenu = customerMenu;
 
             _create = new CreateCustomerFlow(customerService);
             _read = new ReadCustomerFlow(customerService);
-            _update = new UpdateCustomerFlow(customerService);
-            _delete = new DeleteCustomerFlow(customerService);
         }
         internal void Run()
         {

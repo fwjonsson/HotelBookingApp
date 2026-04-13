@@ -1,9 +1,8 @@
 ﻿using HotelBookingApp.Enums.Menus.Bookings;
 using HotelBookingApp.Menus.Bookings;
-using HotelBookingApp.Utilities;
 using HotelBookingApp.Models;
-using HotelBookingApp.Enums;
 using HotelBookingApp.Services.Bookings;
+using HotelBookingApp.Utilities;
 
 namespace HotelBookingApp.Flows.Bookings
 {
@@ -31,7 +30,7 @@ namespace HotelBookingApp.Flows.Bookings
             while (true)
             {
                 UpdateBookingMenuOption choice = _updateBookingMenu.Show(newStartDate, newEndDate, newRoomId, newCustomerId);
-                
+
                 switch (choice)
                 {
                     case UpdateBookingMenuOption.StartDate:

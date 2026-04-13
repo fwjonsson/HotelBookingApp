@@ -18,25 +18,22 @@ namespace HotelBookingApp.Flows.Bookings
             Booking? booking = _bookingService.GetById(bookingId);
             FlowHelper.EnsureFound(booking, "Booking not found.");
             if (booking == null) return;
+
             BookingPrinter.PrintBooking(booking);
             if (InputHelper.WaitForYesOrNo("Are you sure you want to delete? Y/N"))
             {
-                BookingResult result = _bookingService.DeleteBooking(booking.Id);
+                BookingValidationResult result = _bookingService.DeleteBooking(booking.Id);
 
-                switch (result)
+                if (!result.BookingFound)
                 {
-                    case BookingResult.Success:
-                        Console.WriteLine("Booking deleted.");
-                        break;
-                    case BookingResult.BookingNotFound:
-                        Console.WriteLine("No booking with that ID found.");
-                        break;
-                    default:
-                        Console.WriteLine("Could not delete booking.");
-                        break;
+                    Console.WriteLine("No booking with that ID found.");
                 }
-                InputHelper.WaitForContinue();
+                if (result.Success)
+                {
+                    Console.WriteLine("Booking deleted.");
+                }
             }
+            InputHelper.WaitForContinue();
         }
     }
 }

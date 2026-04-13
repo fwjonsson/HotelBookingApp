@@ -1,7 +1,5 @@
 ﻿using HotelBookingApp.Enums.Menus;
-using HotelBookingApp.Enums.Menus.Bookings;
 using HotelBookingApp.Menus;
-using HotelBookingApp.Menus.Bookings;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Bookings;
 using HotelBookingApp.Utilities;
@@ -52,8 +50,10 @@ namespace HotelBookingApp.Flows.Bookings
             {
                 Booking? booking = _bookingService.GetById(bookingId);
                 FlowHelper.EnsureFound(booking, "Booking not found");
-                if (booking == null) return;
-                ActionMenuOption choice = _bookingActionMenu.Show(booking!);
+                if (booking == null)
+                    return;
+
+                ActionMenuOption choice = _bookingActionMenu.Show(booking);
                 switch (choice)
                 {
                     case ActionMenuOption.Edit:

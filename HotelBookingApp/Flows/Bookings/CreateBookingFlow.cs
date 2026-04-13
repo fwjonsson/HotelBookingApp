@@ -1,5 +1,4 @@
-﻿using HotelBookingApp.Enums;
-using HotelBookingApp.Enums.Menus.Bookings;
+﻿using HotelBookingApp.Enums.Menus.Bookings;
 using HotelBookingApp.Menus.Bookings;
 using HotelBookingApp.Services.Bookings;
 using HotelBookingApp.Utilities;
@@ -42,7 +41,7 @@ namespace HotelBookingApp.Flows.Bookings
                         endDate = InputHelper.ReadDateOnly("Enter end date (yyyy-MM-dd): ");
                         continue;
                     case CreateBookingMenuOption.Create:
-                        if(customerId is not int cId ||
+                        if (customerId is not int cId ||
                             roomId is not int rId ||
                             startDate is not DateOnly sDate ||
                             endDate is not DateOnly eDate)

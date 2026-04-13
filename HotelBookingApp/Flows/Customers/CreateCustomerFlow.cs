@@ -1,11 +1,7 @@
 ﻿using HotelBookingApp.Enums.Menus.Customers;
-using HotelBookingApp.Menus;
 using HotelBookingApp.Menus.Customers;
 using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Flows.Customers
 {
@@ -25,7 +21,7 @@ namespace HotelBookingApp.Flows.Customers
             DateOnly? birthDate = null;
             string? email = null;
             string? phoneNumber = null;
-            
+
 
             while (true)
             {

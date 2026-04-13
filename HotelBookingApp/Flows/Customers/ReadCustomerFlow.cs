@@ -1,5 +1,4 @@
 ﻿using HotelBookingApp.Enums.Menus;
-using HotelBookingApp.Enums.Menus.Customers;
 using HotelBookingApp.Menus;
 using HotelBookingApp.Menus.Customers;
 using HotelBookingApp.Models;
@@ -11,7 +10,6 @@ namespace HotelBookingApp.Flows.Customers
     internal class ReadCustomerFlow
     {
         private readonly CustomerService _customerService;
-        private readonly ReadCustomerMenu _readCustomerMenu;
         private readonly SelectObjectMenu<Customer> _selectCustomerMenu;
         private readonly ActionMenu<Customer> _customerActionMenu;
         private readonly UpdateCustomerFlow _updateCustomerFlow;
@@ -21,115 +19,92 @@ namespace HotelBookingApp.Flows.Customers
         internal ReadCustomerFlow(CustomerService customerService)
         {
             _customerService = customerService;
-            _readCustomerMenu = new ReadCustomerMenu();
             _selectCustomerMenu = new SelectObjectMenu<Customer>("Customer", CustomerPrinter.FormatCustomer);
-            _customerActionMenu = new ActionMenu<Customer>("Customer",CustomerPrinter.FormatCustomer);
+            _customerActionMenu = new ActionMenu<Customer>("Customer", CustomerPrinter.FormatCustomer);
             _updateCustomerFlow = new UpdateCustomerFlow(customerService);
             _deleteCustomerFlow = new DeleteCustomerFlow(customerService);
         }
 
-        private void SelectCustomerAndChooseAction(List<Customer> customers)
+        private void SelectCustomerAndChooseAction(Func<List<Customer>> getCustomers)
         {
             while (true)
             {
+                List<Customer> customers = getCustomers();
                 if (customers.Count == 0)
                 {
                     Console.WriteLine("No customers found");
+                    InputHelper.WaitForContinue();
                     return;
                 }
-                Customer? selectedCustomer = _selectCustomerMenu.Show(customers);
-            if (selectedCustomer == null)
-                return;
+                Customer? customer = _selectCustomerMenu.Show(customers);
+                if (customer == null)
+                {
+                    _selectCustomerMenu.ResetIndex();
+                    return;
+                }
 
-            var choice = _customerActionMenu.Show(selectedCustomer);
+
+            }
+        }
+        private void ChooseAction<TId>(Func<TId, Customer?> getCustomer, TId identifier)
+        {
+            while (true)
+            {
+                Customer? customer = getCustomer(identifier);
+                FlowHelper.EnsureFound(customer, "Customer not found.");
+                if (customer == null)
+                    return;
+
+                ActionMenuOption choice = _customerActionMenu.Show(customer);
 
                 switch (choice)
                 {
                     case ActionMenuOption.Edit:
-                        _updateCustomerFlow.Run(selectedCustomer);
+                        _updateCustomerFlow.Run(customer.Id);
                         break;
                     case ActionMenuOption.Delete:
-                        _deleteCustomerFlow.Run(selectedCustomer);
-                        break;
+                        _deleteCustomerFlow.Run(customer.Id);
+                        _customerActionMenu.ResetIndex();
+                        return;
                     case ActionMenuOption.Back:
+                        _customerActionMenu.ResetIndex();
                         return;
                 }
             }
         }
         internal void ReadAll()
         {
-            List<Customer> allCustomers = _customerService.ListAll();
-
-            SelectCustomerAndChooseAction(allCustomers);
+            SelectCustomerAndChooseAction(_customerService.ListAll);
         }
         internal void ReadById()
         {
             var customerId = InputHelper.ReadInt("Enter customer ID: ");
-            Customer? customer = _customerService.GetById(customerId);
-
-            if (customer == null)
-            {
-                Console.WriteLine("No customer with that ID found.");
-                return;
-            }
-            CustomerPrinter.PrintCustomerAndTheirBookings(customer);
+            ChooseAction(_customerService.GetById, customerId);
         }
         internal void ReadByFullName()
         {
             var fullName = InputHelper.ReadFullName("Full name: ");
-            List<Customer> customers = _customerService.GetByFullName(fullName);
-
-            foreach (Customer customer in customers)
-            {
-                CustomerPrinter.PrintCustomerAndTheirBookings(customer);
-            }
+            SelectCustomerAndChooseAction(() => _customerService.GetByFullName(fullName));
         }
         internal void ReadByBirthDate()
         {
             var birthDate = InputHelper.ReadDateOnly("Birth date: ");
-            List<Customer> customers = _customerService.GetByBirthDate(birthDate);
-
-            foreach (var customer in customers)
-            {
-                CustomerPrinter.PrintCustomerAndTheirBookings(customer);
-            }
+            SelectCustomerAndChooseAction(() => _customerService.GetByBirthDate(birthDate));
         }
         internal void ReadByEmail()
         {
             var email = InputHelper.ReadEmail("Email: ");
-            Customer? customer = _customerService.GetByEmail(email);
-
-            if (customer == null)
-            {
-                Console.WriteLine("No customer with that email found.");
-                return;
-            }
-
-            CustomerPrinter.PrintCustomerAndTheirBookings(customer);
+            ChooseAction(_customerService.GetByEmail,email);
         }
         internal void ReadByPhoneNumber()
         {
             var phoneNumber = InputHelper.ReadPhoneNumber("Phone number: ");
-            Customer? customer = _customerService.GetByPhoneNumber(phoneNumber);
-
-            if (customer == null)
-            {
-                Console.WriteLine("No customer with that phone number found.");
-                return;
-            }
-            CustomerPrinter.PrintCustomerAndTheirBookings(customer);
+            ChooseAction(_customerService.GetByPhoneNumber, phoneNumber);
         }
         internal void ReadByBookingId()
         {
             var bookingId = InputHelper.ReadInt("Booking ID: ");
-            Customer? customer = _customerService.GetByBookingId(bookingId);
-
-            if (customer == null)
-            {
-                Console.WriteLine("No customer with that booking ID found.");
-                return;
-            }
-            CustomerPrinter.PrintCustomerAndTheirBookings(customer);
+            ChooseAction(_customerService.GetByBookingId, bookingId);
         }
     }
 }
