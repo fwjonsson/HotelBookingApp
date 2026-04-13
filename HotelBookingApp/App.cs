@@ -4,6 +4,7 @@ using HotelBookingApp.Flows.Bookings;
 using HotelBookingApp.Flows.Customers;
 using HotelBookingApp.Flows.Rooms;
 using HotelBookingApp.Menus;
+using HotelBookingApp.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -50,7 +51,8 @@ namespace HotelBookingApp
                         _roomFlows.Run();
                         break;
                     case MainMenuOption.Exit:
-                        isRunning = false;
+                        if (InputHelper.WaitForYesOrNo("Are you sure you want to exit?"))
+                            isRunning = false;
                         break;
                 }
             }
