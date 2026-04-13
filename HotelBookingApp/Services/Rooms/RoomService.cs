@@ -1,6 +1,7 @@
 ﻿using HotelBookingApp.Data;
 using HotelBookingApp.Enums;
 using HotelBookingApp.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -117,6 +118,7 @@ namespace HotelBookingApp.Services.Rooms
         internal List<Room> GetByRoomType(RoomType? roomType)
         {
             return _dbContext.Rooms
+                .Include(r => r.Bookings)
                 .Where(r => r.RoomType == roomType)
                 .ToList();
         }

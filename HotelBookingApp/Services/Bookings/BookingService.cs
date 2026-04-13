@@ -21,7 +21,7 @@ namespace HotelBookingApp.Services.Bookings
         internal BookingValidationResult CreateBooking(int customerId, int roomId, DateOnly startDate, DateOnly endDate)
         {
             var result = new BookingValidationResult();
-            if (endDate <= startDate ||startDate < DateOnly.FromDateTime(DateTime.Today))
+            if (endDate <= startDate || startDate < DateOnly.FromDateTime(DateTime.Today))
                 result.ValidDateRange = false;
 
             if (!CustomerExists(customerId))
@@ -33,7 +33,7 @@ namespace HotelBookingApp.Services.Bookings
             if (!IsRoomAvailable(roomId, startDate, endDate))
                 result.RoomAvailable = false;
 
-            if (!result.Success) 
+            if (!result.Success)
                 return result;
 
             Booking newBooking = new Booking
@@ -63,7 +63,7 @@ namespace HotelBookingApp.Services.Bookings
                 return result;
             }
 
-            if (newEndDate <= newStartDate)
+            if (newEndDate <= newStartDate ||newStartDate < DateOnly.FromDateTime(DateTime.Today))
                 result.ValidDateRange = false;
 
             if (!CustomerExists(newCustomerId))
@@ -75,7 +75,7 @@ namespace HotelBookingApp.Services.Bookings
             if (!IsRoomAvailable(newRoomId, newStartDate, newEndDate, bookingId))
                 result.RoomAvailable = false;
 
-            if(!result.Success)
+            if (!result.Success)
                 return result;
 
             booking!.StartDate = newStartDate;
