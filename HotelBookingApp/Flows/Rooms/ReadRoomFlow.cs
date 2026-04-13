@@ -3,6 +3,7 @@ using HotelBookingApp.Menus;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Services.Rooms;
+using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.Printers;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,25 @@ namespace HotelBookingApp.Flows.Rooms
             _roomActionMenu = new ActionMenu<Room>("Room", RoomPrinter.FormatRoom);
             _updateRoomFlow = new UpdateRoomFlow(roomService);
             _deleteRoomFlow = new DeleteRoomFlow(roomService);
+        }
+        private void SelectRoomAndChooseAction(Func<List<Room>> getRooms)
+        {
+            while (true)
+            {
+                List<Room> rooms = getRooms();
+                if (rooms.Count == 0)
+                {
+                    Console.WriteLine("No rooms found");
+                    InputHelper.WaitForContinue();
+                    return;
+                }
+                Room? room = _selectRoomMenu.Show(rooms);
+                if (room == null)
+                {
+                    _selectRoomMenu.ResetIndex();
+                    return;
+                }
+            }
         }
 
         internal void ReadAll()

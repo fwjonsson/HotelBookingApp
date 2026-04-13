@@ -43,8 +43,7 @@ namespace HotelBookingApp.Flows.Customers
                     _selectCustomerMenu.ResetIndex();
                     return;
                 }
-
-
+                ChooseAction(_customerService.GetById, customer.Id);
             }
         }
         private void ChooseAction<TId>(Func<TId, Customer?> getCustomer, TId identifier)
