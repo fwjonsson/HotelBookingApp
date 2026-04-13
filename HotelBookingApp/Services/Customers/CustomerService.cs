@@ -48,8 +48,10 @@ namespace HotelBookingApp.Services.Customers
             var result = new CustomerValidationResult();
 
             if (customer == null)
+            {
                 result.CustomerFound = false;
-
+                return result;
+            }
             if (!EmailAvailable(newEmail, customerId))
                 result.EmailAvailable = false;
 
@@ -77,15 +79,19 @@ namespace HotelBookingApp.Services.Customers
             var result = new CustomerValidationResult();
 
             if (customer == null)
+            {
                 result.CustomerFound = false;
+                return result;
+            }
 
             if (HasCurrentOrFutureBooking(customerId))
                 result.CanBeDeleted = false;
 
-            if(!result.Success)
-            return result;
+            if (!result.Success)
+                return result;
 
-            _dbContext.Customers.Remove(customer);
+            _dbContext.Customers
+                .Remove(customer);
             _dbContext.SaveChanges();
             return result;
         }

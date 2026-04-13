@@ -18,47 +18,157 @@ namespace HotelBookingApp.Services.Rooms
 
         internal RoomValidationResult CreateRoom(int rNumber, RoomType rType, int eBeds)
         {
-            throw new NotImplementedException();
-        }
+            var result = new RoomValidationResult();
 
-        internal RoomValidationResult DeleteRoom(int id)
-        {
-            throw new NotImplementedException();
-        }
+            if (!RoomNumberAvailable(rNumber))
+                result.RoomNumberAvailable = false;
 
-        internal Room? GetByBookingId(int arg)
-        {
-            throw new NotImplementedException();
-        }
+            if (!ValidRoomNumber(rNumber))
+                result.RoomNumberValid = false;
 
-        internal List<Room> GetByCustomerId(int customerId)
-        {
-            throw new NotImplementedException();
-        }
+            if (!ValidAmountOfExtraBeds(eBeds, rType))
+                result.ExtraBedsValid = false;
 
-        internal Room? GetById(int roomId)
-        {
-            throw new NotImplementedException();
-        }
+            if (!result.Success)
+                return result;
 
-        internal Room? GetByRoomNr(int arg)
-        {
-            throw new NotImplementedException();
+            var newRoom = new Room
+            {
+                RoomNumber = rNumber,
+                RoomType = rType,
+                ExtraBeds = eBeds
+            };
+            _dbContext.Rooms
+                .Add(newRoom);
+            _dbContext.SaveChanges();
+            return result;
         }
-
-        internal List<Room> GetByRoomType(RoomType? roomType)
+        internal RoomValidationResult UpdateRoom(int roomId, int newRoomNumber, RoomType newRoomType, int newExtraBeds)
         {
-            throw new NotImplementedException();
+            Room? room = _dbContext.Rooms
+                .FirstOrDefault(r => r.Id == roomId);
+
+            var result = new RoomValidationResult();
+
+            if (room == null)
+            {
+                result.RoomFound = false;
+                return result;
+            }
+            if (!RoomNumberAvailable(newRoomNumber))
+                result.RoomNumberAvailable = false;
+            if (!ValidRoomNumber(newRoomNumber))
+                result.RoomNumberValid = false;
+            if (!ValidAmountOfExtraBeds(newExtraBeds, newRoomType))
+                result.ExtraBedsValid = false;
+            if (!result.Success)
+                return result;
+
+            room!.RoomNumber = newRoomNumber;
+            room.RoomType = newRoomType;
+            room.ExtraBeds = newExtraBeds;
+
+            _dbContext.SaveChanges();
+            return result;
+        }
+        internal RoomValidationResult DeleteRoom(int roomId)
+        {
+            Room? room = _dbContext.Rooms
+                .Include(r => r.Bookings)
+                .FirstOrDefault(r => r.Id == roomId);
+
+            var result = new RoomValidationResult();
+
+            if (room == null)
+            {
+                result.RoomFound = false;
+                return result;
+            }
+            if (HasCurrentOrFutureBooking(roomId))
+                result.CanBeDeleted = false;
+            if (!result.Success)
+                return result;
+
+            _dbContext.Rooms
+                .Remove(room);
+            _dbContext.SaveChanges();
+            return result;
         }
 
         internal List<Room> ListAll()
         {
-            throw new NotImplementedException();
+            return _dbContext.Rooms
+                .ToList();
+        }
+        internal Room? GetById(int roomId)
+        {
+            return _dbContext.Rooms
+                .Include(r => r.Bookings)
+                .FirstOrDefault(r => r.Id == roomId);
+        }
+        internal Room? GetByRoomNumber(int roomNumber)
+        {
+            return _dbContext.Rooms
+                .Include(r => r.Bookings)
+                .FirstOrDefault(r => r.RoomNumber == roomNumber);
         }
 
-        internal RoomValidationResult UpdateRoom(int roomId, int newRoomNumber, RoomType newRoomType, int newExtraBeds)
+        internal List<Room> GetByRoomType(RoomType? roomType)
         {
-            throw new NotImplementedException();
+            return _dbContext.Rooms
+                .Where(r => r.RoomType == roomType)
+                .ToList();
+        }
+        internal Room? GetByBookingId(int bookingId)
+        {
+            return _dbContext.Rooms
+                .Include(r => r.Bookings)
+                .FirstOrDefault(r => r.BookingId == bookingId);
+        }
+
+        internal List<Room> GetByCustomerId(int customerId)
+        {
+            return _dbContext.Bookings
+                .Where(b => b.CustomerId == customerId)
+                .ToList();
+        }
+
+        private bool ValidAmountOfExtraBeds(int extraBeds, RoomType roomType)
+        {
+            if (extraBeds < 0) return false;
+            switch (roomType)
+            {
+                case RoomType.Single:
+                    if (extraBeds > 1)
+                        return false;
+                    break;
+                case RoomType.Double:
+                    if (extraBeds > 2)
+                        return false;
+                    break;
+                    
+            }
+            return true;
+        }
+
+        private bool ValidRoomNumber(int roomNumber)
+        {
+            return roomNumber > 0;
+        }
+        private bool RoomNumberAvailable(int roomNumber, int? roomIdToExclude = null)
+        {
+            return !_dbContext.Rooms
+                .Any(r => 
+                (roomIdToExclude == null || r.Id != roomIdToExclude) &&
+                r.RoomNumber == roomNumber);
+        }
+
+        private bool HasCurrentOrFutureBooking(int roomId)
+        {
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            return _dbContext.Bookings
+                .Any(b => b.RoomId == roomId &&
+                b.EndDate > today);
         }
     }
 }

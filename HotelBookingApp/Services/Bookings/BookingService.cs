@@ -58,7 +58,10 @@ namespace HotelBookingApp.Services.Bookings
             var result = new BookingValidationResult();
 
             if (booking == null)
+            {
                 result.BookingFound = false;
+                return result;
+            }
 
             if (newEndDate <= newStartDate)
                 result.ValidDateRange = false;
