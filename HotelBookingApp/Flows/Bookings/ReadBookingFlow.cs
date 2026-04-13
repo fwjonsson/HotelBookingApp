@@ -50,11 +50,11 @@ namespace HotelBookingApp.Flows.Bookings
             while (true)
             {
                 Booking? booking = _bookingService.GetById(bookingId);
-                FlowHelper.EnsureFound(booking, "Booking not found");
-                if (booking == null)
+                
+                if (!FlowHelper.ItemFound(booking, "Booking not found"))
                     return;
 
-                ActionMenuOption choice = _bookingActionMenu.Show(booking);
+                ActionMenuOption choice = _bookingActionMenu.Show(booking!);
                 switch (choice)
                 {
                     case ActionMenuOption.Edit:

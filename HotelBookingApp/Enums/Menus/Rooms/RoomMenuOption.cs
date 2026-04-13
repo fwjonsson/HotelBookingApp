@@ -10,7 +10,7 @@ namespace HotelBookingApp.Enums.Menus.Rooms
         ShowAll,
         FindByID,
         FindByRoomNR,
-        FindByRoomSize,
+        FindByRoomType,
         FindByCustomerID,
         FindByBookingID,
         Back

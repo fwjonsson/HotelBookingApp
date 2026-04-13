@@ -18,7 +18,7 @@ namespace HotelBookingApp.Menus.Rooms
                 new(RoomMenuOption.ShowAll, "Show All Rooms"),
                 new(RoomMenuOption.FindByID, "Find By ID"),
                 new(RoomMenuOption.FindByRoomNR, "Find By Room Number"),
-                new(RoomMenuOption.FindByRoomSize, "Find By Size (1 or 2)"),
+                new(RoomMenuOption.FindByRoomType, "Find By Size (1 or 2)"),
                 new(RoomMenuOption.FindByCustomerID, "Find By Customer ID"),
                 new(RoomMenuOption.FindByBookingID, "Find By Booking ID"),
                 new(RoomMenuOption.Back, "Back")

@@ -17,13 +17,14 @@ namespace HotelBookingApp.Flows.Bookings
         internal void Run(int bookingId)
         {
             Booking? booking = _bookingService.GetById(bookingId);
-            FlowHelper.EnsureFound(booking, "Booking not found.");
-            if (booking == null) return;
+            
+            if (!FlowHelper.ItemFound(booking, "Booking not found."))
+                return;
 
-            BookingPrinter.PrintBooking(booking);
+            BookingPrinter.PrintBooking(booking!);
             if (InputHelper.WaitForYesOrNo("Are you sure you want to delete? Y/N"))
             {
-                BookingValidationResult result = _bookingService.DeleteBooking(booking.Id);
+                BookingValidationResult result = _bookingService.DeleteBooking(booking!.Id);
 
                 if (!result.BookingFound)
                 {

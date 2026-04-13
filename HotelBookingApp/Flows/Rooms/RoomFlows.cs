@@ -41,8 +41,8 @@ namespace HotelBookingApp.Flows.Rooms
                     case RoomMenuOption.FindByRoomNR:
                         _read.ReadByRoomNr();
                         break;
-                    case RoomMenuOption.FindByRoomSize:
-                        _read.ReadByRoomSize();
+                    case RoomMenuOption.FindByRoomType:
+                        _read.ReadByRoomType();
                         break;
                     case RoomMenuOption.FindByCustomerID:
                         _read.ReadByCustomerId();

@@ -51,19 +51,18 @@ namespace HotelBookingApp.Flows.Customers
             while (true)
             {
                 Customer? customer = getCustomer(identifier);
-                FlowHelper.EnsureFound(customer, "Customer not found.");
-                if (customer == null)
+                if (!FlowHelper.ItemFound(customer, "Customer not found."))
                     return;
 
-                ActionMenuOption choice = _customerActionMenu.Show(customer);
+                ActionMenuOption choice = _customerActionMenu.Show(customer!);
 
                 switch (choice)
                 {
                     case ActionMenuOption.Edit:
-                        _updateCustomerFlow.Run(customer.Id);
+                        _updateCustomerFlow.Run(customer!.Id);
                         break;
                     case ActionMenuOption.Delete:
-                        _deleteCustomerFlow.Run(customer.Id);
+                        _deleteCustomerFlow.Run(customer!.Id);
                         _customerActionMenu.ResetIndex();
                         return;
                     case ActionMenuOption.Back:

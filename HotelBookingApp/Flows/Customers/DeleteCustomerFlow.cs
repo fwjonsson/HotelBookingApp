@@ -21,14 +21,13 @@ namespace HotelBookingApp.Flows.Customers
         internal void Run(int customerId)
         {
             Customer? customer = _customerService.GetById(customerId);
-            FlowHelper.EnsureFound(customer, "Customer not found.");
-            if (customer == null)
+            if (!FlowHelper.ItemFound(customer, "Customer not found."))
                 return;
 
-            CustomerPrinter.PrintCustomer(customer);
+            CustomerPrinter.PrintCustomer(customer!);
             if (InputHelper.WaitForYesOrNo("Are you sure you want to delete? Y/N"))
             {
-                CustomerValidationResult result = _customerService.DeleteCustomer(customer.Id);
+                CustomerValidationResult result = _customerService.DeleteCustomer(customer!.Id);
 
                 if (!result.CustomerFound)
                 {

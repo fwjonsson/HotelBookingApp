@@ -6,15 +6,15 @@ namespace HotelBookingApp.Utilities
 {
     internal static class FlowHelper
     {
-        internal static void EnsureFound<T>(T? item, string notFoundMessage) where T : class
+        internal static bool ItemFound<T>(T? item, string notFoundMessage) where T : class
         {
             if (item == null)
             {
                 Console.WriteLine(notFoundMessage);
                 InputHelper.WaitForContinue();
-                return;
+                return false;
             }
-            return;
+            return true;
         }
     }
 }

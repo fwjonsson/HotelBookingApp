@@ -20,11 +20,10 @@ namespace HotelBookingApp.Flows.Customers
         internal void Run(int customerId)
         {
             Customer? customer = _customerService.GetById(customerId);
-            FlowHelper.EnsureFound(customer, "Customer not found");
-            if (customer == null)
+            if (!FlowHelper.ItemFound(customer, "Customer not found"))
                 return;
 
-            string newFullName = customer.FullName;
+            string newFullName = customer!.FullName;
             DateOnly newBirthDate = customer.BirthDate;
             string newEmail = customer.Email;
             string newPhoneNumber = customer.PhoneNumber;

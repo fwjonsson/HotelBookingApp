@@ -1,4 +1,6 @@
-﻿using HotelBookingApp.Flows.Customers;
+﻿using HotelBookingApp.Enums;
+using HotelBookingApp.Enums.Menus;
+using HotelBookingApp.Flows.Customers;
 using HotelBookingApp.Menus;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Customers;
@@ -44,37 +46,76 @@ namespace HotelBookingApp.Flows.Rooms
                     _selectRoomMenu.ResetIndex();
                     return;
                 }
+                ChooseAction(_roomService.GetById, room.Id);
+            }
+        }
+        private void ChooseAction<TId>(Func<TId, Room?> getRoom, TId identifier)
+        {
+            while (true)
+            {
+                Room? room = getRoom(identifier);
+                if (!FlowHelper.ItemFound(room, "Room not found"))
+                    return;
+
+                ActionMenuOption choice = _roomActionMenu.Show(room!);
+
+                switch (choice)
+                {
+                    case ActionMenuOption.Edit:
+                        _updateRoomFlow.Run(room!.Id);
+                        break;
+                    case ActionMenuOption.Delete:
+                        _deleteRoomFlow.Run(room!.Id);
+                        return;
+                    case ActionMenuOption.Back:
+                        _roomActionMenu.ResetIndex();
+                        return;
+                }
             }
         }
 
         internal void ReadAll()
         {
-            throw new NotImplementedException();
+            SelectRoomAndChooseAction(_roomService.ListAll);
         }
-
-        internal void ReadByBookingId()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void ReadByCustomerId()
-        {
-            throw new NotImplementedException();
-        }
-
         internal void ReadById()
         {
-            throw new NotImplementedException();
+            var roomId = InputHelper.ReadInt("Enter room ID: ");
+            ChooseAction(_roomService.GetById, roomId);
         }
-
         internal void ReadByRoomNr()
         {
-            throw new NotImplementedException();
+            var roomNr = InputHelper.ReadInt("Enter room number: ");
+            ChooseAction(_roomService.GetByRoomNr, roomNr);
         }
-
-        internal void ReadByRoomSize()
+        internal void ReadByRoomType()
         {
-            throw new NotImplementedException();
+            var input = InputHelper.ReadInt("Single or double room (Enter 1 or 2): ");
+            RoomType? roomType = null;
+            switch (input)
+            {
+                case 1:
+                    roomType = RoomType.Single;
+                    break;
+                case 2:
+                    roomType = RoomType.Double;
+                    break;
+                default:
+                    Console.WriteLine("Must be 1 or 2");
+                    InputHelper.WaitForContinue();
+                    return;
+            }
+            SelectRoomAndChooseAction(() => _roomService.GetByRoomType(roomType));
+        }
+        internal void ReadByCustomerId()
+        {
+            var customerId = InputHelper.ReadInt("Enter customer ID: ");
+            SelectRoomAndChooseAction(() => _roomService.GetByCustomerId(customerId));
+        }
+        internal void ReadByBookingId()
+        {
+            var bookingId = InputHelper.ReadInt("Enter booking ID: ");
+            ChooseAction(_roomService.GetByBookingId, bookingId);
         }
     }
 }

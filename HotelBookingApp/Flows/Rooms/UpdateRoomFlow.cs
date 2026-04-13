@@ -14,5 +14,10 @@ namespace HotelBookingApp.Flows.Rooms
         {
             _roomService = roomService;
         }
+
+        internal void Run(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
