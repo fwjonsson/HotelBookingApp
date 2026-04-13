@@ -12,7 +12,7 @@ namespace HotelBookingApp.Menus.Bookings
             _menu = new ConsoleMenu<BookingMenuOption>("Booking Menu", new List<MenuChoice<BookingMenuOption>>
             {
                 new(BookingMenuOption.Create, "Create New Booking"),
-                new(BookingMenuOption.ShowAll, "Read Bookings"),
+                new(BookingMenuOption.ShowAll, "Show All Bookings"),
                 new(BookingMenuOption.FindById, "Find By ID"),
                 new(BookingMenuOption.FindByDate, "Find By Date"),
                 new(BookingMenuOption.FindByRoomId, "Room ID"),

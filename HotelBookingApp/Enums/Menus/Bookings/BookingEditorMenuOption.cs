@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HotelBookingApp.Enums.Menus.Bookings
+﻿namespace HotelBookingApp.Enums.Menus.Bookings
 {
     internal enum BookingEditorMenuOption
     {

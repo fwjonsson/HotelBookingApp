@@ -1,18 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using HotelBookingApp.Startup;
-using HotelBookingApp.Data;
+﻿using HotelBookingApp.Data;
 using HotelBookingApp.Flows.Bookings;
 using HotelBookingApp.Flows.Customers;
 using HotelBookingApp.Flows.Rooms;
-using HotelBookingApp.Services;
-using HotelBookingApp.Menus;
-using HotelBookingApp.Menus.Bookings;
-using HotelBookingApp.Menus.Customers;
-using HotelBookingApp.Menus.Rooms;
 using HotelBookingApp.Services.Bookings;
 using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Services.Rooms;
+using HotelBookingApp.Startup;
 namespace HotelBookingApp
 {
     internal class Program
