@@ -1,12 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HotelBookingApp.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace HotelBookingApp.Data
 {
-    public class ApplicationDbContext : DbContext
+    internal class ApplicationDbContext : DbContext
     {
+        public DbSet<Customer> Customers { get; set; } = null!;
+        public DbSet<Room> Rooms { get; set; } = null!;
+        public DbSet<Booking> Bookings { get; set; } = null!;
         public ApplicationDbContext()
         {
 
