@@ -3,6 +3,7 @@ using HotelBookingApp.Enums.Menus.Rooms;
 using HotelBookingApp.Menus.Rooms;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Rooms;
+using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
 using System;
 using System.Collections.Generic;
@@ -39,22 +40,47 @@ namespace HotelBookingApp.Flows.Rooms
                 switch (choice)
                 {
                     case RoomEditorMenuOption.RoomNumber:
-
+                        newRoomNumber = RoomFlowHelpers.ValidateRoomNumber(newRoomNumber) ?? newRoomNumber;
                         break;
                     case RoomEditorMenuOption.RoomType:
-
+                        var (tempNewRoomType, tempNewExtraBeds) = RoomFlowHelpers.ValidateRoomType(newRoomType, newExtraBeds);
+                        newRoomType = tempNewRoomType ?? newRoomType;
+                        newExtraBeds = tempNewExtraBeds ?? newExtraBeds;
                         break;
                     case RoomEditorMenuOption.ExtraBeds:
-
+                        newExtraBeds = RoomFlowHelpers.ValidateExtraBeds(newExtraBeds, newRoomType) ?? newExtraBeds;
                         break;
                     case RoomEditorMenuOption.Save:
-
+                        bool saved = TrySave(newRoomNumber,newRoomType,newExtraBeds);
+                        if (saved)
+                        {
+                            _updateRoomMenu.ResetIndex();
+                            InputHelper.WaitForContinue();
+                            return;
+                        }
                         break;
                     case RoomEditorMenuOption.Cancel:
-
+                        _updateRoomMenu.ResetIndex();
                         return;
                 }
             }
+
+        }
+        private bool TrySave(int newRoomNumber, RoomType newRoomType, int newExtraBeds)
+        {
+            RoomValidationResult result = _roomService.CreateRoom(newRoomNumber, newRoomType, newExtraBeds);
+            if (!result.RoomNumberAvailable)
+                Console.WriteLine("Room number unavailable.");
+            if (!result.RoomTypeValid)
+                Console.WriteLine("Invalid room type, has to be single or double.");
+            if (!result.ExtraBedsValid)
+                Console.WriteLine("Invalid amount of extra beds, max 1 for single room and max 2 for double room.");
+            if (result.Success)
+            {
+                Console.WriteLine("Room created successfully.");
+                return true;
+            }
+            return false;
         }
     }
 }
