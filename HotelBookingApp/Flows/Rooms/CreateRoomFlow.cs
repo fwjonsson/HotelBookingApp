@@ -36,7 +36,7 @@ namespace HotelBookingApp.Flows.Rooms
                         roomNumber = ValidateRoomNumber();
                         break;
                     case RoomEditorMenuOption.RoomType:
-                        roomType = ValidateRoomType();
+                        (roomType, extraBeds) = ValidateRoomType(roomType, extraBeds);
                         break;
                     case RoomEditorMenuOption.ExtraBeds:
                         extraBeds = ValidateExtraBeds(roomType);
@@ -122,18 +122,30 @@ namespace HotelBookingApp.Flows.Rooms
             return null;
         }
 
-        private RoomType? ValidateRoomType()
+        private (RoomType?, int?) ValidateRoomType(RoomType? roomType, int? extraBeds)
         {
             var input = InputHelper.ReadInt("Single or double room (Enter 1 or 2): ");
-            if (input == 1) return RoomType.Single;
-            if (input == 2) return RoomType.Double;
-            else
+            switch (input) 
             {
-                Console.WriteLine("Must be 1 or 2");
-                InputHelper.WaitForContinue();
-                return null;
+                case 1:
+                if (extraBeds > 1)
+                {
+                    Console.WriteLine("Too many extra beds for this room size.");
+                    extraBeds = 1;
+                }
+                return (RoomType.Single, extraBeds);
+                case 2:
+                    if (extraBeds > 2)
+                    {
+                        Console.WriteLine("Too many extra beds for this room size.");
+                        extraBeds = 2;
+                    }
+                    return (RoomType.Double, extraBeds);
+                default:
+                    Console.WriteLine("Must be 1 or 2");
+                    InputHelper.WaitForContinue();
+                    return (roomType, extraBeds);
             }
-
         }
     }
 }

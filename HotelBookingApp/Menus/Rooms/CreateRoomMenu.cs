@@ -24,15 +24,14 @@ namespace HotelBookingApp.Menus.Rooms
             {
                 new(RoomEditorMenuOption.RoomNumber, $"Room Number: {roomNumber?.ToString() ?? "Not set" }"),
                 new(RoomEditorMenuOption.RoomType, $"Room Type(1 or 2): {roomType?.ToString() ?? "Not set"}"),
-                new(RoomEditorMenuOption.ExtraBeds, $"Enter Room Type First"),
+                new(RoomEditorMenuOption.ExtraBeds, $"Extra Beds(Max 1 in single room and max 2 in double room): Enter Room Type First"),
                 new(RoomEditorMenuOption.Save, "Save"),
                 new(RoomEditorMenuOption.Cancel, "Cancel")
             });
             }
             else
             {
-                {
-                    _menu.SetChoices(new List<MenuChoice<RoomEditorMenuOption>>
+                _menu.SetChoices(new List<MenuChoice<RoomEditorMenuOption>>
             {
                 new(RoomEditorMenuOption.RoomNumber, $"Room Number: {roomNumber?.ToString() ?? "Not set" }"),
                 new(RoomEditorMenuOption.RoomType, $"Room Type(1 or 2): {roomType?.ToString() ?? "Not set"}"),
@@ -40,7 +39,7 @@ namespace HotelBookingApp.Menus.Rooms
                 new(RoomEditorMenuOption.Save, "Save"),
                 new(RoomEditorMenuOption.Cancel, "Cancel")
             });
-                }
+
             }
             var result = _menu.Show();
             if (result.WasCancelled)
