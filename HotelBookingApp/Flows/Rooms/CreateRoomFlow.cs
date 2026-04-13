@@ -62,6 +62,9 @@ namespace HotelBookingApp.Flows.Rooms
             int? roomTypeInput = null;
             int? extraBedsInput = null;
 
+            int? checkedRoomNumber = null;
+            RoomType? checkedRoomType = null;
+            int? checkedExtraBeds = null;
 
             var result = new RoomValidationResult();
             while (true)
@@ -87,12 +90,17 @@ namespace HotelBookingApp.Flows.Rooms
                         _createRoomMenu.ResetIndex();
                         return;
                 }
-                (roomNumber, roomType, extraBeds, result) = RoomValidator.ValidateRoomInput(roomNumberInput, roomTypeInput, extraBedsInput, _roomService);
+                (checkedRoomNumber, checkedRoomType, checkedExtraBeds, result) = RoomValidator.ValidateRoomInput(roomNumberInput, roomTypeInput, extraBedsInput, _roomService);
+                if (checkedRoomNumber != null) roomNumber = checkedRoomNumber;
+                if (checkedRoomType != null) roomType = checkedRoomType;
+                if (checkedExtraBeds != null) extraBeds = checkedExtraBeds;
+
                 if(!result.RoomNumberValid) Console.WriteLine("Room number invalid.");
                 if(!result.RoomNumberAvailable) Console.WriteLine("Room number unavailable.");
                 if(!result.RoomTypeValid) Console.WriteLine("Room type invalid.");
                 if(!result.ChoseRoomTypeBeforeExtraBeds) Console.WriteLine("Must choose room type before choosing extra beds.");
                 if(!result.ExtraBedsValid) Console.WriteLine("Invalid amount of extra beds");
+                InputHelper.WaitForContinue();
             }
         }
 
