@@ -3,6 +3,7 @@ using HotelBookingApp.Menus;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Bookings;
 using HotelBookingApp.Utilities;
+using HotelBookingApp.Utilities.Printers;
 
 namespace HotelBookingApp.Flows.Bookings
 {

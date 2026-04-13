@@ -1,5 +1,5 @@
 ﻿using HotelBookingApp.Enums.Menus.Rooms;
-using HotelBookingApp.Utilities;
+using HotelBookingApp.Utilities.Menus;
 using System;
 using System.Collections.Generic;
 using System.Text;

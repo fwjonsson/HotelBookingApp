@@ -1,6 +1,6 @@
 ﻿using HotelBookingApp.Enums.Menus;
 using HotelBookingApp.Models;
-using HotelBookingApp.Utilities;
+using HotelBookingApp.Utilities.Menus;
 using System;
 using System.Collections.Generic;
 using System.Text;

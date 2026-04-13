@@ -1,5 +1,5 @@
 ﻿using HotelBookingApp.Enums.Menus;
-using HotelBookingApp.Utilities;
+using HotelBookingApp.Utilities.Menus;
 
 namespace HotelBookingApp.Menus
 {

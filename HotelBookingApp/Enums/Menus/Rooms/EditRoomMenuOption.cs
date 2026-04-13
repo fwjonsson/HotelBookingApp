@@ -9,7 +9,7 @@ namespace HotelBookingApp.Enums.Menus.Rooms
         RoomNumber,
         RoomType,
         ExtraBeds,
-        Create,
+        Save,
         Cancel
     }
 }

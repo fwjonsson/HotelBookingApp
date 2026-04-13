@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HotelBookingApp.Utilities
+namespace HotelBookingApp.Utilities.Menus
 {
     internal class MenuChoice<T>
     {

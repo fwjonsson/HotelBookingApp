@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HotelBookingApp.Utilities
+namespace HotelBookingApp.Utilities.Printers
 {
     internal static class BookingPrinter
     {

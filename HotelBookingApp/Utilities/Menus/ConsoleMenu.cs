@@ -1,4 +1,4 @@
-﻿namespace HotelBookingApp.Utilities
+﻿namespace HotelBookingApp.Utilities.Menus
 {
     internal class ConsoleMenu<T>
     {
