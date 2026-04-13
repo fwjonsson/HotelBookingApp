@@ -21,25 +21,62 @@ namespace HotelBookingApp.Flows.Rooms
             _createRoomMenu = new CreateRoomMenu();
         }
 
+        //internal void Run()
+        //{
+        //    int? roomNumber = null;
+        //    RoomType? roomType = null;
+        //    int? extraBeds = null;
+
+        //    while (true)
+        //    {
+        //        var choice = _createRoomMenu.Show(roomNumber, roomType, extraBeds);
+        //        switch (choice)
+        //        {
+        //            case RoomEditorMenuOption.RoomNumber:
+        //                roomNumber = ValidateRoomNumber(roomNumber);
+        //                break;
+        //            case RoomEditorMenuOption.RoomType:
+        //                (roomType, extraBeds) = ValidateRoomType(roomType, extraBeds);
+        //                break;
+        //            case RoomEditorMenuOption.ExtraBeds:
+        //                extraBeds = ValidateExtraBeds(extraBeds, roomType);
+        //                break;
+        //            case RoomEditorMenuOption.Save:
+        //                bool saved = TrySave(roomNumber, roomType, extraBeds);
+        //                if (saved)
+        //                    return;
+        //                break;
+        //            case RoomEditorMenuOption.Cancel:
+        //                _createRoomMenu.ResetIndex();
+        //                return;
+        //        }
+        //    }
+        //}
         internal void Run()
         {
             int? roomNumber = null;
             RoomType? roomType = null;
             int? extraBeds = null;
 
+            int? roomNumberInput = null;
+            int? roomTypeInput = null;
+            int? extraBedsInput = null;
+
+
+            var result = new RoomValidationResult();
             while (true)
             {
                 var choice = _createRoomMenu.Show(roomNumber, roomType, extraBeds);
                 switch (choice)
                 {
                     case RoomEditorMenuOption.RoomNumber:
-                        roomNumber = ValidateRoomNumber(roomNumber);
+                        roomNumberInput = InputHelper.ReadInt("Enter room number: ");
                         break;
                     case RoomEditorMenuOption.RoomType:
-                        (roomType, extraBeds) = ValidateRoomType(roomType, extraBeds);
+                        roomTypeInput = InputHelper.ReadInt("Single or double room (Enter 1 or 2): ");
                         break;
                     case RoomEditorMenuOption.ExtraBeds:
-                        extraBeds = ValidateExtraBeds(extraBeds, roomType);
+                        extraBedsInput = InputHelper.ReadInt("Amount of extra beds (Max 1 for single room, max 2 for double room.");
                         break;
                     case RoomEditorMenuOption.Save:
                         bool saved = TrySave(roomNumber, roomType, extraBeds);
@@ -50,6 +87,12 @@ namespace HotelBookingApp.Flows.Rooms
                         _createRoomMenu.ResetIndex();
                         return;
                 }
+                (roomNumber, roomType, extraBeds, result) = RoomValidator.ValidateRoomInput(roomNumberInput, roomTypeInput, extraBedsInput, _roomService);
+                if(!result.RoomNumberValid) Console.WriteLine("Room number invalid.");
+                if(!result.RoomNumberAvailable) Console.WriteLine("Room number unavailable.");
+                if(!result.RoomTypeValid) Console.WriteLine("Room type invalid.");
+                if(!result.ChoseRoomTypeBeforeExtraBeds) Console.WriteLine("Must choose room type before choosing extra beds.");
+                if(!result.ExtraBedsValid) Console.WriteLine("Invalid amount of extra beds");
             }
         }
 

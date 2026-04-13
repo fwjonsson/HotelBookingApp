@@ -1,15 +1,11 @@
 ﻿using HotelBookingApp.Enums;
 using HotelBookingApp.Models;
-using HotelBookingApp.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Services.Rooms
 {
     internal static class RoomValidator
     {
-        internal static (int?, RoomType?, int?, RoomValidationResult) ValidateRoomEdits(int? roomNumber, int? roomTypeInput, int? extraBeds, RoomService roomService)
+        internal static (int?, RoomType?, int?, RoomValidationResult) ValidateRoomInput(int? roomNumber, int? roomTypeInput, int? extraBeds, RoomService roomService)
         {
             var result = new RoomValidationResult();
             int? checkedRoomNumber = null;
@@ -63,7 +59,7 @@ namespace HotelBookingApp.Services.Rooms
                 else
                     checkedExtraBeds = eBeds;
             }
-                
+
 
             return (checkedRoomNumber, checkedRoomType, checkedExtraBeds, result);
 
