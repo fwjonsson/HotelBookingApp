@@ -14,9 +14,9 @@ namespace HotelBookingApp.Flows.Rooms
         private readonly CreateRoomFlow _create;
         private readonly ReadRoomFlow _read;
 
-        internal RoomFlows(RoomService roomService, RoomMenu roomMenu)
+        internal RoomFlows(RoomService roomService)
         {
-            _roomMenu = roomMenu;
+            _roomMenu = new RoomMenu();
 
             _create = new CreateRoomFlow(roomService);
             _read = new ReadRoomFlow(roomService);

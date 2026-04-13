@@ -10,6 +10,9 @@ using HotelBookingApp.Menus;
 using HotelBookingApp.Menus.Bookings;
 using HotelBookingApp.Menus.Customers;
 using HotelBookingApp.Menus.Rooms;
+using HotelBookingApp.Services.Bookings;
+using HotelBookingApp.Services.Customers;
+using HotelBookingApp.Services.Rooms;
 namespace HotelBookingApp
 {
     internal class Program

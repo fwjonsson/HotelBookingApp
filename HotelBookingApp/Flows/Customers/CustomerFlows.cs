@@ -11,9 +11,9 @@ namespace HotelBookingApp.Flows.Customers
         private readonly CreateCustomerFlow _create;
         private readonly ReadCustomerFlow _read;
 
-        internal CustomerFlows(CustomerService customerService, CustomerMenu customerMenu)
+        internal CustomerFlows(CustomerService customerService)
         {
-            _customerMenu = customerMenu;
+            _customerMenu = new CustomerMenu();
 
             _create = new CreateCustomerFlow(customerService);
             _read = new ReadCustomerFlow(customerService);
