@@ -11,6 +11,7 @@ namespace HotelBookingApp.Services.Rooms
         public bool RoomNumberValid { get; set; } = true;
         public bool RoomTypeValid { get; set; } = true;
         public bool ExtraBedsValid { get; set; } = true;
+        public bool ChoseRoomTypeBeforeExtraBeds { get; set; } = true;
         public bool BookingFound { get; set; } = true;
         public bool CustomerFound { get; set; } = true;
         public bool CanBeDeleted { get; set; } = true;
@@ -21,6 +22,7 @@ namespace HotelBookingApp.Services.Rooms
             RoomNumberValid &&
             RoomTypeValid &&
             ExtraBedsValid &&
+            ChoseRoomTypeBeforeExtraBeds &&
             BookingFound &&
             CustomerFound &&
             CanBeDeleted;

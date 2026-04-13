@@ -22,22 +22,22 @@ namespace HotelBookingApp.Services.Rooms
             {
                 if (!ValidRoomNumber(rNumber))
                     result.RoomNumberValid = false;
+                else
+                {
+                    Room? roomNumberCheck = roomService.GetByRoomNr(rNumber);
+                    if (roomNumberCheck != null)
+                        result.RoomNumberAvailable = false;
 
-                Room? roomNumberCheck = roomService.GetByRoomNr(rNumber);
-                if (roomNumberCheck != null)
-                    result.RoomNumberAvailable = false;
-
-                if (result.RoomNumberValid && result.RoomNumberAvailable)
-                    checkedRoomNumber = rNumber;
+                    if (result.RoomNumberValid && result.RoomNumberAvailable)
+                        checkedRoomNumber = rNumber;
+                }
             }
 
 
             if (roomTypeInput is int rTypeInput)
             {
                 if (!ValidRoomType(rTypeInput))
-                {
                     result.RoomTypeValid = false;
-                }
                 else
                 {
                     switch (rTypeInput)
@@ -52,7 +52,7 @@ namespace HotelBookingApp.Services.Rooms
                 }
             }
 
-            if (extraBeds is int eBeds)
+            if (extraBeds is int eBeds && result.RoomTypeValid)
             {
 
                 if (!ValidNrOfExtraBeds(eBeds, checkedRoomType))
@@ -63,46 +63,30 @@ namespace HotelBookingApp.Services.Rooms
                 else
                     checkedExtraBeds = eBeds;
             }
+            else result.ChoseRoomTypeBeforeExtraBeds = false;
 
             return (checkedRoomNumber, checkedRoomType, checkedExtraBeds, result);
 
         }
-        private static bool ValidRoomNumber(int? roomNumber)
+        private static bool ValidRoomNumber(int roomNumber)
         {
             if (roomNumber < 1)
             {
-                Console.WriteLine("Must be greater than 0");
-                InputHelper.WaitForContinue();
                 return false;
             }
             else return true;
         }
-        private static bool ValidNrOfExtraBeds(int? extraBeds, RoomType? roomType)
+        private static bool ValidNrOfExtraBeds(int extraBeds, RoomType? roomType)
         {
-            if (roomType == null)
+            if (roomType == null ||
+                roomType == RoomType.Single && extraBeds > 1 ||
+                roomType == RoomType.Double && extraBeds > 2 ||
+                extraBeds < 0
+                )
             {
-                Console.WriteLine("Must choose room type first.");
-                InputHelper.WaitForContinue();
                 return false;
             }
-            if (roomType == RoomType.Single && extraBeds > 1)
-            {
-                Console.WriteLine("Max 1.");
-            }
-            else if (roomType == RoomType.Double && extraBeds > 2)
-            {
-                Console.WriteLine("Max 2.");
-            }
-            else if (extraBeds < 0)
-            {
-                Console.WriteLine("Extra beds cannot be negative.");
-            }
-            else
-            {
-                return true;
-            }
-            InputHelper.WaitForContinue();
-            return false;
+            return true;
         }
 
         private static bool ValidRoomType(int rTypeInput)
@@ -116,8 +100,6 @@ namespace HotelBookingApp.Services.Rooms
                     return true;
 
                 default:
-                    Console.WriteLine("Must be 1 or 2");
-                    InputHelper.WaitForContinue();
                     return false;
             }
 
