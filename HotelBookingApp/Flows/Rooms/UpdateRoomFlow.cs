@@ -51,11 +51,11 @@ namespace HotelBookingApp.Flows.Rooms
                         newExtraBeds = RoomFlowHelpers.ValidateExtraBeds(newExtraBeds, newRoomType) ?? newExtraBeds;
                         break;
                     case RoomEditorMenuOption.Save:
-                        bool saved = TrySave(newRoomNumber,newRoomType,newExtraBeds);
+                        bool saved = TrySave(room.Id, newRoomNumber,newRoomType,newExtraBeds);
+                        InputHelper.WaitForContinue();
                         if (saved)
                         {
                             _updateRoomMenu.ResetIndex();
-                            InputHelper.WaitForContinue();
                             return;
                         }
                         break;
@@ -66,9 +66,9 @@ namespace HotelBookingApp.Flows.Rooms
             }
 
         }
-        private bool TrySave(int newRoomNumber, RoomType newRoomType, int newExtraBeds)
+        private bool TrySave(int roomId, int newRoomNumber, RoomType newRoomType, int newExtraBeds)
         {
-            RoomValidationResult result = _roomService.CreateRoom(newRoomNumber, newRoomType, newExtraBeds);
+            RoomValidationResult result = _roomService.UpdateRoom(roomId, newRoomNumber, newRoomType, newExtraBeds);
             if (!result.RoomNumberAvailable)
                 Console.WriteLine("Room number unavailable.");
             if (!result.RoomTypeValid)
@@ -77,7 +77,7 @@ namespace HotelBookingApp.Flows.Rooms
                 Console.WriteLine("Invalid amount of extra beds, max 1 for single room and max 2 for double room.");
             if (result.Success)
             {
-                Console.WriteLine("Room created successfully.");
+                Console.WriteLine("Room updated successfully.");
                 return true;
             }
             return false;

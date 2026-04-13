@@ -50,5 +50,10 @@ namespace HotelBookingApp.Services.Rooms
         {
             throw new NotImplementedException();
         }
+
+        internal RoomValidationResult UpdateRoom(int roomId, int newRoomNumber, RoomType newRoomType, int newExtraBeds)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
