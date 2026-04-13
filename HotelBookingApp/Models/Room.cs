@@ -10,6 +10,7 @@ namespace HotelBookingApp.Models
     {
         [Key]
         public int Id { get; set; }
+        public int RoomNumber { get; set; }
         public RoomType RoomType { get; set; }
         [Range (0,2)]
         public int ExtraBeds { get; set; }

@@ -8,27 +8,27 @@ namespace HotelBookingApp.Menus.Bookings
 {
     internal class CreateBookingMenu
     {
-        private readonly ConsoleMenu<CreateBookingMenuOption> _menu;
+        private readonly ConsoleMenu<EditBookingMenuOption> _menu;
 
         internal CreateBookingMenu()
         {
-            _menu = new ConsoleMenu<CreateBookingMenuOption>(
-                "Create Booking", new List<MenuChoice<CreateBookingMenuOption>>());
+            _menu = new ConsoleMenu<EditBookingMenuOption>(
+                "Create Booking", new List<MenuChoice<EditBookingMenuOption>>());
         }
-        internal CreateBookingMenuOption Show(int? customerId, int? roomId, DateOnly? startDate, DateOnly? endDate)
+        internal EditBookingMenuOption Show(int? customerId, int? roomId, DateOnly? startDate, DateOnly? endDate)
         {
-            _menu.SetChoices(new List<MenuChoice<CreateBookingMenuOption>>
+            _menu.SetChoices(new List<MenuChoice<EditBookingMenuOption>>
             {
-                new(CreateBookingMenuOption.CustomerId, $"Customer ID: {customerId?.ToString() ?? "Not set"}"),
-                new(CreateBookingMenuOption.RoomId, $"Room ID: {roomId?.ToString() ?? "Not set"}"),
-                new(CreateBookingMenuOption.StartDate, $"Start date (yyyy-MM-dd): {startDate?.ToString("yyyy-MM-dd") ?? "Not set"}"),
-                new(CreateBookingMenuOption.EndDate, $"End date (yyyy-MM-dd): {endDate?.ToString("yyyy-MM-dd")?? "Not set"}"),
-                new(CreateBookingMenuOption.Create, $"Create booking"),
-                new(CreateBookingMenuOption.Cancel, $"Cancel")
+                new(EditBookingMenuOption.CustomerId, $"Customer ID: {customerId?.ToString() ?? "Not set"}"),
+                new(EditBookingMenuOption.RoomId, $"Room ID: {roomId?.ToString() ?? "Not set"}"),
+                new(EditBookingMenuOption.StartDate, $"Start date (yyyy-MM-dd): {startDate?.ToString("yyyy-MM-dd") ?? "Not set"}"),
+                new(EditBookingMenuOption.EndDate, $"End date (yyyy-MM-dd): {endDate?.ToString("yyyy-MM-dd")?? "Not set"}"),
+                new(EditBookingMenuOption.Save, $"Create booking"),
+                new(EditBookingMenuOption.Cancel, $"Cancel")
             });
             var result = _menu.Show();
             if (result.WasCancelled)
-                return CreateBookingMenuOption.Cancel;
+                return EditBookingMenuOption.Cancel;
             return result.Value;
 
         }

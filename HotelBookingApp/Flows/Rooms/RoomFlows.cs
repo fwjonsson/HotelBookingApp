@@ -1,5 +1,6 @@
-﻿using HotelBookingApp.Menus.Rooms;
-using HotelBookingApp.Services;
+﻿using HotelBookingApp.Enums.Menus.Rooms;
+using HotelBookingApp.Menus.Rooms;
+using HotelBookingApp.Services.Rooms;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,8 +13,6 @@ namespace HotelBookingApp.Flows.Rooms
 
         private readonly CreateRoomFlow _create;
         private readonly ReadRoomFlow _read;
-        private readonly UpdateRoomFlow _update;
-        private readonly DeleteRoomFlow _delete;
 
         internal RoomFlows(RoomService roomService, RoomMenu roomMenu)
         {
@@ -21,12 +20,42 @@ namespace HotelBookingApp.Flows.Rooms
 
             _create = new CreateRoomFlow(roomService);
             _read = new ReadRoomFlow(roomService);
-            _update = new UpdateRoomFlow(roomService);
-            _delete = new DeleteRoomFlow(roomService);
         }
         internal void Run()
         {
+            while (true)
+            {
+                var choice = _roomMenu.Show();
 
+                switch (choice)
+                {
+                    case RoomMenuOption.Create:
+                        _create.Run();
+                        break;
+                    case RoomMenuOption.ShowAll:
+                        _read.ReadAll();
+                        break;
+                    case RoomMenuOption.FindByID:
+                        _read.ReadById();
+                        break;
+                    case RoomMenuOption.FindByRoomNR:
+                        _read.ReadByRoomNr();
+                        break;
+                    case RoomMenuOption.FindByRoomSize:
+                        _read.ReadByRoomSize();
+                        break;
+                    case RoomMenuOption.FindByCustomerID:
+                        _read.ReadByCustomerId();
+                        break;
+                    case RoomMenuOption.FindByBookingID:
+                        _read.ReadByBookingId();
+                        break;
+                    case RoomMenuOption.Back:
+                        _roomMenu.ResetIndex();
+                        return;
+
+                }
+            }
         }
     }
 }

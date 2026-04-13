@@ -31,23 +31,23 @@ namespace HotelBookingApp.Flows.Customers
 
             while (true)
             {
-                UpdateCustomerMenuOption choice = _updateCustomerMenu.Show(newFullName, newBirthDate, newEmail, newPhoneNumber);
+                EditCustomerMenuOption choice = _updateCustomerMenu.Show(newFullName, newBirthDate, newEmail, newPhoneNumber);
 
                 switch (choice)
                 {
-                    case UpdateCustomerMenuOption.FullName:
+                    case EditCustomerMenuOption.FullName:
                         newFullName = InputHelper.ReadFullName("New full name: ");
                         continue;
-                    case UpdateCustomerMenuOption.BirthDate:
+                    case EditCustomerMenuOption.BirthDate:
                         newBirthDate = InputHelper.ReadDateOnly("New birth date: ");
                         continue;
-                    case UpdateCustomerMenuOption.Email:
+                    case EditCustomerMenuOption.Email:
                         newEmail = InputHelper.ReadEmail("New email: ");
                         continue;
-                    case UpdateCustomerMenuOption.PhoneNumber:
+                    case EditCustomerMenuOption.PhoneNumber:
                         newPhoneNumber = InputHelper.ReadPhoneNumber("New phone number: ");
                         continue;
-                    case UpdateCustomerMenuOption.Save:
+                    case EditCustomerMenuOption.Save:
                         CustomerValidationResult result = _customerService.UpdateCustomer(customer.Id, newFullName, newBirthDate, newEmail, newPhoneNumber);
                         if (!result.CustomerFound)
                         {
@@ -69,7 +69,7 @@ namespace HotelBookingApp.Flows.Customers
                             return;
                         }
                         break;
-                    case UpdateCustomerMenuOption.Cancel:
+                    case EditCustomerMenuOption.Cancel:
                         _updateCustomerMenu.ResetIndex();
                         return;
                 }

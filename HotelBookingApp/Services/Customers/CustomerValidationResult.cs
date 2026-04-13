@@ -9,10 +9,12 @@ namespace HotelBookingApp.Services.Customers
         public bool CustomerFound { get; set; } = true;
         public bool EmailAvailable { get; set; } = true;
         public bool PhoneNumberAvailable { get; set; } = true;
+        public bool CanBeDeleted { get; set; } = true;
 
         public bool Success => 
             CustomerFound &&
             EmailAvailable && 
-            PhoneNumberAvailable;
+            PhoneNumberAvailable &&
+            CanBeDeleted;
     }
 }

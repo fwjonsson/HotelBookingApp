@@ -12,12 +12,16 @@ namespace HotelBookingApp.Menus.Customers
 
         internal CustomerMenu()
         {
-            _menu = new ConsoleMenu<CustomerMenuOption>("Customer menu", new List<MenuChoice<CustomerMenuOption>>
+            _menu = new ConsoleMenu<CustomerMenuOption>("Customer Menu", new List<MenuChoice<CustomerMenuOption>>
             {
                 new(CustomerMenuOption.Create, "Create New Customer"),
-                new(CustomerMenuOption.ShowAll, "Read Customers"),
-                new(CustomerMenuOption.Update, "Update Customer"),
-                new(CustomerMenuOption.Delete, "Delete Customer"),
+                new(CustomerMenuOption.ShowAll, "Show All Customers"),
+                new(CustomerMenuOption.FindByID, "Find By ID"),
+                new(CustomerMenuOption.FindByFullName, "Find By Full Name"),
+                new(CustomerMenuOption.FindByBirthDate, "Find By Birth Date"),
+                new(CustomerMenuOption.FindByEmail, "Find By Email"),
+                new(CustomerMenuOption.FindByPhoneNumber, "Find By Phone Number"),
+                new(CustomerMenuOption.FindByBookingID, "Find By Booking ID"),
                 new(CustomerMenuOption.Back, "Back")
             });
         }

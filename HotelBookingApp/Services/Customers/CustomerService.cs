@@ -71,17 +71,22 @@ namespace HotelBookingApp.Services.Customers
         internal CustomerValidationResult DeleteCustomer(int customerId)
         {
             Customer? customer = _dbContext.Customers
+                .Include(c => c.Bookings)
                 .FirstOrDefault(c => c.Id == customerId);
 
             var result = new CustomerValidationResult();
 
             if (customer == null)
-            {
                 result.CustomerFound = false;
-                return result;
-            }
+
+            if (HasCurrentOrFutureBooking(customerId))
+                result.CanBeDeleted = false;
+
+            if(!result.Success)
+            return result;
 
             _dbContext.Customers.Remove(customer);
+            _dbContext.SaveChanges();
             return result;
         }
         internal List<Customer> ListAll()
@@ -145,6 +150,12 @@ namespace HotelBookingApp.Services.Customers
             //Maybe normalize phone numbers
         }
 
-
+        private bool HasCurrentOrFutureBooking(int customerId)
+        {
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            return _dbContext.Bookings
+                .Any(b => b.CustomerId == customerId &&
+                b.EndDate > today);
+        }
     }
 }

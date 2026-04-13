@@ -28,19 +28,19 @@ namespace HotelBookingApp.Flows.Customers
                 var choice = _createCustomerMenu.Show(fullName, birthDate, email, phoneNumber);
                 switch (choice)
                 {
-                    case CreateCustomerMenuOption.FullName:
+                    case EditCustomerMenuOption.FullName:
                         fullName = InputHelper.ReadFullName("Enter customers full name: ");
                         continue;
-                    case CreateCustomerMenuOption.BirthDate:
+                    case EditCustomerMenuOption.BirthDate:
                         birthDate = InputHelper.ReadDateOnly("Enter customers birth date (yyyy-MM-dd): ");
                         continue;
-                    case CreateCustomerMenuOption.Email:
+                    case EditCustomerMenuOption.Email:
                         email = InputHelper.ReadEmail("Enter customer email: ");
                         continue;
-                    case CreateCustomerMenuOption.PhoneNumber:
+                    case EditCustomerMenuOption.PhoneNumber:
                         phoneNumber = InputHelper.ReadPhoneNumber("Enter customer phone number: ");
                         continue;
-                    case CreateCustomerMenuOption.Create:
+                    case EditCustomerMenuOption.Save:
                         if (fullName is not string fName ||
                             birthDate is not DateOnly bDate ||
                             email is not string e ||
@@ -67,7 +67,7 @@ namespace HotelBookingApp.Flows.Customers
                             return;
                         }
                         break;
-                    case CreateCustomerMenuOption.Cancel:
+                    case EditCustomerMenuOption.Cancel:
                         _createCustomerMenu.ResetIndex();
                         return;
                 }

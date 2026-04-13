@@ -29,23 +29,23 @@ namespace HotelBookingApp.Flows.Bookings
 
             while (true)
             {
-                UpdateBookingMenuOption choice = _updateBookingMenu.Show(newStartDate, newEndDate, newRoomId, newCustomerId);
+                EditBookingMenuOption choice = _updateBookingMenu.Show(newStartDate, newEndDate, newRoomId, newCustomerId);
 
                 switch (choice)
                 {
-                    case UpdateBookingMenuOption.StartDate:
+                    case EditBookingMenuOption.StartDate:
                         newStartDate = InputHelper.ReadDateOnly("New start date (yyyy-MM-dd): ");
                         continue;
-                    case UpdateBookingMenuOption.EndDate:
+                    case EditBookingMenuOption.EndDate:
                         newEndDate = InputHelper.ReadDateOnly("New end date (yyyy-MM-dd): ");
                         continue;
-                    case UpdateBookingMenuOption.RoomId:
+                    case EditBookingMenuOption.RoomId:
                         newRoomId = InputHelper.ReadInt("New room ID: ");
                         continue;
-                    case UpdateBookingMenuOption.CustomerId:
+                    case EditBookingMenuOption.CustomerId:
                         newCustomerId = InputHelper.ReadInt("New customer ID: ");
                         continue;
-                    case UpdateBookingMenuOption.Save:
+                    case EditBookingMenuOption.Save:
                         BookingValidationResult result = _bookingService.UpdateBooking(booking.Id, newStartDate, newEndDate, newRoomId, newCustomerId);
                         if (!result.BookingFound)
                         {
@@ -79,7 +79,7 @@ namespace HotelBookingApp.Flows.Bookings
                             return;
                         }
                         break;
-                    case UpdateBookingMenuOption.Cancel:
+                    case EditBookingMenuOption.Cancel:
                         _updateBookingMenu.ResetIndex();
                         return;
                 }

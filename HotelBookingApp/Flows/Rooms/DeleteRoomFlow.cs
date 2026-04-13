@@ -1,4 +1,4 @@
-﻿using HotelBookingApp.Services;
+﻿using HotelBookingApp.Services.Rooms;
 using System;
 using System.Collections.Generic;
 using System.Text;

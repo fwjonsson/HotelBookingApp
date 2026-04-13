@@ -21,7 +21,7 @@ namespace HotelBookingApp.Services.Bookings
         internal BookingValidationResult CreateBooking(int customerId, int roomId, DateOnly startDate, DateOnly endDate)
         {
             var result = new BookingValidationResult();
-            if (endDate <= startDate)
+            if (endDate <= startDate ||startDate < DateOnly.FromDateTime(DateTime.Today))
                 result.ValidDateRange = false;
 
             if (!CustomerExists(customerId))

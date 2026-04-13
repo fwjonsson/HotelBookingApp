@@ -8,26 +8,26 @@ namespace HotelBookingApp.Menus.Customers
 {
     internal class CreateCustomerMenu
     {
-        private readonly ConsoleMenu<CreateCustomerMenuOption> _menu;
+        private readonly ConsoleMenu<EditCustomerMenuOption> _menu;
 
         internal CreateCustomerMenu()
         {
-            _menu = new ConsoleMenu<CreateCustomerMenuOption>("Create Customer", new List<MenuChoice<CreateCustomerMenuOption>>());
+            _menu = new ConsoleMenu<EditCustomerMenuOption>("Create Customer", new List<MenuChoice<EditCustomerMenuOption>>());
         }
-        internal CreateCustomerMenuOption Show(string? fullName, DateOnly? birthDate, string? email, string? phoneNumber)
+        internal EditCustomerMenuOption Show(string? fullName, DateOnly? birthDate, string? email, string? phoneNumber)
         {
-            _menu.SetChoices(new List<MenuChoice<CreateCustomerMenuOption>>
+            _menu.SetChoices(new List<MenuChoice<EditCustomerMenuOption>>
             {
-                new(CreateCustomerMenuOption.FullName, $"Full Name: {fullName?.ToString() ?? "Not set"}"),
-                new(CreateCustomerMenuOption.BirthDate, $"Birth date: {birthDate?.ToString("yyyy-MM-dd") ?? "Not set"}"),
-                new(CreateCustomerMenuOption.Email, $"Email: {email?.ToString() ?? "Not set"}"),
-                new(CreateCustomerMenuOption.PhoneNumber, $"Phone Number: {phoneNumber?.ToString() ?? "Not set"}"),
-                new(CreateCustomerMenuOption.Create, $"Create Customer"),
-                new(CreateCustomerMenuOption.Cancel, "Cancel")
+                new(EditCustomerMenuOption.FullName, $"Full Name: {fullName?.ToString() ?? "Not set"}"),
+                new(EditCustomerMenuOption.BirthDate, $"Birth date: {birthDate?.ToString("yyyy-MM-dd") ?? "Not set"}"),
+                new(EditCustomerMenuOption.Email, $"Email: {email?.ToString() ?? "Not set"}"),
+                new(EditCustomerMenuOption.PhoneNumber, $"Phone Number: {phoneNumber?.ToString() ?? "Not set"}"),
+                new(EditCustomerMenuOption.Save, $"Save"),
+                new(EditCustomerMenuOption.Cancel, "Cancel")
             });
             var result = _menu.Show();
             if (result.WasCancelled)
-                return CreateCustomerMenuOption.Cancel;
+                return EditCustomerMenuOption.Cancel;
             return result.Value;
         }
         internal void ResetIndex()

@@ -4,13 +4,13 @@ using System.Text;
 
 namespace HotelBookingApp.Enums.Menus.Bookings
 {
-    internal enum CreateBookingMenuOption
+    internal enum EditBookingMenuOption
     {
         StartDate,
         EndDate,
         RoomId,
         CustomerId,
-        Create,
+        Save,
         Cancel
     }
 }

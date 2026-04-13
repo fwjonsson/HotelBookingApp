@@ -33,6 +33,10 @@ namespace HotelBookingApp.Flows.Customers
                 {
                     Console.WriteLine("No customer with that ID found.");
                 }
+                if (!result.CanBeDeleted)
+                {
+                    Console.WriteLine("Cannot delete a customer with current or future bookings.");
+                }
                 if (result.Success)
                 {
                     Console.WriteLine("Customer deleted.");

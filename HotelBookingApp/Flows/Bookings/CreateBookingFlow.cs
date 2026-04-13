@@ -28,19 +28,19 @@ namespace HotelBookingApp.Flows.Bookings
                 var choice = _createBookingMenu.Show(customerId, roomId, startDate, endDate);
                 switch (choice)
                 {
-                    case CreateBookingMenuOption.CustomerId:
+                    case EditBookingMenuOption.CustomerId:
                         customerId = InputHelper.ReadInt("Enter customer ID: ");
                         continue;
-                    case CreateBookingMenuOption.RoomId:
+                    case EditBookingMenuOption.RoomId:
                         roomId = InputHelper.ReadInt("Enter room ID: ");
                         continue;
-                    case CreateBookingMenuOption.StartDate:
+                    case EditBookingMenuOption.StartDate:
                         startDate = InputHelper.ReadDateOnly("Enter start date (yyyy-MM-dd): ");
                         continue;
-                    case CreateBookingMenuOption.EndDate:
+                    case EditBookingMenuOption.EndDate:
                         endDate = InputHelper.ReadDateOnly("Enter end date (yyyy-MM-dd): ");
                         continue;
-                    case CreateBookingMenuOption.Create:
+                    case EditBookingMenuOption.Save:
                         if (customerId is not int cId ||
                             roomId is not int rId ||
                             startDate is not DateOnly sDate ||
@@ -61,7 +61,7 @@ namespace HotelBookingApp.Flows.Bookings
                         }
                         if (!result.ValidDateRange)
                         {
-                            Console.WriteLine("End date must be after start date");
+                            Console.WriteLine("Start date cannot be earlier than today and end date must be after start date");
                         }
                         if (!result.RoomAvailable)
                         {
@@ -75,7 +75,7 @@ namespace HotelBookingApp.Flows.Bookings
                             return;
                         }
                         break;
-                    case CreateBookingMenuOption.Cancel:
+                    case EditBookingMenuOption.Cancel:
                         _createBookingMenu.ResetIndex();
                         return;
                 }
