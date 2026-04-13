@@ -18,18 +18,15 @@ namespace HotelBookingApp.Services.Customers
         internal CustomerValidationResult CreateCustomer(string fullName, DateOnly birthDate, string email, string phoneNumber)
         {
             var result = new CustomerValidationResult();
+
             if (!EmailAvailable(email))
-            {
                 result.EmailAvailable = false;
-            }
+
             if (!PhoneNumberAvailable(phoneNumber))
-            {
                 result.PhoneNumberAvailable = false;
-            }
+
             if (!result.Success)
-            {
                 return result;
-            }
 
             var newCustomer = new Customer
             {
@@ -52,17 +49,45 @@ namespace HotelBookingApp.Services.Customers
 
             if (customer == null)
                 result.CustomerFound = false;
-            if (_dbContext.Customers.Any(c => c.PhoneNumber == newPhoneNumber))
+
+            if (!EmailAvailable(newEmail, customerId))
+                result.EmailAvailable = false;
+
+            if (!PhoneNumberAvailable(newPhoneNumber, customerId))
                 result.PhoneNumberAvailable = false;
+
+            if (!result.Success)
+                return result;
+
+            customer!.FullName = newFullName;
+            customer.BirthDate = newBirthDate;
+            customer.Email = newEmail;
+            customer.PhoneNumber = newPhoneNumber;
+
+            _dbContext.SaveChanges();
+            return result;
         }
 
-        internal CustomerValidationResult DeleteCustomer(int id)
+        internal CustomerValidationResult DeleteCustomer(int customerId)
         {
-            throw new NotImplementedException();
+            Customer? customer = _dbContext.Customers
+                .FirstOrDefault(c => c.Id == customerId);
+
+            var result = new CustomerValidationResult();
+
+            if (customer == null)
+            {
+                result.CustomerFound = false;
+                return result;
+            }
+
+            _dbContext.Customers.Remove(customer);
+            return result;
         }
         internal List<Customer> ListAll()
         {
-            return _dbContext.Customers.ToList();
+            return _dbContext.Customers
+                .ToList();
         }
         internal Customer? GetById(int customerId)
         {
@@ -99,20 +124,24 @@ namespace HotelBookingApp.Services.Customers
         internal Customer? GetByBookingId(int bookingId)
         {
             return _dbContext.Customers
-                .Include(c=> c.Bookings)
+                .Include(c => c.Bookings)
                 .FirstOrDefault(c => c.Bookings
                 .Any(b => b.Id == bookingId));
         }
 
-        private bool EmailAvailable(string email)
+        private bool EmailAvailable(string email, int? customerIdToExclude = null)
         {
             return !_dbContext.Customers
-                .Any(c => c.Email == email);
+                .Any(c =>
+                (customerIdToExclude == null || c.Id != customerIdToExclude) &&
+                c.Email == email);
         }
-        private bool PhoneNumberAvailable(string phoneNumber)
+        private bool PhoneNumberAvailable(string phoneNumber, int? customerIdToExclude = null)
         {
             return !_dbContext.Customers
-                .Any(c => c.PhoneNumber == phoneNumber);
+                .Any(c =>
+                (customerIdToExclude == null || c.Id != customerIdToExclude) &&
+                c.PhoneNumber == phoneNumber);
             //Maybe normalize phone numbers
         }
 
