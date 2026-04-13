@@ -87,8 +87,8 @@ namespace HotelBookingApp.Flows.Rooms
         }
         internal void ReadByRoomNr()
         {
-            var roomNr = InputHelper.ReadInt("Enter room number: ");
-            ChooseAction(_roomService.GetByRoomNumber, roomNr);
+            var roomNumber = InputHelper.ReadInt("Enter room number: ");
+            ChooseAction(_roomService.GetByRoomNumber, roomNumber);
         }
         internal void ReadByRoomType()
         {

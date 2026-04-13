@@ -55,7 +55,7 @@ namespace HotelBookingApp.Services.Rooms
                 result.RoomFound = false;
                 return result;
             }
-            if (!RoomNumberAvailable(newRoomNumber, room.RoomNumber))
+            if (!RoomNumberAvailable(newRoomNumber, roomId))
                 result.RoomNumberAvailable = false;
             if (!ValidRoomNumber(newRoomNumber))
                 result.RoomNumberValid = false;
@@ -124,7 +124,7 @@ namespace HotelBookingApp.Services.Rooms
         {
             return _dbContext.Rooms
                 .Include(r => r.Bookings)
-                .Where(r => r.Bookings.Any(b => b.Id == bookingId));
+                .FirstOrDefault(r => r.Bookings.Any(b => b.Id == bookingId));
         }
 
         internal List<Room> GetByCustomerId(int customerId)
