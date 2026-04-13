@@ -11,7 +11,6 @@ namespace HotelBookingApp.Flows.Bookings
     internal class ReadBookingFlow
     {
         private readonly BookingService _bookingService;
-        private readonly ReadBookingMenu _readBookingMenu;
         private readonly SelectObjectMenu<Booking> _selectBookingMenu;
         private readonly ActionMenu<Booking> _bookingActionMenu;
         private readonly UpdateBookingFlow _updateBookingFlow;
@@ -20,126 +19,84 @@ namespace HotelBookingApp.Flows.Bookings
         internal ReadBookingFlow(BookingService bookingService)
         {
             _bookingService = bookingService;
-            _readBookingMenu = new ReadBookingMenu();
             _selectBookingMenu = new SelectObjectMenu<Booking>("Booking", BookingPrinter.FormatBooking);
             _bookingActionMenu = new ActionMenu<Booking>("Booking", BookingPrinter.FormatBooking);
             _updateBookingFlow = new UpdateBookingFlow(bookingService);
             _deleteBookingFlow = new DeleteBookingFlow(bookingService);
 
         }
-        //internal void Run()
-        //{
-        //    while (true)
-        //    {
-        //        ReadBookingMenuOption choice = _readBookingMenu.Show();
-
-        //        switch (choice)
-        //        {
-        //            case ReadBookingMenuOption.ReadAll:
-        //                ReadAll();
-        //                break;
-        //            case ReadBookingMenuOption.ReadByDate:
-        //                ReadByDate();
-        //                break;
-        //            case ReadBookingMenuOption.ReadById:
-        //                ReadById();
-        //                break;
-        //            case ReadBookingMenuOption.ReadByRoomId:
-        //                ReadByRoomId();
-        //                break;
-        //            case ReadBookingMenuOption.ReadByCustomerId:
-        //                ReadByCustomerId();
-        //                break;
-        //            case ReadBookingMenuOption.Back:
-        //                _readBookingMenu.ResetIndex();
-        //                return;
-        //        }
-        //        InputHelper.WaitForContinue();
-        //    }
-        //}
-        private bool SelectBookingAndChooseAction(List<Booking> bookings)
+        private void SelectBookingAndChooseAction(Func<List<Booking>> getBookings)
         {
+            while (true)
+            {
+                List<Booking> bookings = getBookings();
                 if (bookings.Count == 0)
                 {
                     Console.WriteLine("No bookings found.");
-                    return false;
+                    InputHelper.WaitForContinue();
+                    return;
                 }
 
                 Booking? booking = _selectBookingMenu.Show(bookings);
                 if (booking == null)
                 {
                     _selectBookingMenu.ResetIndex();
-                    return false;
+                    return;
                 }
-                ChooseAction(booking);
-            return true;
+                ChooseAction(booking.Id);
+            }
         }
-        private void ChooseAction(Booking booking)
+        private void ChooseAction(int bookingId)
         {
             while (true)
             {
-                ActionMenuOption choice = _bookingActionMenu.Show(booking);
+                Booking? booking = _bookingService.GetById(bookingId);
+                FlowHelper.EnsureFound(booking, "Booking not found");
+                if (booking == null) return;
+                ActionMenuOption choice = _bookingActionMenu.Show(booking!);
                 switch (choice)
                 {
                     case ActionMenuOption.Edit:
-                        _updateBookingFlow.Run(booking);
+                        _updateBookingFlow.Run(bookingId);
                         break;
                     case ActionMenuOption.Delete:
-                        _deleteBookingFlow.Run(booking);
+                        _deleteBookingFlow.Run(bookingId);
+                        _bookingActionMenu.ResetIndex();
                         return;
                     case ActionMenuOption.Back:
                         _bookingActionMenu.ResetIndex();
                         return;
                 }
-                InputHelper.WaitForContinue();
             }
         }
-        internal void ReadAll() //TODO CONTINUE FINISHING THE READ METHODS
+        internal void ReadAll()
         {
-            var inMenu = true;
-            while (inMenu)
-            {
-                List<Booking> allBookings = _bookingService.ListAll();
-                inMenu = SelectBookingAndChooseAction(allBookings);
-            }
+            SelectBookingAndChooseAction(_bookingService.ListAll);
         }
 
         internal void ReadByDate()
         {
             var date = InputHelper.ReadDateOnly("Booking date (yyyy-MM-dd):");
-            var inMenu = true;
-            while (inMenu)
-            {
-            List<Booking> bookingsOnDate = _bookingService.GetByDate(date);
-                inMenu = SelectBookingAndChooseAction(bookingsOnDate);
-            }
+            SelectBookingAndChooseAction(() => _bookingService.GetByDate(date));
         }
 
         internal void ReadById()
         {
             int bookingId = InputHelper.ReadInt("Booking ID:");
-            Booking? booking = _bookingService.GetById(bookingId);
-            if (booking == null)
-            {
-                Console.WriteLine("No booking with that ID found.");
-                return;
-            }
-            ChooseAction(booking);
+            ChooseAction(bookingId);
         }
 
         internal void ReadByRoomId()
         {
             int id = InputHelper.ReadInt("Room ID:");
-            
-            List<Booking> bookingsOnRoom = _bookingService.GetByRoomId(id);
-            SelectBookingAndChooseAction(bookingsOnRoom);
+            SelectBookingAndChooseAction(() => _bookingService.GetByRoomId(id));
         }
 
         internal void ReadByCustomerId()
         {
             int customerId = InputHelper.ReadInt("Customer ID:");
-            List<Booking> bookingsByCustomer = _bookingService.GetByCustomerId(customerId);
-            SelectBookingAndChooseAction(bookingsByCustomer);
+            SelectBookingAndChooseAction(() => _bookingService.GetByCustomerId(customerId));
+
         }
     }
 }

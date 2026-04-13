@@ -34,7 +34,7 @@ namespace HotelBookingApp.Flows.Bookings
                         _create.Run();
                         break;
                     case BookingMenuOption.ShowAll:
-                        _read.ReadAll(); ;
+                        _read.ReadAll();
                         break;
                     case BookingMenuOption.FindById:
                         _read.ReadById();
@@ -43,7 +43,7 @@ namespace HotelBookingApp.Flows.Bookings
                         _read.ReadByDate();
                         break;
                     case BookingMenuOption.FindByRoomId:
-                        _read.ReadById();
+                        _read.ReadByRoomId();
                         break;
                     case BookingMenuOption.FindByCustomerId:
                         _read.ReadByCustomerId();

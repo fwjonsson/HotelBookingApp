@@ -17,8 +17,11 @@ namespace HotelBookingApp.Flows.Bookings
             _bookingService = bookingService;
             _updateBookingMenu = new UpdateBookingMenu();
         }
-        internal void Run(Booking booking)
+        internal void Run(int bookingId)
         {
+            Booking? booking = _bookingService.GetById(bookingId);
+            FlowHelper.EnsureFound(booking, "Booking not found.");
+            if (booking == null) return;
             DateOnly newStartDate = booking.StartDate;
             DateOnly newEndDate = booking.EndDate;
             int newCustomerId = booking.CustomerId;
@@ -73,6 +76,7 @@ namespace HotelBookingApp.Flows.Bookings
                         {
                             Console.WriteLine("Changes saved.");
                             _updateBookingMenu.ResetIndex();
+                            InputHelper.WaitForContinue();
                             return;
                         }
                         break;

@@ -41,7 +41,7 @@ namespace HotelBookingApp.Menus
             var result = _menu.Show();
             if (result.WasCancelled)
                 return null;
-            int selectedIndex = _menu.Show().Value;
+            int selectedIndex = result.Value;
 
             if (selectedIndex == backIndex)
             {
