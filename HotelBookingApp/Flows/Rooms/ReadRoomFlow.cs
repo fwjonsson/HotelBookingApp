@@ -54,7 +54,7 @@ namespace HotelBookingApp.Flows.Rooms
             while (true)
             {
                 Room? room = getRoom(identifier);
-                if (!FlowHelper.ItemFound(room, "Room not found"))
+                if (!FlowHelper.CheckItemExistsAndWait(room, "Room not found"))
                     return;
 
                 ActionMenuOption choice = _roomActionMenu.Show(room!);
@@ -66,6 +66,7 @@ namespace HotelBookingApp.Flows.Rooms
                         break;
                     case ActionMenuOption.Delete:
                         _deleteRoomFlow.Run(room!.Id);
+                        _roomActionMenu.ResetIndex();
                         return;
                     case ActionMenuOption.Back:
                         _roomActionMenu.ResetIndex();

@@ -19,7 +19,7 @@ namespace HotelBookingApp.Flows.Bookings
         internal void Run(int bookingId)
         {
             Booking? booking = _bookingService.GetById(bookingId);
-            if (!FlowHelper.ItemFound(booking, "Booking not found.")) 
+            if (!FlowHelper.CheckItemExistsAndWait(booking, "Booking not found.")) 
                 return;
             DateOnly newStartDate = booking!.StartDate;
             DateOnly newEndDate = booking.EndDate;

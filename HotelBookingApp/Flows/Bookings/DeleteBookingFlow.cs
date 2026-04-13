@@ -18,7 +18,7 @@ namespace HotelBookingApp.Flows.Bookings
         {
             Booking? booking = _bookingService.GetById(bookingId);
             
-            if (!FlowHelper.ItemFound(booking, "Booking not found."))
+            if (!FlowHelper.CheckItemExistsAndWait(booking, "Booking not found."))
                 return;
 
             BookingPrinter.PrintBooking(booking!);

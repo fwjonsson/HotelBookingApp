@@ -8,6 +8,7 @@ namespace HotelBookingApp.Services.Rooms
     {
         public bool RoomFound { get; set; } = true;
         public bool RoomNumberAvailable { get; set; } = true;
+        public bool RoomNumberValid { get; set; } = true;
         public bool RoomTypeValid { get; set; } = true;
         public bool ExtraBedsValid { get; set; } = true;
         public bool BookingFound { get; set; } = true;
@@ -17,6 +18,7 @@ namespace HotelBookingApp.Services.Rooms
         public bool Success =>
             RoomFound &&
             RoomNumberAvailable &&
+            RoomNumberValid &&
             RoomTypeValid &&
             ExtraBedsValid &&
             BookingFound &&

@@ -51,7 +51,7 @@ namespace HotelBookingApp.Flows.Customers
             while (true)
             {
                 Customer? customer = getCustomer(identifier);
-                if (!FlowHelper.ItemFound(customer, "Customer not found."))
+                if (!FlowHelper.CheckItemExistsAndWait(customer, "Customer not found."))
                     return;
 
                 ActionMenuOption choice = _customerActionMenu.Show(customer!);
