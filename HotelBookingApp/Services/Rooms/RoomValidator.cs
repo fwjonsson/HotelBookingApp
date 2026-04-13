@@ -52,18 +52,18 @@ namespace HotelBookingApp.Services.Rooms
                 }
             }
 
-            if (extraBeds is int eBeds && result.RoomTypeValid)
+            if (extraBeds is int eBeds)
             {
+                if (checkedRoomType == null)
+                    result.ChoseRoomTypeBeforeExtraBeds = false;
 
-                if (!ValidNrOfExtraBeds(eBeds, checkedRoomType))
-                {
+                else if (!ValidNrOfExtraBeds(eBeds, checkedRoomType))
                     result.ExtraBedsValid = false;
-                }
 
                 else
                     checkedExtraBeds = eBeds;
             }
-            else result.ChoseRoomTypeBeforeExtraBeds = false;
+                
 
             return (checkedRoomNumber, checkedRoomType, checkedExtraBeds, result);
 
@@ -78,8 +78,7 @@ namespace HotelBookingApp.Services.Rooms
         }
         private static bool ValidNrOfExtraBeds(int extraBeds, RoomType? roomType)
         {
-            if (roomType == null ||
-                roomType == RoomType.Single && extraBeds > 1 ||
+            if (roomType == RoomType.Single && extraBeds > 1 ||
                 roomType == RoomType.Double && extraBeds > 2 ||
                 extraBeds < 0
                 )
