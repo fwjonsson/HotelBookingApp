@@ -1,4 +1,5 @@
 ﻿using HotelBookingApp.Enums;
+using HotelBookingApp.Enums.Menus.Rooms;
 using HotelBookingApp.Menus.Rooms;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Rooms;
@@ -26,9 +27,20 @@ namespace HotelBookingApp.Flows.Rooms
             Room? room = _roomService.GetById(roomId);
             if (!FlowHelper.CheckItemExistsAndWait(room, "Room not found."))
                 return;
-            int roomNr = room!.RoomNumber;
-            RoomType roomType = room.RoomType;
-            int extraBeds = room.ExtraBeds;
+
+            int newRoomNumber = room!.RoomNumber;
+            RoomType newRoomType = room.RoomType;
+            int newExtraBeds = room.ExtraBeds;
+
+            while (true)
+            {
+                RoomEditorMenuOption choice = _updateRoomMenu.Show(newRoomNumber, newRoomType, newExtraBeds);
+
+                switch (choice)
+                {
+
+                }
+            }
         }
     }
 }

@@ -36,44 +36,52 @@ namespace HotelBookingApp.Flows.Customers
                 {
                     case CustomerEditorMenuOption.FullName:
                         newFullName = InputHelper.ReadFullName("New full name: ");
-                        continue;
+                        break;
                     case CustomerEditorMenuOption.BirthDate:
                         newBirthDate = InputHelper.ReadDateOnly("New birth date: ");
-                        continue;
+                        break;
                     case CustomerEditorMenuOption.Email:
                         newEmail = InputHelper.ReadEmail("New email: ");
-                        continue;
+                        break;
                     case CustomerEditorMenuOption.PhoneNumber:
                         newPhoneNumber = InputHelper.ReadPhoneNumber("New phone number: ");
-                        continue;
+                        break;
                     case CustomerEditorMenuOption.Save:
-                        CustomerValidationResult result = _customerService.UpdateCustomer(customer.Id, newFullName, newBirthDate, newEmail, newPhoneNumber);
-                        if (!result.CustomerFound)
-                        {
-                            Console.WriteLine("Customer not found.");
-                        }
-                        if (!result.EmailAvailable)
-                        {
-                            Console.WriteLine("Email is already registered.");
-                        }
-                        if (!result.PhoneNumberAvailable)
-                        {
-                            Console.WriteLine("Phone number is already registered.");
-                        }
-                        if (result.Success)
-                        {
-                            Console.WriteLine("Changes saved.");
-                            _updateCustomerMenu.ResetIndex();
-                            InputHelper.WaitForContinue();
+                        bool saved = TrySave(customer.Id, newFullName, newBirthDate, newEmail, newPhoneNumber);
+                        if (saved)
                             return;
-                        }
                         break;
                     case CustomerEditorMenuOption.Cancel:
                         _updateCustomerMenu.ResetIndex();
                         return;
                 }
-                InputHelper.WaitForContinue();
             }
+        }
+
+        private bool TrySave(int customerId, string newFullName, DateOnly newBirthDate, string newEmail, string newPhoneNumber)
+        {
+            CustomerValidationResult result = _customerService.UpdateCustomer(customerId, newFullName, newBirthDate, newEmail, newPhoneNumber);
+            if (!result.CustomerFound)
+            {
+                Console.WriteLine("Customer not found.");
+            }
+            if (!result.EmailAvailable)
+            {
+                Console.WriteLine("Email is already registered.");
+            }
+            if (!result.PhoneNumberAvailable)
+            {
+                Console.WriteLine("Phone number is already registered.");
+            }
+            if (result.Success)
+            {
+                Console.WriteLine("Changes saved.");
+                _updateCustomerMenu.ResetIndex();
+                InputHelper.WaitForContinue();
+                return true;
+            }
+            InputHelper.WaitForContinue();
+            return false;
         }
     }
 }
