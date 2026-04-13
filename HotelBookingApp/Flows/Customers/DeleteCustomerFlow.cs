@@ -25,23 +25,17 @@ namespace HotelBookingApp.Flows.Customers
             if (!FlowHelper.CheckItemExistsAndWait(customer, "Customer not found."))
                 return;
 
-            CustomerPrinter.PrintCustomer(customer!);
+            Console.WriteLine(CustomerPrinter.FormatCustomer(customer!));
             if (InputHelper.WaitForYesOrNo("Are you sure you want to delete? Y/N"))
             {
                 CustomerValidationResult result = _customerService.DeleteCustomer(customer!.Id);
 
                 if (!result.CustomerFound)
-                {
                     Console.WriteLine("No customer with that ID found.");
-                }
                 if (!result.CanBeDeleted)
-                {
                     Console.WriteLine("Cannot delete a customer with current or future bookings.");
-                }
                 if (result.Success)
-                {
                     Console.WriteLine("Customer deleted.");
-                }
             }
             InputHelper.WaitForContinue();
         }

@@ -21,6 +21,11 @@ namespace HotelBookingApp.Services.Rooms
             throw new NotImplementedException();
         }
 
+        internal RoomValidationResult DeleteRoom(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         internal Room? GetByBookingId(int arg)
         {
             throw new NotImplementedException();

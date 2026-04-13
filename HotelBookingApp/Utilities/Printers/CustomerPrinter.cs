@@ -30,13 +30,13 @@ namespace HotelBookingApp.Utilities.Printers
             {
                 foreach (Customer customer in customers)
                 {
-                    PrintCustomer(customer);
+                    Console.WriteLine(FormatCustomer(customer!));
                 }
             }
         }
         internal static void PrintCustomerAndTheirBookings(Customer customer)
         {
-            PrintCustomer(customer);
+            Console.WriteLine(FormatCustomer(customer!));
 
             if (customer.Bookings.Count > 0)
             {
@@ -45,7 +45,7 @@ namespace HotelBookingApp.Utilities.Printers
 
                 foreach (Booking booking in customer.Bookings)
                 {
-                    BookingPrinter.PrintBooking(booking);
+                    Console.WriteLine(BookingPrinter.FormatBooking(booking!));
                 }
             }
             Console.WriteLine();

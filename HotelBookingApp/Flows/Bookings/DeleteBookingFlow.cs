@@ -22,7 +22,7 @@ namespace HotelBookingApp.Flows.Bookings
             if (!FlowHelper.CheckItemExistsAndWait(booking, "Booking not found."))
                 return;
 
-            BookingPrinter.PrintBooking(booking!);
+            Console.WriteLine(BookingPrinter.FormatBooking(booking!));
             if (InputHelper.WaitForYesOrNo("Are you sure you want to delete? Y/N"))
             {
                 BookingValidationResult result = _bookingService.DeleteBooking(booking!.Id);

@@ -32,7 +32,7 @@ namespace HotelBookingApp.Utilities.Printers
             {
                 foreach (var booking in bookings)
                 {
-                    PrintBooking(booking);
+                    Console.WriteLine(FormatBooking(booking!));
                 }
             }
         }
