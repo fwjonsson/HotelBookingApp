@@ -28,51 +28,54 @@ namespace HotelBookingApp.Flows.Customers
                 var choice = _createCustomerMenu.Show(fullName, birthDate, email, phoneNumber);
                 switch (choice)
                 {
-                    case EditCustomerMenuOption.FullName:
+                    case CustomerEditorMenuOption.FullName:
                         fullName = InputHelper.ReadFullName("Full name: ");
                         continue;
-                    case EditCustomerMenuOption.BirthDate:
+                    case CustomerEditorMenuOption.BirthDate:
                         birthDate = InputHelper.ReadDateOnly("Birth date (yyyy-MM-dd): ");
                         continue;
-                    case EditCustomerMenuOption.Email:
+                    case CustomerEditorMenuOption.Email:
                         email = InputHelper.ReadEmail("Email: ");
                         continue;
-                    case EditCustomerMenuOption.PhoneNumber:
+                    case CustomerEditorMenuOption.PhoneNumber:
                         phoneNumber = InputHelper.ReadPhoneNumber("Phone number: ");
                         continue;
-                    case EditCustomerMenuOption.Save:
-                        if (fullName is not string fName ||
-                            birthDate is not DateOnly bDate ||
-                            email is not string e ||
-                            phoneNumber is not string pNumber)
-                        {
-                            Console.WriteLine("You must fill in all values before creating.");
-                            InputHelper.WaitForContinue();
-                            continue;
-                        }
-                        CustomerValidationResult result = _customerService.CreateCustomer(fName, bDate, e, pNumber);
-                        if (!result.EmailAvailable)
-                        {
-                            Console.WriteLine("Email is already registered.");
-                        }
-                        if (!result.PhoneNumberAvailable)
-                        {
-                            Console.WriteLine("Phone number is already registered.");
-                        }
-                        if (result.Success)
-                        {
-                            Console.WriteLine("Customer created successfully.");
-                            _createCustomerMenu.ResetIndex();
-                            InputHelper.WaitForContinue();
+                    case CustomerEditorMenuOption.Save:
+                        bool saved = TrySave(fullName, birthDate, email, phoneNumber);
+                        if (saved)
                             return;
-                        }
                         break;
-                    case EditCustomerMenuOption.Cancel:
+                    case CustomerEditorMenuOption.Cancel:
                         _createCustomerMenu.ResetIndex();
                         return;
                 }
                 InputHelper.WaitForContinue();
             }
+        }
+
+        private bool TrySave(string? fullName, DateOnly? birthDate, string? email, string? phoneNumber)
+        {
+            if (fullName is not string fName ||
+                birthDate is not DateOnly bDate ||
+                email is not string e ||
+                phoneNumber is not string pNumber)
+            {
+                Console.WriteLine("You must fill in all values before creating.");
+                return false;
+            }
+            CustomerValidationResult result = _customerService.CreateCustomer(fName, bDate, e, pNumber);
+            if (!result.EmailAvailable)
+                Console.WriteLine("Email is already registered.");
+            if (!result.PhoneNumberAvailable)
+                Console.WriteLine("Phone number is already registered.");
+            if (result.Success)
+            {
+                Console.WriteLine("Customer created successfully.");
+                _createCustomerMenu.ResetIndex();
+                InputHelper.WaitForContinue();
+                return true;
+            }
+            return false;
         }
     }
 }

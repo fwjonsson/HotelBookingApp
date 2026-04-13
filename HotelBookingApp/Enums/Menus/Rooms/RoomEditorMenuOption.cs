@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HotelBookingApp.Enums.Menus.Rooms
 {
-    internal enum EditRoomMenuOption
+    internal enum RoomEditorMenuOption
     {
         RoomNumber,
         RoomType,

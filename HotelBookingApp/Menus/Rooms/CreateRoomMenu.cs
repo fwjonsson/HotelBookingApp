@@ -10,41 +10,41 @@ namespace HotelBookingApp.Menus.Rooms
 {
     internal class CreateRoomMenu
     {
-        private readonly ConsoleMenu<EditRoomMenuOption> _menu;
+        private readonly ConsoleMenu<RoomEditorMenuOption> _menu;
 
         internal CreateRoomMenu()
         {
-            _menu = new ConsoleMenu<EditRoomMenuOption>("Create Room", new List<MenuChoice<EditRoomMenuOption>>());
+            _menu = new ConsoleMenu<RoomEditorMenuOption>("Create Room", new List<MenuChoice<RoomEditorMenuOption>>());
         }
-        internal EditRoomMenuOption Show(int? roomNumber, RoomType? roomType, int? extraBeds)
+        internal RoomEditorMenuOption Show(int? roomNumber, RoomType? roomType, int? extraBeds)
         {
             if (roomType == null)
             {
-                _menu.SetChoices(new List<MenuChoice<EditRoomMenuOption>>
+                _menu.SetChoices(new List<MenuChoice<RoomEditorMenuOption>>
             {
-                new(EditRoomMenuOption.RoomNumber, $"Room Number: {roomNumber?.ToString() ?? "Not set" }"),
-                new(EditRoomMenuOption.RoomType, $"Room Type(1 or 2): {roomType?.ToString() ?? "Not set"}"),
-                new(EditRoomMenuOption.ExtraBeds, $"Enter Room Type First"),
-                new(EditRoomMenuOption.Save, "Save"),
-                new(EditRoomMenuOption.Cancel, "Cancel")
+                new(RoomEditorMenuOption.RoomNumber, $"Room Number: {roomNumber?.ToString() ?? "Not set" }"),
+                new(RoomEditorMenuOption.RoomType, $"Room Type(1 or 2): {roomType?.ToString() ?? "Not set"}"),
+                new(RoomEditorMenuOption.ExtraBeds, $"Enter Room Type First"),
+                new(RoomEditorMenuOption.Save, "Save"),
+                new(RoomEditorMenuOption.Cancel, "Cancel")
             });
             }
             else
             {
                 {
-                    _menu.SetChoices(new List<MenuChoice<EditRoomMenuOption>>
+                    _menu.SetChoices(new List<MenuChoice<RoomEditorMenuOption>>
             {
-                new(EditRoomMenuOption.RoomNumber, $"Room Number: {roomNumber?.ToString() ?? "Not set" }"),
-                new(EditRoomMenuOption.RoomType, $"Room Type(1 or 2): {roomType?.ToString() ?? "Not set"}"),
-                new(EditRoomMenuOption.ExtraBeds, $"Extra Beds(Max 1 in single room and max 2 in double room): {extraBeds?.ToString() ?? "Not set"}"),
-                new(EditRoomMenuOption.Save, "Save"),
-                new(EditRoomMenuOption.Cancel, "Cancel")
+                new(RoomEditorMenuOption.RoomNumber, $"Room Number: {roomNumber?.ToString() ?? "Not set" }"),
+                new(RoomEditorMenuOption.RoomType, $"Room Type(1 or 2): {roomType?.ToString() ?? "Not set"}"),
+                new(RoomEditorMenuOption.ExtraBeds, $"Extra Beds(Max 1 in single room and max 2 in double room): {extraBeds?.ToString() ?? "Not set"}"),
+                new(RoomEditorMenuOption.Save, "Save"),
+                new(RoomEditorMenuOption.Cancel, "Cancel")
             });
                 }
             }
             var result = _menu.Show();
             if (result.WasCancelled)
-                return EditRoomMenuOption.Cancel;
+                return RoomEditorMenuOption.Cancel;
             return result.Value;
         }
         internal void ResetIndex()

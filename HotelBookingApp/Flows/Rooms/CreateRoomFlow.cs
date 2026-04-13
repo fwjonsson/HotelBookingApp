@@ -27,57 +27,69 @@ namespace HotelBookingApp.Flows.Rooms
             RoomType? roomType = null;
             int? extraBeds = null;
 
-
             while (true)
             {
                 var choice = _createRoomMenu.Show(roomNumber, roomType, extraBeds);
                 switch (choice)
                 {
-                    case EditRoomMenuOption.RoomNumber:
-                        roomNumber = InputHelper.ReadInt("Room number:");
-                        continue;
-                    case EditRoomMenuOption.RoomType:
+                    case RoomEditorMenuOption.RoomNumber:
+                        roomNumber = ValidateRoomNumber();
+                        break;
+                    case RoomEditorMenuOption.RoomType:
                         roomType = ValidateRoomType();
-                        continue;
-                    case EditRoomMenuOption.ExtraBeds:
+                        break;
+                    case RoomEditorMenuOption.ExtraBeds:
                         extraBeds = ValidateExtraBeds(roomType);
-                        continue;
-                    case EditRoomMenuOption.Save:
+                        break;
+                    case RoomEditorMenuOption.Save:
                         bool saved = TrySave(roomNumber, roomType, extraBeds);
-                        InputHelper.WaitForContinue();
                         if (saved)
                             return;
                         break;
-                    case EditRoomMenuOption.Cancel:
+                    case RoomEditorMenuOption.Cancel:
                         _createRoomMenu.ResetIndex();
                         return;
                 }
-                InputHelper.WaitForContinue();
             }
+        }
+
+        private int? ValidateRoomNumber()
+        {
+            var input = InputHelper.ReadInt("Room number:");
+            if (input < 1)
+            {
+                Console.WriteLine("Must be over 0");
+                InputHelper.WaitForContinue();
+                return null;
+            }
+            else return input;
         }
 
         private bool TrySave(int? roomNumber, RoomType? roomType, int? extraBeds)
         {
             if (roomNumber is not int rNumber ||
-                            roomType is not RoomType rType ||
-                            extraBeds is not int eBeds)
+                roomType is not RoomType rType ||
+                extraBeds is not int eBeds)
             {
                 Console.WriteLine("You must fill in all values before creating.");
+                InputHelper.WaitForContinue();
                 return false;
             }
             RoomValidationResult result = _roomService.CreateRoom(rNumber, rType, eBeds);
             if (!result.RoomNumberAvailable)
                 Console.WriteLine("Room number unavailable.");
             if (!result.RoomTypeValid)
-                Console.WriteLine("Invalid room type, has to be single or double,");
+                Console.WriteLine("Invalid room type, has to be single or double.");
             if (!result.ExtraBedsValid)
                 Console.WriteLine("Invalid amount of extra beds, max 1 for single room and max 2 for double room.");
             if (result.Success)
             {
                 Console.WriteLine("Room created successfully.");
+                InputHelper.WaitForContinue();
                 _createRoomMenu.ResetIndex();
                 return true;
             }
+            InputHelper.WaitForContinue();
             return false;
         }
 
@@ -94,13 +106,13 @@ namespace HotelBookingApp.Flows.Rooms
             {
                 Console.WriteLine("Max 1.");
             }
-            if (roomType == RoomType.Double && input > 2)
+            else if (roomType == RoomType.Double && input > 2)
             {
-                Console.WriteLine("Max 2,");
+                Console.WriteLine("Max 2.");
             }
-            if (input < 0)
+            else if (input < 0)
             {
-                Console.WriteLine("Extra beds cannot me < 0.");
+                Console.WriteLine("Extra beds cannot be negative.");
             }
             else
             {

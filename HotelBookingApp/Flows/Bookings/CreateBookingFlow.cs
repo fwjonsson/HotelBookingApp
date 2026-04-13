@@ -28,19 +28,19 @@ namespace HotelBookingApp.Flows.Bookings
                 var choice = _createBookingMenu.Show(customerId, roomId, startDate, endDate);
                 switch (choice)
                 {
-                    case EditBookingMenuOption.CustomerId:
+                    case BookingEditorMenuOption.CustomerId:
                         customerId = InputHelper.ReadInt("Enter customer ID: ");
                         continue;
-                    case EditBookingMenuOption.RoomId:
+                    case BookingEditorMenuOption.RoomId:
                         roomId = InputHelper.ReadInt("Enter room ID: ");
                         continue;
-                    case EditBookingMenuOption.StartDate:
+                    case BookingEditorMenuOption.StartDate:
                         startDate = InputHelper.ReadDateOnly("Enter start date (yyyy-MM-dd): ");
                         continue;
-                    case EditBookingMenuOption.EndDate:
+                    case BookingEditorMenuOption.EndDate:
                         endDate = InputHelper.ReadDateOnly("Enter end date (yyyy-MM-dd): ");
                         continue;
-                    case EditBookingMenuOption.Save:
+                    case BookingEditorMenuOption.Save:
                         if (customerId is not int cId ||
                             roomId is not int rId ||
                             startDate is not DateOnly sDate ||
@@ -75,7 +75,7 @@ namespace HotelBookingApp.Flows.Bookings
                             return;
                         }
                         break;
-                    case EditBookingMenuOption.Cancel:
+                    case BookingEditorMenuOption.Cancel:
                         _createBookingMenu.ResetIndex();
                         return;
                 }

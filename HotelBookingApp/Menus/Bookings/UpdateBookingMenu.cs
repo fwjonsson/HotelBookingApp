@@ -9,27 +9,27 @@ namespace HotelBookingApp.Menus.Bookings
 {
     internal class UpdateBookingMenu
     {
-        private readonly ConsoleMenu<EditBookingMenuOption> _menu;
+        private readonly ConsoleMenu<BookingEditorMenuOption> _menu;
         internal UpdateBookingMenu()
         {
-            _menu = new ConsoleMenu<EditBookingMenuOption>(
+            _menu = new ConsoleMenu<BookingEditorMenuOption>(
                 "Update Booking"
-                , new List<MenuChoice<EditBookingMenuOption>>());
+                , new List<MenuChoice<BookingEditorMenuOption>>());
         }
-        internal EditBookingMenuOption Show(DateOnly startDate, DateOnly endDate, int roomId, int customerId)
+        internal BookingEditorMenuOption Show(DateOnly startDate, DateOnly endDate, int roomId, int customerId)
         {
-            _menu.SetChoices(new List<MenuChoice<EditBookingMenuOption>>
+            _menu.SetChoices(new List<MenuChoice<BookingEditorMenuOption>>
             {
-                new(EditBookingMenuOption.StartDate, $"Change start date ({startDate:yyyy-MM-dd})"),
-                new(EditBookingMenuOption.EndDate, $"Change end date ({endDate:yyyy-MM-dd})"),
-                new(EditBookingMenuOption.RoomId, $"Change room by room ID ({roomId})"),
-                new(EditBookingMenuOption.CustomerId, $"Change customer by customer ID ({customerId})"),
-                new(EditBookingMenuOption.Save, "Save changes"),
-                new(EditBookingMenuOption.Cancel, "Cancel")
+                new(BookingEditorMenuOption.StartDate, $"Change start date ({startDate:yyyy-MM-dd})"),
+                new(BookingEditorMenuOption.EndDate, $"Change end date ({endDate:yyyy-MM-dd})"),
+                new(BookingEditorMenuOption.RoomId, $"Change room by room ID ({roomId})"),
+                new(BookingEditorMenuOption.CustomerId, $"Change customer by customer ID ({customerId})"),
+                new(BookingEditorMenuOption.Save, "Save changes"),
+                new(BookingEditorMenuOption.Cancel, "Cancel")
             });
             var result = _menu.Show();
             if (result.WasCancelled)
-                return EditBookingMenuOption.Cancel;
+                return BookingEditorMenuOption.Cancel;
             return result.Value;
         }
         internal void ResetIndex()

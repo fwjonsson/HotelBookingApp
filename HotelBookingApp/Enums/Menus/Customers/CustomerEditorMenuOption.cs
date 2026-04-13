@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HotelBookingApp.Enums.Menus.Customers
 {
-    internal enum EditCustomerMenuOption
+    internal enum CustomerEditorMenuOption
     {
         FullName,
         BirthDate,

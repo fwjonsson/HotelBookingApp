@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HotelBookingApp.Enums.Menus.Bookings
 {
-    internal enum EditBookingMenuOption
+    internal enum BookingEditorMenuOption
     {
         StartDate,
         EndDate,

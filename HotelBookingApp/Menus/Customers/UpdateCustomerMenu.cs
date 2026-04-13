@@ -8,28 +8,28 @@ namespace HotelBookingApp.Menus.Customers
 {
     internal class UpdateCustomerMenu
     {
-        private readonly ConsoleMenu<EditCustomerMenuOption> _menu;
+        private readonly ConsoleMenu<CustomerEditorMenuOption> _menu;
 
         internal UpdateCustomerMenu()
         {
-            _menu = new ConsoleMenu<EditCustomerMenuOption>(
+            _menu = new ConsoleMenu<CustomerEditorMenuOption>(
                 "Update Customer"
-                , new List<MenuChoice<EditCustomerMenuOption>>());
+                , new List<MenuChoice<CustomerEditorMenuOption>>());
         }
-        internal EditCustomerMenuOption Show(string fullName, DateOnly birthDate, string email, string phoneNumber)
+        internal CustomerEditorMenuOption Show(string fullName, DateOnly birthDate, string email, string phoneNumber)
         {
-            _menu.SetChoices(new List<MenuChoice<EditCustomerMenuOption>>
+            _menu.SetChoices(new List<MenuChoice<CustomerEditorMenuOption>>
             {
-                new(EditCustomerMenuOption.FullName, $"Change full name: {fullName}"),
-                new(EditCustomerMenuOption.BirthDate, $"Change birth date: {birthDate:yyyy-MM-dd}"),
-                new(EditCustomerMenuOption.Email, $"Change email: {email}"),
-                new(EditCustomerMenuOption.PhoneNumber, $"Change phone number: {phoneNumber}"),
-                new(EditCustomerMenuOption.Save, "Save changes"),
-                new(EditCustomerMenuOption.Cancel, "Cancel")
+                new(CustomerEditorMenuOption.FullName, $"Change full name: {fullName}"),
+                new(CustomerEditorMenuOption.BirthDate, $"Change birth date: {birthDate:yyyy-MM-dd}"),
+                new(CustomerEditorMenuOption.Email, $"Change email: {email}"),
+                new(CustomerEditorMenuOption.PhoneNumber, $"Change phone number: {phoneNumber}"),
+                new(CustomerEditorMenuOption.Save, "Save changes"),
+                new(CustomerEditorMenuOption.Cancel, "Cancel")
             });
             var result = _menu.Show();
             if (result.WasCancelled)
-                return EditCustomerMenuOption.Cancel;
+                return CustomerEditorMenuOption.Cancel;
             return result.Value;
         }
         internal void ResetIndex()
