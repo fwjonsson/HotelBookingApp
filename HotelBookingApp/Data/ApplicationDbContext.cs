@@ -34,8 +34,7 @@ namespace HotelBookingApp.Data
             modelBuilder.Entity<Booking>()
                 .HasOne(b => b.Customer)
                 .WithMany(c => c.Bookings)
-                .HasForeignKey(b => b.CustomerId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(b => b.CustomerId);
 
             base.OnModelCreating(modelBuilder);
         }

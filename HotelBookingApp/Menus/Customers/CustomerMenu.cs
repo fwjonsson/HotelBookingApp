@@ -16,11 +16,11 @@ namespace HotelBookingApp.Menus.Customers
             {
                 new(CustomerMenuOption.Create, "Create New Customer"),
                 new(CustomerMenuOption.ShowAll, "Show All Customers"),
-                new(CustomerMenuOption.FindByID, "Find By ID"),
                 new(CustomerMenuOption.FindByFullName, "Find By Full Name"),
                 new(CustomerMenuOption.FindByBirthDate, "Find By Birth Date"),
                 new(CustomerMenuOption.FindByEmail, "Find By Email"),
                 new(CustomerMenuOption.FindByPhoneNumber, "Find By Phone Number"),
+                new(CustomerMenuOption.FindByID, "Find By Customer ID"),
                 new(CustomerMenuOption.FindByBookingID, "Find By Booking ID"),
                 new(CustomerMenuOption.Back, "Back")
             });

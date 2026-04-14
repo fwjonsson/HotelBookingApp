@@ -32,11 +32,11 @@ namespace HotelBookingApp.Flows.Bookings
                     case BookingMenuOption.ShowAll:
                         _read.ReadAll();
                         break;
-                    case BookingMenuOption.FindById:
-                        _read.ReadById();
-                        break;
                     case BookingMenuOption.FindByDate:
                         _read.ReadByDate();
+                        break;
+                    case BookingMenuOption.FindById:
+                        _read.ReadById();
                         break;
                     case BookingMenuOption.FindByRoomId:
                         _read.ReadByRoomId();

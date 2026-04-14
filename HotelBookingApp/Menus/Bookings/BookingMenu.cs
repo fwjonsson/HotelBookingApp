@@ -13,8 +13,8 @@ namespace HotelBookingApp.Menus.Bookings
             {
                 new(BookingMenuOption.Create, "Create New Booking"),
                 new(BookingMenuOption.ShowAll, "Show All Bookings"),
-                new(BookingMenuOption.FindById, "Find By ID"),
                 new(BookingMenuOption.FindByDate, "Find By Date"),
+                new(BookingMenuOption.FindById, "Find By Booking ID"),
                 new(BookingMenuOption.FindByRoomId, "Find By Room ID"),
                 new(BookingMenuOption.FindByCustomerId, "Find By Customer ID"),
                 new(BookingMenuOption.Back, "Back")

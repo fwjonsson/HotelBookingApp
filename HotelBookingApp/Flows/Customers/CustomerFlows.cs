@@ -32,9 +32,6 @@ namespace HotelBookingApp.Flows.Customers
                     case CustomerMenuOption.ShowAll:
                         _read.ReadAll();
                         break;
-                    case CustomerMenuOption.FindByID:
-                        _read.ReadById();
-                        break;
                     case CustomerMenuOption.FindByFullName:
                         _read.ReadByFullName();
                         break;
@@ -46,6 +43,9 @@ namespace HotelBookingApp.Flows.Customers
                         break;
                     case CustomerMenuOption.FindByPhoneNumber:
                         _read.ReadByPhoneNumber();
+                        break;
+                    case CustomerMenuOption.FindByID:
+                        _read.ReadById();
                         break;
                     case CustomerMenuOption.FindByBookingID:
                         _read.ReadByBookingId();
