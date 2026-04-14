@@ -53,7 +53,6 @@ namespace HotelBookingApp.Flows.Rooms
                     case RoomMenuOption.Back:
                         _roomMenu.ResetIndex();
                         return;
-
                 }
             }
         }

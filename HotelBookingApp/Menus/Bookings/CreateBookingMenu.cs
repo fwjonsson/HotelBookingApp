@@ -13,7 +13,7 @@ namespace HotelBookingApp.Menus.Bookings
         internal CreateBookingMenu()
         {
             _menu = new ConsoleMenu<BookingEditorMenuOption>(
-                "Create Booking", new List<MenuChoice<BookingEditorMenuOption>>());
+                "--Create New Booking--", new List<MenuChoice<BookingEditorMenuOption>>());
         }
         internal BookingEditorMenuOption Show(int? customerId, int? roomId, DateOnly? startDate, DateOnly? endDate)
         {
@@ -21,9 +21,9 @@ namespace HotelBookingApp.Menus.Bookings
             {
                 new(BookingEditorMenuOption.CustomerId, $"Customer ID: {customerId?.ToString() ?? "Not set"}"),
                 new(BookingEditorMenuOption.RoomId, $"Room ID: {roomId?.ToString() ?? "Not set"}"),
-                new(BookingEditorMenuOption.StartDate, $"Start date (yyyy-MM-dd): {startDate?.ToString("yyyy-MM-dd") ?? "Not set"}"),
-                new(BookingEditorMenuOption.EndDate, $"End date (yyyy-MM-dd): {endDate?.ToString("yyyy-MM-dd")?? "Not set"}"),
-                new(BookingEditorMenuOption.Save, $"Create booking"),
+                new(BookingEditorMenuOption.StartDate, $"Start Date (yyyy-MM-dd): {startDate?.ToString("yyyy-MM-dd") ?? "Not set"}"),
+                new(BookingEditorMenuOption.EndDate, $"End Date (yyyy-MM-dd): {endDate?.ToString("yyyy-MM-dd")?? "Not set"}"),
+                new(BookingEditorMenuOption.Save, $"Save"),
                 new(BookingEditorMenuOption.Cancel, $"Cancel")
             });
             var result = _menu.Show();

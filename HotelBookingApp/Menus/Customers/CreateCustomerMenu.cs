@@ -12,14 +12,14 @@ namespace HotelBookingApp.Menus.Customers
 
         internal CreateCustomerMenu()
         {
-            _menu = new ConsoleMenu<CustomerEditorMenuOption>("Create Customer", new List<MenuChoice<CustomerEditorMenuOption>>());
+            _menu = new ConsoleMenu<CustomerEditorMenuOption>("--Create New Customer--", new List<MenuChoice<CustomerEditorMenuOption>>());
         }
         internal CustomerEditorMenuOption Show(string? fullName, DateOnly? birthDate, string? email, string? phoneNumber)
         {
             _menu.SetChoices(new List<MenuChoice<CustomerEditorMenuOption>>
             {
                 new(CustomerEditorMenuOption.FullName, $"Full Name: {fullName?.ToString() ?? "Not set"}"),
-                new(CustomerEditorMenuOption.BirthDate, $"Birth date: {birthDate?.ToString("yyyy-MM-dd") ?? "Not set"}"),
+                new(CustomerEditorMenuOption.BirthDate, $"Birth Date: {birthDate?.ToString("yyyy-MM-dd") ?? "Not set"}"),
                 new(CustomerEditorMenuOption.Email, $"Email: {email?.ToString() ?? "Not set"}"),
                 new(CustomerEditorMenuOption.PhoneNumber, $"Phone Number: {phoneNumber?.ToString() ?? "Not set"}"),
                 new(CustomerEditorMenuOption.Save, $"Save"),

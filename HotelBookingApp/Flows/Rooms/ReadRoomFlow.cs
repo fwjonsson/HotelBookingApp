@@ -25,12 +25,12 @@ namespace HotelBookingApp.Flows.Rooms
         internal ReadRoomFlow(RoomService roomService)
         {
             _roomService = roomService;
-            _selectRoomMenu = new SelectObjectMenu<Room>("Room", RoomPrinter.FormatRoom);
+            _selectRoomMenu = new SelectObjectMenu<Room>(RoomPrinter.FormatRoom);
             _roomActionMenu = new ActionMenu<Room>("Room", RoomPrinter.FormatRoom);
             _updateRoomFlow = new UpdateRoomFlow(roomService);
             _deleteRoomFlow = new DeleteRoomFlow(roomService);
         }
-        private void SelectRoomAndChooseAction(Func<List<Room>> getRooms)
+        private void SelectRoomAndChooseAction(Func<List<Room>> getRooms, string title)
         {
             while (true)
             {
@@ -41,7 +41,7 @@ namespace HotelBookingApp.Flows.Rooms
                     InputHelper.WaitForContinue();
                     return;
                 }
-                Room? room = _selectRoomMenu.Show(rooms);
+                Room? room = _selectRoomMenu.Show(rooms, title);
                 if (room == null)
                 {
                     _selectRoomMenu.ResetIndex();
@@ -81,7 +81,7 @@ namespace HotelBookingApp.Flows.Rooms
 
         internal void ReadAll()
         {
-            SelectRoomAndChooseAction(_roomService.ListAll);
+            SelectRoomAndChooseAction(_roomService.ListAll, "--All Rooms--");
         }
         internal void ReadById()
         {
@@ -110,12 +110,12 @@ namespace HotelBookingApp.Flows.Rooms
                     InputHelper.WaitForContinue();
                     return;
             }
-            SelectRoomAndChooseAction(() => _roomService.GetByRoomType(roomType));
+            SelectRoomAndChooseAction(() => _roomService.GetByRoomType(roomType), $"--All {roomType} Rooms--");
         }
         internal void ReadByCustomerId()
         {
             var customerId = InputHelper.ReadInt("Customer ID: ");
-            SelectRoomAndChooseAction(() => _roomService.GetByCustomerId(customerId));
+            SelectRoomAndChooseAction(() => _roomService.GetByCustomerId(customerId), $"All Rooms By Customer ID: {customerId}--");
         }
         internal void ReadByBookingId()
         {

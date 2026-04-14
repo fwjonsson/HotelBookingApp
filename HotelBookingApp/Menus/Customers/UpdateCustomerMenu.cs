@@ -13,18 +13,18 @@ namespace HotelBookingApp.Menus.Customers
         internal UpdateCustomerMenu()
         {
             _menu = new ConsoleMenu<CustomerEditorMenuOption>(
-                "Update Customer"
+                "--Update Customer--"
                 , new List<MenuChoice<CustomerEditorMenuOption>>());
         }
         internal CustomerEditorMenuOption Show(string fullName, DateOnly birthDate, string email, string phoneNumber)
         {
             _menu.SetChoices(new List<MenuChoice<CustomerEditorMenuOption>>
             {
-                new(CustomerEditorMenuOption.FullName, $"Full name: {fullName}"),
-                new(CustomerEditorMenuOption.BirthDate, $"Birth date: {birthDate:yyyy-MM-dd}"),
+                new(CustomerEditorMenuOption.FullName, $"Full Name: {fullName}"),
+                new(CustomerEditorMenuOption.BirthDate, $"Birth Date: {birthDate:yyyy-MM-dd}"),
                 new(CustomerEditorMenuOption.Email, $"Email: {email}"),
-                new(CustomerEditorMenuOption.PhoneNumber, $"Phone number: {phoneNumber}"),
-                new(CustomerEditorMenuOption.Save, "Save changes"),
+                new(CustomerEditorMenuOption.PhoneNumber, $"Phone Number: {phoneNumber}"),
+                new(CustomerEditorMenuOption.Save, "Save"),
                 new(CustomerEditorMenuOption.Cancel, "Cancel")
             });
             var result = _menu.Show();

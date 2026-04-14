@@ -67,7 +67,7 @@ namespace HotelBookingApp.Flows.Bookings
         private bool TrySave(int bookingId, DateOnly newStartDate, DateOnly newEndDate, int newCustomerId, int newRoomId)
         {
             BookingValidationResult result = _bookingService.UpdateBooking(bookingId, newStartDate, newEndDate, newRoomId, newCustomerId);
-            BookingValidationResultPrinter.PrintErrorsOrSuccess(result, "Changes saved");
+            BookingValidationResultPrinter.PrintErrorsOrSuccess(result, "Changes saved.");
             InputHelper.WaitForContinue();
             if (result.Success)
                 return true;

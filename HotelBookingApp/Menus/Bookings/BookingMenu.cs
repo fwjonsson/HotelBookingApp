@@ -9,7 +9,7 @@ namespace HotelBookingApp.Menus.Bookings
 
         internal BookingMenu()
         {
-            _menu = new ConsoleMenu<BookingMenuOption>("Booking Menu", new List<MenuChoice<BookingMenuOption>>
+            _menu = new ConsoleMenu<BookingMenuOption>("--Booking Menu--", new List<MenuChoice<BookingMenuOption>>
             {
                 new(BookingMenuOption.Create, "Create New Booking"),
                 new(BookingMenuOption.ShowAll, "Show All Bookings"),

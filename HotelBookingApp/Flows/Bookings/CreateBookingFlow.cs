@@ -68,7 +68,7 @@ namespace HotelBookingApp.Flows.Bookings
                 return false;
             }
             BookingValidationResult result = _bookingService.CreateBooking(cId, rId, sDate, eDate);
-            BookingValidationResultPrinter.PrintErrorsOrSuccess(result, "Booking created successfully");
+            BookingValidationResultPrinter.PrintErrorsOrSuccess(result, "Booking created.");
             InputHelper.WaitForContinue();
             if (result.Success)
                 return true;

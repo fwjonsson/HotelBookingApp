@@ -9,7 +9,7 @@ namespace HotelBookingApp.Menus
 
         internal MainMenu()
         {
-            _menu = new ConsoleMenu<MainMenuOption>("Main Menu", new List<MenuChoice<MainMenuOption>>
+            _menu = new ConsoleMenu<MainMenuOption>("--Main Menu--", new List<MenuChoice<MainMenuOption>>
             {
                 new(MainMenuOption.Bookings, "Bookings"),
                 new(MainMenuOption.Customers, "Customers"),

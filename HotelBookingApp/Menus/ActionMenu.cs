@@ -21,7 +21,7 @@ namespace HotelBookingApp.Menus
         }
         internal ActionMenuOption Show(T type)
         {
-            _menu.SetTitle($"{_item}\n\n{_formatter(type)}");
+            _menu.SetTitle($"--{_item}--\n\n{_formatter(type)}");
             _menu.SetChoices(new List<MenuChoice<ActionMenuOption>>
             {
                 new(ActionMenuOption.Edit, "Edit"),

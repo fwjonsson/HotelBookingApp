@@ -23,7 +23,7 @@ namespace HotelBookingApp.Flows.Bookings
                 Booking? booking = _bookingService.GetById(bookingId);
 
                 BookingValidationResult result = _bookingService.DeleteBooking(booking!.Id);
-                BookingValidationResultPrinter.PrintErrorsOrSuccess(result, "Booking deleted");
+                BookingValidationResultPrinter.PrintErrorsOrSuccess(result, "Booking deleted.");
                 InputHelper.WaitForContinue();
                 if (result.Success)
                     return true;

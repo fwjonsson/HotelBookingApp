@@ -21,13 +21,13 @@ namespace HotelBookingApp.Flows.Customers
         internal ReadCustomerFlow(CustomerService customerService)
         {
             _customerService = customerService;
-            _selectCustomerMenu = new SelectObjectMenu<Customer>("Customer", CustomerPrinter.FormatCustomer);
-            _customerActionMenu = new ActionMenu<Customer>("Customer", CustomerPrinter.FormatCustomer);
+            _selectCustomerMenu = new SelectObjectMenu<Customer>(CustomerPrinter.FormatCustomer);
+            _customerActionMenu = new ActionMenu<Customer>("--Customer--", CustomerPrinter.FormatCustomer);
             _updateCustomerFlow = new UpdateCustomerFlow(customerService);
             _deleteCustomerFlow = new DeleteCustomerFlow(customerService);
         }
 
-        private void SelectCustomerAndChooseAction(Func<List<Customer>> getCustomers)
+        private void SelectCustomerAndChooseAction(Func<List<Customer>> getCustomers, string title)
         {
             while (true)
             {
@@ -38,7 +38,7 @@ namespace HotelBookingApp.Flows.Customers
                     InputHelper.WaitForContinue();
                     return;
                 }
-                Customer? customer = _selectCustomerMenu.Show(customers);
+                Customer? customer = _selectCustomerMenu.Show(customers, title);
                 if (customer == null)
                 {
                     _selectCustomerMenu.ResetIndex();
@@ -77,7 +77,7 @@ namespace HotelBookingApp.Flows.Customers
         }
         internal void ReadAll()
         {
-            SelectCustomerAndChooseAction(_customerService.ListAll);
+            SelectCustomerAndChooseAction(_customerService.ListAll, "--All Customers--");
         }
         internal void ReadById()
         {
@@ -86,13 +86,13 @@ namespace HotelBookingApp.Flows.Customers
         }
         internal void ReadByFullName()
         {
-            var fullName = InputHelper.ReadFullName("Full name: ");
-            SelectCustomerAndChooseAction(() => _customerService.GetByFullName(fullName));
+            var fullName = InputHelper.ReadFullName("Full Name: ");
+            SelectCustomerAndChooseAction(() => _customerService.GetByFullName(fullName), $"--Customers By Name: {fullName}--");
         }
         internal void ReadByBirthDate()
         {
-            var birthDate = InputHelper.ReadDateOnly("Birth date: ");
-            SelectCustomerAndChooseAction(() => _customerService.GetByBirthDate(birthDate));
+            var birthDate = InputHelper.ReadDateOnly("Birth Date: ");
+            SelectCustomerAndChooseAction(() => _customerService.GetByBirthDate(birthDate), $"--Customers With Birth Date: {birthDate:yyyy-MM-dd}--");
         }
         internal void ReadByEmail()
         {
@@ -101,7 +101,7 @@ namespace HotelBookingApp.Flows.Customers
         }
         internal void ReadByPhoneNumber()
         {
-            var phoneNumber = InputHelper.ReadPhoneNumber("Phone number: ");
+            var phoneNumber = InputHelper.ReadPhoneNumber("Phone Number: ");
             ChooseAction(_customerService.GetByPhoneNumber, phoneNumber);
         }
         internal void ReadByBookingId()

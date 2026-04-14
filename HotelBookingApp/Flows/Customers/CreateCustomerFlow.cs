@@ -67,7 +67,7 @@ namespace HotelBookingApp.Flows.Customers
                 return false;
             }
             CustomerValidationResult result = _customerService.CreateCustomer(fName, bDate, e, pNumber);
-            CustomerValidationResultPrinter.PrintErrorsOrSuccess(result, "Customer created successfully.");
+            CustomerValidationResultPrinter.PrintErrorsOrSuccess(result, "Customer created.");
             InputHelper.WaitForContinue();
             if (result.Success)
                 return true;

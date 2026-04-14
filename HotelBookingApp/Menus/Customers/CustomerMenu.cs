@@ -12,7 +12,7 @@ namespace HotelBookingApp.Menus.Customers
 
         internal CustomerMenu()
         {
-            _menu = new ConsoleMenu<CustomerMenuOption>("Customer Menu", new List<MenuChoice<CustomerMenuOption>>
+            _menu = new ConsoleMenu<CustomerMenuOption>("--Customer Menu--", new List<MenuChoice<CustomerMenuOption>>
             {
                 new(CustomerMenuOption.Create, "Create New Customer"),
                 new(CustomerMenuOption.ShowAll, "Show All Customers"),

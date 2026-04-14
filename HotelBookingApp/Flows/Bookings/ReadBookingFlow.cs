@@ -19,13 +19,13 @@ namespace HotelBookingApp.Flows.Bookings
         internal ReadBookingFlow(BookingService bookingService)
         {
             _bookingService = bookingService;
-            _selectBookingMenu = new SelectObjectMenu<Booking>("Booking", BookingPrinter.FormatBooking);
+            _selectBookingMenu = new SelectObjectMenu<Booking>(BookingPrinter.FormatBooking);
             _bookingActionMenu = new ActionMenu<Booking>("Booking", BookingPrinter.FormatBooking);
             _updateBookingFlow = new UpdateBookingFlow(bookingService);
             _deleteBookingFlow = new DeleteBookingFlow(bookingService);
 
         }
-        private void SelectBookingAndChooseAction(Func<List<Booking>> getBookings)
+        private void SelectBookingAndChooseAction(Func<List<Booking>> getBookings, string title)
         {
             while (true)
             {
@@ -37,7 +37,7 @@ namespace HotelBookingApp.Flows.Bookings
                     return;
                 }
 
-                Booking? booking = _selectBookingMenu.Show(bookings);
+                Booking? booking = _selectBookingMenu.Show(bookings, title);
                 if (booking == null)
                 {
                     _selectBookingMenu.ResetIndex();
@@ -76,13 +76,13 @@ namespace HotelBookingApp.Flows.Bookings
         }
         internal void ReadAll()
         {
-            SelectBookingAndChooseAction(_bookingService.ListAll);
+            SelectBookingAndChooseAction(_bookingService.ListAll, "--All Bookings--");
         }
 
         internal void ReadByDate()
         {
-            var date = InputHelper.ReadDateOnly("Booking date (yyyy-MM-dd):");
-            SelectBookingAndChooseAction(() => _bookingService.GetByDate(date));
+            var date = InputHelper.ReadDateOnly("Booking Date (yyyy-MM-dd):");
+            SelectBookingAndChooseAction(() => _bookingService.GetByDate(date), $"--Bookings On Date {date:yyyy-MM-dd}--");
         }
 
         internal void ReadById()
@@ -94,13 +94,13 @@ namespace HotelBookingApp.Flows.Bookings
         internal void ReadByRoomId()
         {
             int id = InputHelper.ReadInt("Room ID:");
-            SelectBookingAndChooseAction(() => _bookingService.GetByRoomId(id));
+            SelectBookingAndChooseAction(() => _bookingService.GetByRoomId(id), $"--Bookings On Room ID {id}--");
         }
 
         internal void ReadByCustomerId()
         {
             int customerId = InputHelper.ReadInt("Customer ID:");
-            SelectBookingAndChooseAction(() => _bookingService.GetByCustomerId(customerId));
+            SelectBookingAndChooseAction(() => _bookingService.GetByCustomerId(customerId), $"--Bookings By Customer ID: {customerId}--");
 
         }
     }

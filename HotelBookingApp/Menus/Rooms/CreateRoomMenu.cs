@@ -14,7 +14,7 @@ namespace HotelBookingApp.Menus.Rooms
 
         internal CreateRoomMenu()
         {
-            _menu = new ConsoleMenu<RoomEditorMenuOption>("Create Room", new List<MenuChoice<RoomEditorMenuOption>>());
+            _menu = new ConsoleMenu<RoomEditorMenuOption>("--Create New Room--", new List<MenuChoice<RoomEditorMenuOption>>());
         }
         internal RoomEditorMenuOption Show(int? roomNumber, RoomType? roomType, int? extraBeds)
         {

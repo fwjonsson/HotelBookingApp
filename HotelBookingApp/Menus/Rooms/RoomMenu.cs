@@ -12,7 +12,7 @@ namespace HotelBookingApp.Menus.Rooms
 
         internal RoomMenu()
         {
-            _menu = new ConsoleMenu<RoomMenuOption>("Room Menu", new List<MenuChoice<RoomMenuOption>>
+            _menu = new ConsoleMenu<RoomMenuOption>("--Room Menu--", new List<MenuChoice<RoomMenuOption>>
             {
                 new(RoomMenuOption.Create, "Create New Room"),
                 new(RoomMenuOption.ShowAll, "Show All Rooms"),
