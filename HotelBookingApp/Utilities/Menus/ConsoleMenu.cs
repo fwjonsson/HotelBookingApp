@@ -1,33 +1,34 @@
-﻿using Azure;
-
-namespace HotelBookingApp.Utilities.Menus
+﻿namespace HotelBookingApp.Utilities.Menus
 {
     internal class ConsoleMenu<T>
     {
         private string _title;
-        private readonly List<MenuChoice<T>> _choices;
         private List<List<MenuChoice<T>>> _choicesPerPage;
+        private List<MenuChoice<T>> _currentChoices;
         private int _index = 0;
         private int _currentPage = 0;
+        private readonly MenuChoice<T> _backChoice;
 
 
 
         internal ConsoleMenu(string title, List<MenuChoice<T>> choices)
         {
             _title = title;
-            _choices = choices;
-            _choicesPerPage = BuildPages(_choices);
+            _backChoice = new MenuChoice<T>(default!, "Back");
+            _choicesPerPage = BuildPages(choices);
+            _currentChoices = _choicesPerPage[0];
         }
         private static List<List<MenuChoice<T>>> BuildPages(List<MenuChoice<T>> choices)
         {
             var backChoice = choices[choices.Count - 1];
             var choicesPerPage = choices
-                .Chunk(9)
-                .Select(chunk => chunk.ToList())
+                .Chunk(10)
+                .Select(chunk => 
+                chunk.ToList())
                 .ToList();
 
             foreach (var page in choicesPerPage)
-                page.Add(backChoice);
+                page.Add(_backChoice);
 
             return choicesPerPage;
         }
@@ -44,11 +45,11 @@ namespace HotelBookingApp.Utilities.Menus
                 Console.WriteLine(_title);
                 Console.WriteLine();
 
-                var currentChoices = _choicesPerPage[_currentPage];
-                for (int choice = 0; choice < currentChoices.Count; choice++)
+                _currentChoices = _choicesPerPage[_currentPage];
+                for (int choice = 0; choice < _currentChoices.Count; choice++)
                 {
                     Console.Write(choice == _index ? "> " : "  ");
-                    Console.WriteLine($"{currentChoices[choice].Text}");
+                    Console.WriteLine($"{_currentChoices[choice].Text}");
                 }
 
                 Console.WriteLine();
@@ -69,12 +70,12 @@ namespace HotelBookingApp.Utilities.Menus
                 {
                     case ConsoleKey.UpArrow:
                         _index--;
-                        if (_index < 0) _index = currentChoices.Count - 1;
+                        if (_index < 0) _index = _currentChoices.Count - 1;
                         break;
 
                     case ConsoleKey.DownArrow:
                         _index++;
-                        if (_index >= currentChoices.Count) _index = 0;
+                        if (_index >= _currentChoices.Count) _index = 0;
                         break;
 
                     case ConsoleKey.RightArrow:
@@ -83,6 +84,8 @@ namespace HotelBookingApp.Utilities.Menus
                             _currentPage++;
                             if (_currentPage >= _choicesPerPage.Count)
                                 _currentPage = 0;
+
+                            ClampIndex();
                         }
                         break;
 
@@ -90,17 +93,29 @@ namespace HotelBookingApp.Utilities.Menus
                         if (_choicesPerPage.Count > 1)
                         {
                             _currentPage--;
-                            if (_currentPage < 0) _currentPage = _choicesPerPage.Count - 1;
+                            if (_currentPage < 0) 
+                                _currentPage = _choicesPerPage.Count - 1;
+
+                            ClampIndex();
                         }
                         break;
 
                     case ConsoleKey.Enter:
-                        return MenuResult<T>.Selected(_choicesPerPage[_currentPage][_index].Value);
+                        return MenuResult<T>.Selected(_currentChoices[_index].Value);
 
                     case ConsoleKey.Escape:
                         return MenuResult<T>.Cancelled();
                 }
             }
+        }
+        internal void ClampIndex()
+        {
+            _currentChoices = _choicesPerPage[_currentPage];
+
+            if (_index >= _currentChoices.Count)
+                _index = _currentChoices.Count - 1;
+            if (_index < 0)
+                _index = 0;
         }
         internal void ResetPage()
         {
@@ -116,13 +131,14 @@ namespace HotelBookingApp.Utilities.Menus
         }
         internal void SetChoices(List<MenuChoice<T>> choices)
         {
-            _choices.Clear();
-            _choices.AddRange(choices);
+            _choicesPerPage.Clear();
+            _choicesPerPage = BuildPages(choices);
 
-            if (_index >= _choices.Count)
-            {
-                _index = 0;
-            }
+            if (_currentPage >= _choicesPerPage.Count)
+                _currentPage = _choicesPerPage.Count -1;
+            if (_index >= _currentChoices.Count)
+                _index = _currentChoices.Count -1;
+
         }
     }
 }
