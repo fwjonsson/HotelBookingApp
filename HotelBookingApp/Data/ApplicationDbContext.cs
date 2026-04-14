@@ -17,6 +17,28 @@ namespace HotelBookingApp.Data
         {
 
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Customer>()
+                .HasIndex(c => c.Email)
+                .IsUnique();
+
+            modelBuilder.Entity<Customer>()
+                .HasIndex(c => c.PhoneNumber)
+                .IsUnique();
+
+            modelBuilder.Entity<Room>()
+                .HasIndex(r => r.RoomNumber)
+                .IsUnique();
+
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.Customer)
+                .WithMany(c => c.Bookings)
+                .HasForeignKey(b => b.CustomerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            base.OnModelCreating(modelBuilder);
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
