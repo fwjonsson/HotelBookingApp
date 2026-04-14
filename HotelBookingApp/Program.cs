@@ -1,4 +1,5 @@
 ﻿using HotelBookingApp.Data;
+using HotelBookingApp.Data.BogusSeeder;
 using HotelBookingApp.Flows.Bookings;
 using HotelBookingApp.Flows.Customers;
 using HotelBookingApp.Flows.Rooms;
@@ -13,6 +14,8 @@ namespace HotelBookingApp
         static void Main(string[] args)
         {
             using ApplicationDbContext dbContext = AppStartup.CreateDbContext();
+
+            //DbSeeder.Seed(dbContext);
 
             var bookingService = new BookingService(dbContext);
             var customerService = new CustomerService(dbContext);
