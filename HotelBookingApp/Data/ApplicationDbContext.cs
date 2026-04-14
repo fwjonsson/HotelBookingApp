@@ -31,10 +31,6 @@ namespace HotelBookingApp.Data
                 .HasIndex(r => r.RoomNumber)
                 .IsUnique();
 
-            modelBuilder.Entity<Booking>()
-                .HasOne(b => b.Customer)
-                .WithMany(c => c.Bookings)
-                .HasForeignKey(b => b.CustomerId);
 
             base.OnModelCreating(modelBuilder);
         }

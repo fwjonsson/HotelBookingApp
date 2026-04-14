@@ -9,11 +9,11 @@ namespace HotelBookingApp.Utilities.Printers
     {
         internal static string FormatCustomer(Customer customer)
         {
-            return $"Customer ID: {customer.Id}" +
-                $"Customer full name: {customer.FullName}" +
-                $"Customer birth date: {customer.BirthDate:yyyy-MM-dd}" +
-                $"Customer email: {customer.Email}" +
-                $"Customer phone number: {customer.PhoneNumber}";
+            return $"Customer ID: {customer.Id}\n" +
+                $"Full name: {customer.FullName}\n" +
+                $"Birth date: {customer.BirthDate:yyyy-MM-dd}\n" +
+                $"Email: {customer.Email}\n" +
+                $"Phone number: {customer.PhoneNumber}\n";
         }
         internal static void PrintCustomer(Customer customer)
         {

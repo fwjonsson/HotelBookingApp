@@ -10,16 +10,16 @@ namespace HotelBookingApp.Utilities.Printers
         internal static string FormatRoom(Room room)
         {
             if (room.RoomType == Enums.RoomType.Single)
-                return $"Room ID: {room.Id}" +
-                    $"Room Number: {room.RoomNumber}" +
-                    $"Room Type: Single Room" +
-                    $"Extra Beds: {room.ExtraBeds}";
+                return $"Room ID: {room.Id}\n" +
+                    $"Room Number: {room.RoomNumber}\n" +
+                    $"Room Type: Single Room\n" +
+                    $"Extra Beds: {room.ExtraBeds}\n";
 
 
-            else return $"Room ID: {room.Id}" +
-                    $"Room Number: {room.RoomNumber}" +
-                    $"Room Type: Double Room" +
-                    $"Extra Beds: {room.ExtraBeds}";
+            else return $"Room ID: {room.Id}\n" +
+                    $"Room Number: {room.RoomNumber}\n" +
+                    $"Room Type: Double Room\n" +
+                    $"Extra Beds: {room.ExtraBeds}\n";
         }
         internal static void PrintRoom(Room room)
         {
