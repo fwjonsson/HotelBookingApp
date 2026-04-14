@@ -29,7 +29,7 @@ namespace HotelBookingApp.Utilities.FlowHelpers
                 InputHelper.WaitForContinue();
                 return null;
             }
-            var input = InputHelper.ReadInt("Number of extra beds (Max 1 in single room and max 2 in double room): ");
+            var input = InputHelper.ReadInt("Extra beds (Max 1 in single room and max 2 in double room): ");
             if (roomType == RoomType.Single && input > 1)
             {
                 Console.WriteLine("Max 1.");

@@ -2,7 +2,7 @@
 using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
-using HotelBookingApp.Utilities.Printers;
+using HotelBookingApp.Utilities.Printers.Customers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,25 +19,18 @@ namespace HotelBookingApp.Flows.Customers
             _customerService = customerService;
         }
 
-        internal void Run(int customerId)
+        internal bool TryDelete(int customerId)
         {
-            Customer? customer = _customerService.GetById(customerId);
-            if (!FlowHelper.CheckItemExistsAndWait(customer, "Customer not found."))
-                return;
-
-            Console.WriteLine(CustomerPrinter.FormatCustomer(customer!));
             if (InputHelper.WaitForYesOrNo("Are you sure you want to delete? Y/N"))
             {
+                Customer? customer = _customerService.GetById(customerId);
                 CustomerValidationResult result = _customerService.DeleteCustomer(customer!.Id);
-
-                if (!result.CustomerFound)
-                    Console.WriteLine("No customer with that ID found.");
-                if (!result.CanBeDeleted)
-                    Console.WriteLine("Cannot delete a customer with current or future bookings.");
+                CustomerValidationResultPrinter.PrintErrorsOrSuccess(result, "Customer deleted.");
+                InputHelper.WaitForContinue();
                 if (result.Success)
-                    Console.WriteLine("Customer deleted.");
+                    return true;
             }
-            InputHelper.WaitForContinue();
+            return false;
         }
     }
 }

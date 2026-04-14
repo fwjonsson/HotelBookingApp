@@ -5,6 +5,7 @@ using HotelBookingApp.Models;
 using HotelBookingApp.Services.Rooms;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
+using HotelBookingApp.Utilities.Printers.Rooms;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,7 +27,7 @@ namespace HotelBookingApp.Flows.Rooms
         internal void Run(int roomId)
         {
             Room? room = _roomService.GetById(roomId);
-            if (!FlowHelper.CheckItemExistsAndWait(room, "Room not found."))
+            if (!FlowHelper.CheckItemExists(room, "Room not found."))
                 return;
 
             int newRoomNumber = room!.RoomNumber;
@@ -69,17 +70,10 @@ namespace HotelBookingApp.Flows.Rooms
         private bool TrySave(int roomId, int newRoomNumber, RoomType newRoomType, int newExtraBeds)
         {
             RoomValidationResult result = _roomService.UpdateRoom(roomId, newRoomNumber, newRoomType, newExtraBeds);
-            if (!result.RoomNumberAvailable)
-                Console.WriteLine("Room number unavailable.");
-            if (!result.RoomTypeValid)
-                Console.WriteLine("Invalid room type, has to be single or double.");
-            if (!result.ExtraBedsValid)
-                Console.WriteLine("Invalid amount of extra beds, max 1 for single room and max 2 for double room.");
+            RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "Changes saved.");
+            InputHelper.WaitForContinue();
             if (result.Success)
-            {
-                Console.WriteLine("Room updated successfully.");
                 return true;
-            }
             return false;
         }
     }

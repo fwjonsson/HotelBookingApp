@@ -3,6 +3,7 @@ using HotelBookingApp.Menus.Bookings;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Bookings;
 using HotelBookingApp.Utilities;
+using HotelBookingApp.Utilities.Printers.Bookings;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelBookingApp.Flows.Bookings
@@ -31,21 +32,19 @@ namespace HotelBookingApp.Flows.Bookings
                 switch (choice)
                 {
                     case BookingEditorMenuOption.CustomerId:
-                        customerId = InputHelper.ReadInt("Enter customer ID: ");
+                        customerId = InputHelper.ReadInt("Customer ID: ");
                         break;
                     case BookingEditorMenuOption.RoomId:
-                        roomId = InputHelper.ReadInt("Enter room ID: ");
+                        roomId = InputHelper.ReadInt("Room ID: ");
                         break;
                     case BookingEditorMenuOption.StartDate:
-                        startDate = InputHelper.ReadDateOnly("Enter start date (yyyy-MM-dd): ");
+                        startDate = InputHelper.ReadDateOnly("Start date (yyyy-MM-dd): ");
                         break;
                     case BookingEditorMenuOption.EndDate:
-                        endDate = InputHelper.ReadDateOnly("Enter end date (yyyy-MM-dd): ");
+                        endDate = InputHelper.ReadDateOnly("End date (yyyy-MM-dd): ");
                         break;
                     case BookingEditorMenuOption.Save:
-                        bool saved = TrySave(customerId, roomId, startDate, endDate);
-                        InputHelper.WaitForContinue();
-                        if (saved)
+                        if (TrySave(customerId, roomId, startDate, endDate))
                         {
                             _createBookingMenu.ResetIndex();
                             return;
@@ -65,22 +64,14 @@ namespace HotelBookingApp.Flows.Bookings
                 endDate is not DateOnly eDate)
             {
                 Console.WriteLine("You must fill in all values before creating.");
+                InputHelper.WaitForContinue();
                 return false;
             }
             BookingValidationResult result = _bookingService.CreateBooking(cId, rId, sDate, eDate);
-            if (!result.CustomerFound)
-                Console.WriteLine("Customer not found.");
-            if (!result.RoomFound)
-                Console.WriteLine("Room not found.");
-            if (!result.ValidDateRange)
-                Console.WriteLine("Start date cannot be earlier than today and end date must be after start date");
-            if (!result.RoomAvailable)
-                Console.WriteLine("Room unavailable for those dates.");
+            BookingValidationResultPrinter.PrintErrorsOrSuccess(result, "Booking created successfully");
+            InputHelper.WaitForContinue();
             if (result.Success)
-            {
-                Console.WriteLine("Booking created successfully.");
                 return true;
-            }
             return false;
         }
     }

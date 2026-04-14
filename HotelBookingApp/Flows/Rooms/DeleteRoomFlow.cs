@@ -3,6 +3,7 @@ using HotelBookingApp.Services.Rooms;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
 using HotelBookingApp.Utilities.Printers;
+using HotelBookingApp.Utilities.Printers.Rooms;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,26 +20,18 @@ namespace HotelBookingApp.Flows.Rooms
             _roomService = roomService;
         }
 
-        internal void Run(int roomId)
+        internal bool TryDelete(int roomId)
         {
-            Room? room = _roomService.GetById(roomId);
-            if (!FlowHelper.CheckItemExistsAndWait(room, "Room not found."))
-                return;
-
-            Console.WriteLine(RoomPrinter.FormatRoom(room!));
-
-            if(InputHelper.WaitForYesOrNo("Are you sure you want to delete? Y/N"))
+            if (InputHelper.WaitForYesOrNo("Are you sure you want to delete? Y/N"))
             {
+                Room? room = _roomService.GetById(roomId);
                 RoomValidationResult result = _roomService.DeleteRoom(room!.Id);
-
-                if(!result.RoomFound)
-                    Console.WriteLine("No room with that ID found.");
-                if(!result.CanBeDeleted)
-                    Console.WriteLine("Can not delete a room with current or future bookings.");
-                if(result.Success)
-                    Console.WriteLine("Room deleted.");
+                RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "Room deleted.");
+                InputHelper.WaitForContinue();
+                if (result.Success)
+                    return true;
             }
-            InputHelper.WaitForContinue();
+            return false;
         }
     }
 }

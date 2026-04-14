@@ -4,6 +4,7 @@ using HotelBookingApp.Models;
 using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
+using HotelBookingApp.Utilities.Printers.Customers;
 
 namespace HotelBookingApp.Flows.Customers
 {
@@ -21,7 +22,7 @@ namespace HotelBookingApp.Flows.Customers
         internal void Run(int customerId)
         {
             Customer? customer = _customerService.GetById(customerId);
-            if (!FlowHelper.CheckItemExistsAndWait(customer, "Customer not found"))
+            if (!FlowHelper.CheckItemExists(customer, "Customer not found"))
                 return;
 
             string newFullName = customer!.FullName;
@@ -36,16 +37,16 @@ namespace HotelBookingApp.Flows.Customers
                 switch (choice)
                 {
                     case CustomerEditorMenuOption.FullName:
-                        newFullName = InputHelper.ReadFullName("New full name: ");
+                        newFullName = InputHelper.ReadFullName("Full name: ");
                         break;
                     case CustomerEditorMenuOption.BirthDate:
-                        newBirthDate = InputHelper.ReadDateOnly("New birth date: ");
+                        newBirthDate = InputHelper.ReadDateOnly("Birth date: ");
                         break;
                     case CustomerEditorMenuOption.Email:
-                        newEmail = InputHelper.ReadEmail("New email: ");
+                        newEmail = InputHelper.ReadEmail("Email: ");
                         break;
                     case CustomerEditorMenuOption.PhoneNumber:
-                        newPhoneNumber = InputHelper.ReadPhoneNumber("New phone number: ");
+                        newPhoneNumber = InputHelper.ReadPhoneNumber("Phone number: ");
                         break;
                     case CustomerEditorMenuOption.Save:
                         bool saved = TrySave(customer.Id, newFullName, newBirthDate, newEmail, newPhoneNumber);
@@ -66,17 +67,9 @@ namespace HotelBookingApp.Flows.Customers
         private bool TrySave(int customerId, string newFullName, DateOnly newBirthDate, string newEmail, string newPhoneNumber)
         {
             CustomerValidationResult result = _customerService.UpdateCustomer(customerId, newFullName, newBirthDate, newEmail, newPhoneNumber);
-            if (!result.CustomerFound)
-                Console.WriteLine("Customer not found.");
-            if (!result.EmailAvailable)
-                Console.WriteLine("Email is already registered.");
-            if (!result.PhoneNumberAvailable)
-                Console.WriteLine("Phone number is already registered.");
+            CustomerValidationResultPrinter.PrintErrorsOrSuccess(result, "Changes saved");
             if (result.Success)
-            {
-                Console.WriteLine("Changes saved.");
                 return true;
-            }
             return false;
         }
     }

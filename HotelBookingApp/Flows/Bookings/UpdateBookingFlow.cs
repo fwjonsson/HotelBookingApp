@@ -4,6 +4,7 @@ using HotelBookingApp.Models;
 using HotelBookingApp.Services.Bookings;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
+using HotelBookingApp.Utilities.Printers.Bookings;
 
 namespace HotelBookingApp.Flows.Bookings
 {
@@ -20,7 +21,7 @@ namespace HotelBookingApp.Flows.Bookings
         internal void Run(int bookingId)
         {
             Booking? booking = _bookingService.GetById(bookingId);
-            if (!FlowHelper.CheckItemExistsAndWait(booking, "Booking not found."))
+            if (!FlowHelper.CheckItemExists(booking, "Booking not found."))
                 return;
             DateOnly newStartDate = booking!.StartDate;
             DateOnly newEndDate = booking.EndDate;
@@ -35,16 +36,16 @@ namespace HotelBookingApp.Flows.Bookings
                 switch (choice)
                 {
                     case BookingEditorMenuOption.StartDate:
-                        newStartDate = InputHelper.ReadDateOnly("New start date (yyyy-MM-dd): ");
+                        newStartDate = InputHelper.ReadDateOnly("Start date (yyyy-MM-dd): ");
                         continue;
                     case BookingEditorMenuOption.EndDate:
-                        newEndDate = InputHelper.ReadDateOnly("New end date (yyyy-MM-dd): ");
+                        newEndDate = InputHelper.ReadDateOnly("End date (yyyy-MM-dd): ");
                         continue;
                     case BookingEditorMenuOption.RoomId:
-                        newRoomId = InputHelper.ReadInt("New room ID: ");
+                        newRoomId = InputHelper.ReadInt("Room (room ID): ");
                         continue;
                     case BookingEditorMenuOption.CustomerId:
-                        newCustomerId = InputHelper.ReadInt("New customer ID: ");
+                        newCustomerId = InputHelper.ReadInt("Customer (customer ID): ");
                         continue;
                     case BookingEditorMenuOption.Save:
                         bool saved = TrySave(bookingId, newStartDate, newEndDate, newCustomerId, newRoomId);
@@ -66,21 +67,10 @@ namespace HotelBookingApp.Flows.Bookings
         private bool TrySave(int bookingId, DateOnly newStartDate, DateOnly newEndDate, int newCustomerId, int newRoomId)
         {
             BookingValidationResult result = _bookingService.UpdateBooking(bookingId, newStartDate, newEndDate, newRoomId, newCustomerId);
-            if (!result.BookingFound)
-                Console.WriteLine("Booking not found.");
-            if (!result.ValidDateRange)
-                Console.WriteLine("Start date cannot be earlier than today and end date must be after start date");
-            if (!result.CustomerFound)
-                Console.WriteLine("Customer not found.");
-            if (!result.RoomFound)
-                Console.WriteLine("Room not found.");
-            if (!result.RoomAvailable)
-                Console.WriteLine("Room unavailable for those dates.");
+            BookingValidationResultPrinter.PrintErrorsOrSuccess(result, "Changes saved");
+            InputHelper.WaitForContinue();
             if (result.Success)
-            {
-                Console.WriteLine("Changes saved.");
-                return true; ;
-            }
+                return true;
             return false;
         }
     }

@@ -1,9 +1,10 @@
 ﻿using HotelBookingApp.Models;
+using HotelBookingApp.Utilities.Printers.Bookings;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HotelBookingApp.Utilities.Printers
+namespace HotelBookingApp.Utilities.Printers.Customers
 {
     internal static class CustomerPrinter
     {

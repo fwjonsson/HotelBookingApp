@@ -4,7 +4,7 @@ using HotelBookingApp.Models;
 using HotelBookingApp.Services.Bookings;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
-using HotelBookingApp.Utilities.Printers;
+using HotelBookingApp.Utilities.Printers.Bookings;
 
 namespace HotelBookingApp.Flows.Bookings
 {
@@ -51,8 +51,8 @@ namespace HotelBookingApp.Flows.Bookings
             while (true)
             {
                 Booking? booking = _bookingService.GetById(bookingId);
-                
-                if (!FlowHelper.CheckItemExistsAndWait(booking, "Booking not found"))
+
+                if (!FlowHelper.CheckItemExists(booking, "Booking not found"))
                     return;
 
                 ActionMenuOption choice = _bookingActionMenu.Show(booking!);
@@ -62,9 +62,12 @@ namespace HotelBookingApp.Flows.Bookings
                         _updateBookingFlow.Run(bookingId);
                         break;
                     case ActionMenuOption.Delete:
-                        _deleteBookingFlow.Run(bookingId);
-                        _bookingActionMenu.ResetIndex();
-                        return;
+                            if (_deleteBookingFlow.TryDelete(bookingId))
+                            {
+                                _bookingActionMenu.ResetIndex();
+                                return;
+                            }
+                        break;
                     case ActionMenuOption.Back:
                         _bookingActionMenu.ResetIndex();
                         return;

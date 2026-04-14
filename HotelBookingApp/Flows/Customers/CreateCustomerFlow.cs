@@ -2,6 +2,7 @@
 using HotelBookingApp.Menus.Customers;
 using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Utilities;
+using HotelBookingApp.Utilities.Printers.Customers;
 
 namespace HotelBookingApp.Flows.Customers
 {
@@ -41,9 +42,7 @@ namespace HotelBookingApp.Flows.Customers
                         phoneNumber = InputHelper.ReadPhoneNumber("Phone number: ");
                         break;
                     case CustomerEditorMenuOption.Save:
-                        bool saved = TrySave(fullName, birthDate, email, phoneNumber);
-                        InputHelper.WaitForContinue();
-                        if (saved)
+                        if (TrySave(fullName, birthDate, email, phoneNumber))
                         {
                             _createCustomerMenu.ResetIndex();
                             return;
@@ -64,18 +63,14 @@ namespace HotelBookingApp.Flows.Customers
                 phoneNumber is not string pNumber)
             {
                 Console.WriteLine("You must fill in all values before creating.");
+                InputHelper.WaitForContinue();
                 return false;
             }
             CustomerValidationResult result = _customerService.CreateCustomer(fName, bDate, e, pNumber);
-            if (!result.EmailAvailable)
-                Console.WriteLine("Email is already registered.");
-            if (!result.PhoneNumberAvailable)
-                Console.WriteLine("Phone number is already registered.");
+            CustomerValidationResultPrinter.PrintErrorsOrSuccess(result, "Customer created successfully.");
+            InputHelper.WaitForContinue();
             if (result.Success)
-            {
-                Console.WriteLine("Customer created successfully.");
                 return true;
-            }
             return false;
         }
     }

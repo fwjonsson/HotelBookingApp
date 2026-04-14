@@ -5,7 +5,7 @@ using HotelBookingApp.Models;
 using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
-using HotelBookingApp.Utilities.Printers;
+using HotelBookingApp.Utilities.Printers.Customers;
 
 namespace HotelBookingApp.Flows.Customers
 {
@@ -52,7 +52,7 @@ namespace HotelBookingApp.Flows.Customers
             while (true)
             {
                 Customer? customer = getCustomer(identifier);
-                if (!FlowHelper.CheckItemExistsAndWait(customer, "Customer not found."))
+                if (!FlowHelper.CheckItemExists(customer, "Customer not found."))
                     return;
 
                 ActionMenuOption choice = _customerActionMenu.Show(customer!);
@@ -63,9 +63,12 @@ namespace HotelBookingApp.Flows.Customers
                         _updateCustomerFlow.Run(customer!.Id);
                         break;
                     case ActionMenuOption.Delete:
-                        _deleteCustomerFlow.Run(customer!.Id);
-                        _customerActionMenu.ResetIndex();
-                        return;
+                            if (_deleteCustomerFlow.TryDelete(customer!.Id))
+                            {
+                                _customerActionMenu.ResetIndex();
+                                return;
+                            }
+                        break;
                     case ActionMenuOption.Back:
                         _customerActionMenu.ResetIndex();
                         return;
@@ -78,7 +81,7 @@ namespace HotelBookingApp.Flows.Customers
         }
         internal void ReadById()
         {
-            var customerId = InputHelper.ReadInt("Enter customer ID: ");
+            var customerId = InputHelper.ReadInt("Customer ID: ");
             ChooseAction(_customerService.GetById, customerId);
         }
         internal void ReadByFullName()
@@ -94,7 +97,7 @@ namespace HotelBookingApp.Flows.Customers
         internal void ReadByEmail()
         {
             var email = InputHelper.ReadEmail("Email: ");
-            ChooseAction(_customerService.GetByEmail,email);
+            ChooseAction(_customerService.GetByEmail, email);
         }
         internal void ReadByPhoneNumber()
         {

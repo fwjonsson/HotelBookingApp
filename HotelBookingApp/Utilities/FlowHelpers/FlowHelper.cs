@@ -9,7 +9,7 @@ namespace HotelBookingApp.Utilities.FlowHelpers
 {
     internal static class FlowHelper
     {
-        internal static bool CheckItemExistsAndWait<T>(T? item, string notFoundMessage) where T : class
+        internal static bool CheckItemExists<T>(T? item, string notFoundMessage) where T : class
         {
             if (item == null)
             {

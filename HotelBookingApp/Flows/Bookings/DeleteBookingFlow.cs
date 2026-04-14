@@ -4,6 +4,7 @@ using HotelBookingApp.Services.Bookings;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
 using HotelBookingApp.Utilities.Printers;
+using HotelBookingApp.Utilities.Printers.Bookings;
 
 namespace HotelBookingApp.Flows.Bookings
 {
@@ -15,28 +16,20 @@ namespace HotelBookingApp.Flows.Bookings
         {
             _bookingService = bookingService;
         }
-        internal void Run(int bookingId)
+        internal bool TryDelete(int bookingId)
         {
-            Booking? booking = _bookingService.GetById(bookingId);
-            
-            if (!FlowHelper.CheckItemExistsAndWait(booking, "Booking not found."))
-                return;
-
-            Console.WriteLine(BookingPrinter.FormatBooking(booking!));
             if (InputHelper.WaitForYesOrNo("Are you sure you want to delete? Y/N"))
             {
-                BookingValidationResult result = _bookingService.DeleteBooking(booking!.Id);
+                Booking? booking = _bookingService.GetById(bookingId);
 
-                if (!result.BookingFound)
-                {
-                    Console.WriteLine("No booking with that ID found.");
-                }
+                BookingValidationResult result = _bookingService.DeleteBooking(booking!.Id);
+                BookingValidationResultPrinter.PrintErrorsOrSuccess(result, "Booking deleted");
+                InputHelper.WaitForContinue();
                 if (result.Success)
-                {
-                    Console.WriteLine("Booking deleted.");
-                }
+                    return true;
             }
-            InputHelper.WaitForContinue();
+            return false;
         }
     }
 }
+

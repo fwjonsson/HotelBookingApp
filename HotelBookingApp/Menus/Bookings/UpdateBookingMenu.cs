@@ -20,9 +20,9 @@ namespace HotelBookingApp.Menus.Bookings
         {
             _menu.SetChoices(new List<MenuChoice<BookingEditorMenuOption>>
             {
-                new(BookingEditorMenuOption.StartDate, $"Change start date ({startDate:yyyy-MM-dd})"),
-                new(BookingEditorMenuOption.EndDate, $"Change end date ({endDate:yyyy-MM-dd})"),
-                new(BookingEditorMenuOption.RoomId, $"Change room by room ID ({roomId})"),
+                new(BookingEditorMenuOption.StartDate, $"Start date ({startDate:yyyy-MM-dd})"),
+                new(BookingEditorMenuOption.EndDate, $"End date ({endDate:yyyy-MM-dd})"),
+                new(BookingEditorMenuOption.RoomId, $"Room ID ({roomId})"),
                 new(BookingEditorMenuOption.CustomerId, $"Change customer by customer ID ({customerId})"),
                 new(BookingEditorMenuOption.Save, "Save changes"),
                 new(BookingEditorMenuOption.Cancel, "Cancel")

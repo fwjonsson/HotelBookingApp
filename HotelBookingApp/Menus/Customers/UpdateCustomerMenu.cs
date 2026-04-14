@@ -20,10 +20,10 @@ namespace HotelBookingApp.Menus.Customers
         {
             _menu.SetChoices(new List<MenuChoice<CustomerEditorMenuOption>>
             {
-                new(CustomerEditorMenuOption.FullName, $"Change full name: {fullName}"),
-                new(CustomerEditorMenuOption.BirthDate, $"Change birth date: {birthDate:yyyy-MM-dd}"),
-                new(CustomerEditorMenuOption.Email, $"Change email: {email}"),
-                new(CustomerEditorMenuOption.PhoneNumber, $"Change phone number: {phoneNumber}"),
+                new(CustomerEditorMenuOption.FullName, $"Full name: {fullName}"),
+                new(CustomerEditorMenuOption.BirthDate, $"Birth date: {birthDate:yyyy-MM-dd}"),
+                new(CustomerEditorMenuOption.Email, $"Email: {email}"),
+                new(CustomerEditorMenuOption.PhoneNumber, $"Phone number: {phoneNumber}"),
                 new(CustomerEditorMenuOption.Save, "Save changes"),
                 new(CustomerEditorMenuOption.Cancel, "Cancel")
             });

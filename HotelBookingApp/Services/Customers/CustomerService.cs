@@ -26,6 +26,9 @@ namespace HotelBookingApp.Services.Customers
             if (!PhoneNumberAvailable(phoneNumber))
                 result.PhoneNumberAvailable = false;
 
+            if (!IsAdult(birthDate))
+                result.IsAdult = false;
+
             if (!result.Success)
                 return result;
 
@@ -58,6 +61,9 @@ namespace HotelBookingApp.Services.Customers
 
             if (!PhoneNumberAvailable(newPhoneNumber, customerId))
                 result.PhoneNumberAvailable = false;
+
+            if (!IsAdult(newBirthDate))
+                result.IsAdult = false;
 
             if (!result.Success)
                 return result;
@@ -139,6 +145,11 @@ namespace HotelBookingApp.Services.Customers
                 .Include(c => c.Bookings)
                 .FirstOrDefault(c => c.Bookings
                 .Any(b => b.Id == bookingId));
+        }
+        private bool IsAdult(DateOnly birthDate)
+        {
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            return birthDate.AddYears(18) <= today;
         }
 
         private bool EmailAvailable(string email, int? customerIdToExclude = null)

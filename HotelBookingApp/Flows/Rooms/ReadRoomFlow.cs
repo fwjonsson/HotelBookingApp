@@ -7,7 +7,7 @@ using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Services.Rooms;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
-using HotelBookingApp.Utilities.Printers;
+using HotelBookingApp.Utilities.Printers.Rooms;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -55,7 +55,7 @@ namespace HotelBookingApp.Flows.Rooms
             while (true)
             {
                 Room? room = getRoom(identifier);
-                if (!FlowHelper.CheckItemExistsAndWait(room, "Room not found"))
+                if (!FlowHelper.CheckItemExists(room, "Room not found"))
                     return;
 
                 ActionMenuOption choice = _roomActionMenu.Show(room!);
@@ -66,9 +66,12 @@ namespace HotelBookingApp.Flows.Rooms
                         _updateRoomFlow.Run(room!.Id);
                         break;
                     case ActionMenuOption.Delete:
-                        _deleteRoomFlow.Run(room!.Id);
-                        _roomActionMenu.ResetIndex();
-                        return;
+                        if (_deleteRoomFlow.TryDelete(room!.Id))
+                        {
+                            _roomActionMenu.ResetIndex();
+                            return;
+                        }
+                        break;
                     case ActionMenuOption.Back:
                         _roomActionMenu.ResetIndex();
                         return;
@@ -82,12 +85,12 @@ namespace HotelBookingApp.Flows.Rooms
         }
         internal void ReadById()
         {
-            var roomId = InputHelper.ReadInt("Enter room ID: ");
+            var roomId = InputHelper.ReadInt("Room ID: ");
             ChooseAction(_roomService.GetById, roomId);
         }
         internal void ReadByRoomNumber()
         {
-            var roomNumber = InputHelper.ReadInt("Enter room number: ");
+            var roomNumber = InputHelper.ReadInt("Room number: ");
             ChooseAction(_roomService.GetByRoomNumber, roomNumber);
         }
         internal void ReadByRoomType()
@@ -111,12 +114,12 @@ namespace HotelBookingApp.Flows.Rooms
         }
         internal void ReadByCustomerId()
         {
-            var customerId = InputHelper.ReadInt("Enter customer ID: ");
+            var customerId = InputHelper.ReadInt("Customer ID: ");
             SelectRoomAndChooseAction(() => _roomService.GetByCustomerId(customerId));
         }
         internal void ReadByBookingId()
         {
-            var bookingId = InputHelper.ReadInt("Enter booking ID: ");
+            var bookingId = InputHelper.ReadInt("Booking ID: ");
             ChooseAction(_roomService.GetByBookingId, bookingId);
         }
     }
