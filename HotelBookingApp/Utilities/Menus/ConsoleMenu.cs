@@ -139,6 +139,8 @@
             if (_index >= _currentChoices.Count)
                 _index = _currentChoices.Count -1;
 
+
+            _currentChoices = _choicesPerPage[_currentPage];
         }
     }
 }
