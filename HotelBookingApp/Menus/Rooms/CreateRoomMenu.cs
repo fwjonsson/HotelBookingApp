@@ -25,8 +25,7 @@ namespace HotelBookingApp.Menus.Rooms
                 new(RoomEditorMenuOption.RoomNumber, $"Room Number: {roomNumber?.ToString() ?? "Not set" }"),
                 new(RoomEditorMenuOption.RoomType, $"Room Type: \"Not set\" (1 or 2)"),
                 new(RoomEditorMenuOption.ExtraBeds, $"Extra Beds: Enter Room Type First (Single room: Max 1. Double room: Max 2)"),
-                new(RoomEditorMenuOption.Save, "Save"),
-                new(RoomEditorMenuOption.Cancel, "Cancel")
+                new(RoomEditorMenuOption.Save, "Save")
             });
             }
             else if (roomType == RoomType.Single)
@@ -36,8 +35,7 @@ namespace HotelBookingApp.Menus.Rooms
                 new(RoomEditorMenuOption.RoomNumber, $"Room Number: {roomNumber?.ToString() ?? "Not set" }"),
                 new(RoomEditorMenuOption.RoomType, $"Room Type (1 or 2): Single"),
                 new(RoomEditorMenuOption.ExtraBeds, $"Extra Beds: (Max 1) {extraBeds?.ToString() ?? "Not set"}"),
-                new(RoomEditorMenuOption.Save, "Save"),
-                new(RoomEditorMenuOption.Cancel, "Cancel")
+                new(RoomEditorMenuOption.Save, "Save")
             });
             }
             else if (roomType == RoomType.Double)
@@ -47,8 +45,7 @@ namespace HotelBookingApp.Menus.Rooms
                 new(RoomEditorMenuOption.RoomNumber, $"Room Number: {roomNumber?.ToString() ?? "Not set" }"),
                 new(RoomEditorMenuOption.RoomType, $"Room Type (1 or 2): Double"),
                 new(RoomEditorMenuOption.ExtraBeds, $"Extra Beds: {extraBeds?.ToString() ?? "Not set"} (Max 2) "),
-                new(RoomEditorMenuOption.Save, "Save"),
-                new(RoomEditorMenuOption.Cancel, "Cancel")
+                new(RoomEditorMenuOption.Save, "Save")
             });
 
             }

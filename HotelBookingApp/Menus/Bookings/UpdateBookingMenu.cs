@@ -24,8 +24,7 @@ namespace HotelBookingApp.Menus.Bookings
                 new(BookingEditorMenuOption.EndDate, $"End Date ({endDate:yyyy-MM-dd})"),
                 new(BookingEditorMenuOption.RoomId, $"Room ID ({roomId})"),
                 new(BookingEditorMenuOption.CustomerId, $"Change Customer By Customer ID ({customerId})"),
-                new(BookingEditorMenuOption.Save, "Save"),
-                new(BookingEditorMenuOption.Cancel, "Cancel")
+                new(BookingEditorMenuOption.Save, "Save")
             });
             var result = _menu.Show();
             if (result.WasCancelled)

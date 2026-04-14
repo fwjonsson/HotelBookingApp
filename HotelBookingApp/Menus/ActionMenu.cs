@@ -25,8 +25,7 @@ namespace HotelBookingApp.Menus
             _menu.SetChoices(new List<MenuChoice<ActionMenuOption>>
             {
                 new(ActionMenuOption.Edit, "Edit"),
-                new(ActionMenuOption.Delete, "Delete"),
-                new(ActionMenuOption.Back, "Back")
+                new(ActionMenuOption.Delete, "Delete")
             });
             var result = _menu.Show();
             if (result.WasCancelled)

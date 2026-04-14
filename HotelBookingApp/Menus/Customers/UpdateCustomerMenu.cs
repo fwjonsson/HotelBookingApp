@@ -24,8 +24,7 @@ namespace HotelBookingApp.Menus.Customers
                 new(CustomerEditorMenuOption.BirthDate, $"Birth Date: {birthDate:yyyy-MM-dd}"),
                 new(CustomerEditorMenuOption.Email, $"Email: {email}"),
                 new(CustomerEditorMenuOption.PhoneNumber, $"Phone Number: {phoneNumber}"),
-                new(CustomerEditorMenuOption.Save, "Save"),
-                new(CustomerEditorMenuOption.Cancel, "Cancel")
+                new(CustomerEditorMenuOption.Save, "Save")
             });
             var result = _menu.Show();
             if (result.WasCancelled)

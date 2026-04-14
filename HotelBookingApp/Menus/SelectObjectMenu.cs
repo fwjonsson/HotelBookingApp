@@ -21,6 +21,7 @@ namespace HotelBookingApp.Menus
             if (itemList.Count == 0)
                 return null;
             _menu.SetTitle(title);
+
             var choices = new List<MenuChoice<int>>();
 
             for (int i = 0; i < itemList.Count; i++)
@@ -31,8 +32,6 @@ namespace HotelBookingApp.Menus
                 choices.Add(new MenuChoice<int>(i, text));
             }
 
-            int backIndex = choices.Count;
-            choices.Add(new MenuChoice<int>(backIndex, "Back"));
 
             _menu.SetChoices(choices);
 
@@ -41,11 +40,6 @@ namespace HotelBookingApp.Menus
                 return null;
             int selectedIndex = result.Value;
 
-            if (selectedIndex == backIndex)
-            {
-                _menu.ResetIndex();
-                return null;
-            }
             return itemList[selectedIndex];
         }
         internal void ResetIndex()

@@ -23,8 +23,7 @@ namespace HotelBookingApp.Menus.Bookings
                 new(BookingEditorMenuOption.RoomId, $"Room ID: {roomId?.ToString() ?? "Not set"}"),
                 new(BookingEditorMenuOption.StartDate, $"Start Date (yyyy-MM-dd): {startDate?.ToString("yyyy-MM-dd") ?? "Not set"}"),
                 new(BookingEditorMenuOption.EndDate, $"End Date (yyyy-MM-dd): {endDate?.ToString("yyyy-MM-dd")?? "Not set"}"),
-                new(BookingEditorMenuOption.Save, $"Save"),
-                new(BookingEditorMenuOption.Cancel, $"Cancel")
+                new(BookingEditorMenuOption.Save, $"Save")
             });
             var result = _menu.Show();
             if (result.WasCancelled)

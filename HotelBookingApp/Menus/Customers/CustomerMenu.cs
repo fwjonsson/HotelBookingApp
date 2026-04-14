@@ -21,8 +21,7 @@ namespace HotelBookingApp.Menus.Customers
                 new(CustomerMenuOption.FindByEmail, "Find By Email"),
                 new(CustomerMenuOption.FindByPhoneNumber, "Find By Phone Number"),
                 new(CustomerMenuOption.FindByID, "Find By Customer ID"),
-                new(CustomerMenuOption.FindByBookingID, "Find By Booking ID"),
-                new(CustomerMenuOption.Back, "Back")
+                new(CustomerMenuOption.FindByBookingID, "Find By Booking ID")
             });
         }
         internal CustomerMenuOption Show()

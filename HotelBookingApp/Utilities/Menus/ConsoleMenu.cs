@@ -7,30 +7,22 @@
         private List<MenuChoice<T>> _currentChoices;
         private int _index = 0;
         private int _currentPage = 0;
-        private readonly MenuChoice<T> _backChoice;
 
 
 
         internal ConsoleMenu(string title, List<MenuChoice<T>> choices)
         {
             _title = title;
-            _backChoice = new MenuChoice<T>(default!, "Back");
             _choicesPerPage = BuildPages(choices);
             _currentChoices = _choicesPerPage[0];
         }
-        private static List<List<MenuChoice<T>>> BuildPages(List<MenuChoice<T>> choices)
+        private List<List<MenuChoice<T>>> BuildPages(List<MenuChoice<T>> choices)
         {
-            var backChoice = choices[choices.Count - 1];
-            var choicesPerPage = choices
+            return choices
                 .Chunk(10)
-                .Select(chunk => 
+                .Select(chunk =>
                 chunk.ToList())
                 .ToList();
-
-            foreach (var page in choicesPerPage)
-                page.Add(_backChoice);
-
-            return choicesPerPage;
         }
 
 
@@ -136,11 +128,15 @@
 
             if (_currentPage >= _choicesPerPage.Count)
                 _currentPage = _choicesPerPage.Count -1;
+
+            _currentChoices = _choicesPerPage[_currentPage];
+
             if (_index >= _currentChoices.Count)
                 _index = _currentChoices.Count -1;
 
-
-            _currentChoices = _choicesPerPage[_currentPage];
+            if (_index < 0)
+                _index = 0;
+            
         }
     }
 }

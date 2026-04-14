@@ -20,8 +20,7 @@ namespace HotelBookingApp.Menus.Rooms
                 new(RoomMenuOption.FindByRoomType, "Find By Size (1 or 2)"),
                 new(RoomMenuOption.FindByID, "Find By Room ID"),
                 new(RoomMenuOption.FindByCustomerID, "Find By Customer ID"),
-                new(RoomMenuOption.FindByBookingID, "Find By Booking ID"),
-                new(RoomMenuOption.Back, "Back")
+                new(RoomMenuOption.FindByBookingID, "Find By Booking ID")
             });
         }
         internal RoomMenuOption Show()
