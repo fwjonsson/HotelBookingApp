@@ -1,7 +1,4 @@
 ﻿using HotelBookingApp.Services.Rooms;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Utilities.Printers.Rooms
 {
@@ -9,7 +6,8 @@ namespace HotelBookingApp.Utilities.Printers.Rooms
     {
         internal static void PrintErrorsOrSuccess(RoomValidationResult result, string messageOnSuccess)
         {
-            if (result.Success){
+            if (result.Success)
+            {
                 Console.WriteLine(messageOnSuccess);
                 return;
             }

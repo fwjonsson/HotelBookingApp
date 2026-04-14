@@ -1,16 +1,11 @@
 ﻿using HotelBookingApp.Enums;
 using HotelBookingApp.Enums.Menus;
-using HotelBookingApp.Flows.Customers;
 using HotelBookingApp.Menus;
 using HotelBookingApp.Models;
-using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Services.Rooms;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
 using HotelBookingApp.Utilities.Printers.Rooms;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Flows.Rooms
 {
@@ -25,8 +20,8 @@ namespace HotelBookingApp.Flows.Rooms
         internal ReadRoomFlow(RoomService roomService)
         {
             _roomService = roomService;
-            _selectRoomMenu = new SelectObjectMenu<Room>(RoomPrinter.FormatRoom);
-            _roomActionMenu = new ActionMenu<Room>("Room", RoomPrinter.FormatRoom);
+            _selectRoomMenu = new SelectObjectMenu<Room>(RoomPrinter.MenuFormatRoom);
+            _roomActionMenu = new ActionMenu<Room>("Room", RoomPrinter.MenuFormatRoom);
             _updateRoomFlow = new UpdateRoomFlow(roomService);
             _deleteRoomFlow = new DeleteRoomFlow(roomService);
         }

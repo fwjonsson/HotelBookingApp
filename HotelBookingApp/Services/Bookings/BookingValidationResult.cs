@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HotelBookingApp.Services.Bookings
+﻿namespace HotelBookingApp.Services.Bookings
 {
     internal class BookingValidationResult
     {

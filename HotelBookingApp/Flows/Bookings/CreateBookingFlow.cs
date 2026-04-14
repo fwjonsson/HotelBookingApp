@@ -1,10 +1,8 @@
 ﻿using HotelBookingApp.Enums.Menus.Bookings;
 using HotelBookingApp.Menus.Bookings;
-using HotelBookingApp.Models;
 using HotelBookingApp.Services.Bookings;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.Printers.Bookings;
-using Microsoft.EntityFrameworkCore;
 
 namespace HotelBookingApp.Flows.Bookings
 {

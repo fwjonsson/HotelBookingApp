@@ -38,7 +38,7 @@ namespace HotelBookingApp.Flows.Rooms
                         (roomType, extraBeds) = RoomFlowHelpers.ValidateRoomType(roomType, extraBeds);
                         break;
                     case RoomEditorMenuOption.ExtraBeds:
-                        extraBeds = RoomFlowHelpers. ValidateExtraBeds(extraBeds, roomType);
+                        extraBeds = RoomFlowHelpers.ValidateExtraBeds(extraBeds, roomType);
                         break;
                     case RoomEditorMenuOption.Save:
                         if (TrySave(roomNumber, roomType, extraBeds))
@@ -67,7 +67,7 @@ namespace HotelBookingApp.Flows.Rooms
             RoomValidationResult result = _roomService.CreateRoom(rNumber, rType, eBeds);
             RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "Room created.");
             InputHelper.WaitForContinue();
-            if(result.Success)
+            if (result.Success)
                 return true;
             return false;
         }

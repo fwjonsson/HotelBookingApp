@@ -6,9 +6,6 @@ using HotelBookingApp.Services.Rooms;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
 using HotelBookingApp.Utilities.Printers.Rooms;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Flows.Rooms
 {
@@ -52,7 +49,7 @@ namespace HotelBookingApp.Flows.Rooms
                         newExtraBeds = RoomFlowHelpers.ValidateExtraBeds(newExtraBeds, newRoomType) ?? newExtraBeds;
                         break;
                     case RoomEditorMenuOption.Save:
-                        bool saved = TrySave(room.Id, newRoomNumber,newRoomType,newExtraBeds);
+                        bool saved = TrySave(room.Id, newRoomNumber, newRoomType, newExtraBeds);
                         InputHelper.WaitForContinue();
                         if (saved)
                         {

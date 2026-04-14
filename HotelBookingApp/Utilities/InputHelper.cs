@@ -1,6 +1,5 @@
-﻿using Microsoft.Identity.Client;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.ComponentModel.DataAnnotations;
 
 namespace HotelBookingApp.Utilities
 {
@@ -60,7 +59,7 @@ namespace HotelBookingApp.Utilities
             Console.WriteLine(prompt);
             while (true)
             {
-            var input = Console.ReadLine()?.Trim();
+                var input = Console.ReadLine()?.Trim();
 
                 if (string.IsNullOrWhiteSpace(input))
                 {

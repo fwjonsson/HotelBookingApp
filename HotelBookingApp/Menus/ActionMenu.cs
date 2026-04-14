@@ -1,9 +1,5 @@
 ﻿using HotelBookingApp.Enums.Menus;
-using HotelBookingApp.Models;
 using HotelBookingApp.Utilities.Menus;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Menus
 {
@@ -13,7 +9,7 @@ namespace HotelBookingApp.Menus
         private readonly string _item;
         private readonly Func<T, string> _formatter;
 
-        internal ActionMenu(string item, Func<T,string> formatter)
+        internal ActionMenu(string item, Func<T, string> formatter)
         {
             _item = item;
             _formatter = formatter;

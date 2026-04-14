@@ -1,7 +1,4 @@
 ﻿using HotelBookingApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Utilities.Printers.Bookings
 {
@@ -16,29 +13,12 @@ namespace HotelBookingApp.Utilities.Printers.Bookings
                 $"Room ID: {booking.RoomId}\n";
 
         }
-        internal static void PrintBooking(Booking booking)
-        {
-            Console.WriteLine(FormatBooking(booking));
-            Console.WriteLine();
-        }
-        internal static void PrintBookings(List<Booking> bookings)
-        {
-            if (bookings.Count == 0)
-            {
-                Console.WriteLine("No bookings found.");
-            }
-
-            else
-            {
-                foreach (var booking in bookings)
-                {
-                    Console.WriteLine(FormatBooking(booking!));
-                }
-            }
-        }
         internal static string MenuFormatBooking(Booking booking)
         {
-            return $"{booking.Id} - {booking.StartDate} - {booking.EndDate} - {booking.CustomerId} - {booking.RoomId}";
+            return $"Booking ID: {booking.Id}" +
+                $"  Dates: {booking.StartDate} - {booking.EndDate}" +
+                $"  Customer ID: {booking.CustomerId}" +
+                $"  Room ID: {booking.RoomId}";
 
         }
     }

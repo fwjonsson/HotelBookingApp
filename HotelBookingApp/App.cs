@@ -1,13 +1,9 @@
-﻿using HotelBookingApp.Data;
-using HotelBookingApp.Enums.Menus;
+﻿using HotelBookingApp.Enums.Menus;
 using HotelBookingApp.Flows.Bookings;
 using HotelBookingApp.Flows.Customers;
 using HotelBookingApp.Flows.Rooms;
 using HotelBookingApp.Menus;
 using HotelBookingApp.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp
 {
@@ -51,7 +47,7 @@ namespace HotelBookingApp
                         _roomFlows.Run();
                         break;
                     case MainMenuOption.Exit:
-                        if (InputHelper.WaitForYesOrNo("Are you sure you want to exit?"))
+                        if (InputHelper.WaitForYesOrNo("Are you sure you want to exit? Y/N"))
                             isRunning = false;
                         break;
                 }

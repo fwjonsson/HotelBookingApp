@@ -19,8 +19,8 @@ namespace HotelBookingApp.Flows.Bookings
         internal ReadBookingFlow(BookingService bookingService)
         {
             _bookingService = bookingService;
-            _selectBookingMenu = new SelectObjectMenu<Booking>(BookingPrinter.FormatBooking);
-            _bookingActionMenu = new ActionMenu<Booking>("Booking", BookingPrinter.FormatBooking);
+            _selectBookingMenu = new SelectObjectMenu<Booking>(BookingPrinter.MenuFormatBooking);
+            _bookingActionMenu = new ActionMenu<Booking>("Booking", BookingPrinter.MenuFormatBooking);
             _updateBookingFlow = new UpdateBookingFlow(bookingService);
             _deleteBookingFlow = new DeleteBookingFlow(bookingService);
 
@@ -62,11 +62,11 @@ namespace HotelBookingApp.Flows.Bookings
                         _updateBookingFlow.Run(bookingId);
                         break;
                     case ActionMenuOption.Delete:
-                            if (_deleteBookingFlow.TryDelete(bookingId))
-                            {
-                                _bookingActionMenu.ResetIndex();
-                                return;
-                            }
+                        if (_deleteBookingFlow.TryDelete(bookingId))
+                        {
+                            _bookingActionMenu.ResetIndex();
+                            return;
+                        }
                         break;
                     case ActionMenuOption.Back:
                         _bookingActionMenu.ResetIndex();

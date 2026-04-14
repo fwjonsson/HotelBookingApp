@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HotelBookingApp.Services.Customers
+﻿namespace HotelBookingApp.Services.Customers
 {
     internal class CustomerValidationResult
     {
@@ -12,9 +8,9 @@ namespace HotelBookingApp.Services.Customers
         public bool CanBeDeleted { get; set; } = true;
         public bool IsAdult { get; set; } = true;
 
-        public bool Success => 
+        public bool Success =>
             CustomerFound &&
-            EmailAvailable && 
+            EmailAvailable &&
             PhoneNumberAvailable &&
             IsAdult &&
             CanBeDeleted;

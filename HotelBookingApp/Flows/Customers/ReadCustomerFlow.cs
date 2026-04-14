@@ -1,6 +1,5 @@
 ﻿using HotelBookingApp.Enums.Menus;
 using HotelBookingApp.Menus;
-using HotelBookingApp.Menus.Customers;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Utilities;
@@ -21,8 +20,8 @@ namespace HotelBookingApp.Flows.Customers
         internal ReadCustomerFlow(CustomerService customerService)
         {
             _customerService = customerService;
-            _selectCustomerMenu = new SelectObjectMenu<Customer>(CustomerPrinter.FormatCustomer);
-            _customerActionMenu = new ActionMenu<Customer>("--Customer--", CustomerPrinter.FormatCustomer);
+            _selectCustomerMenu = new SelectObjectMenu<Customer>(CustomerPrinter.MenuFormatCustomer);
+            _customerActionMenu = new ActionMenu<Customer>("--Customer--", CustomerPrinter.MenuFormatCustomer);
             _updateCustomerFlow = new UpdateCustomerFlow(customerService);
             _deleteCustomerFlow = new DeleteCustomerFlow(customerService);
         }
@@ -63,11 +62,11 @@ namespace HotelBookingApp.Flows.Customers
                         _updateCustomerFlow.Run(customer!.Id);
                         break;
                     case ActionMenuOption.Delete:
-                            if (_deleteCustomerFlow.TryDelete(customer!.Id))
-                            {
-                                _customerActionMenu.ResetIndex();
-                                return;
-                            }
+                        if (_deleteCustomerFlow.TryDelete(customer!.Id))
+                        {
+                            _customerActionMenu.ResetIndex();
+                            return;
+                        }
                         break;
                     case ActionMenuOption.Back:
                         _customerActionMenu.ResetIndex();

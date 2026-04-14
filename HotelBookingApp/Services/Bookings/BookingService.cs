@@ -1,10 +1,5 @@
 ﻿using HotelBookingApp.Data;
-using HotelBookingApp.Enums;
 using HotelBookingApp.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Services.Bookings
 {
@@ -63,7 +58,7 @@ namespace HotelBookingApp.Services.Bookings
                 return result;
             }
 
-            if (newEndDate <= newStartDate ||newStartDate < DateOnly.FromDateTime(DateTime.Today))
+            if (newEndDate <= newStartDate || newStartDate < DateOnly.FromDateTime(DateTime.Today))
                 result.ValidDateRange = false;
 
             if (!CustomerExists(newCustomerId))

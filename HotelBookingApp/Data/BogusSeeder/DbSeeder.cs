@@ -1,8 +1,4 @@
-﻿using HotelBookingApp.Services.Rooms;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace HotelBookingApp.Data.BogusSeeder
 {

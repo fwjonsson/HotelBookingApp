@@ -2,9 +2,6 @@
 using HotelBookingApp.Enums;
 using HotelBookingApp.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Services.Rooms
 {
@@ -150,7 +147,7 @@ namespace HotelBookingApp.Services.Rooms
                     if (extraBeds > 2)
                         return false;
                     break;
-                    
+
             }
             return true;
         }
@@ -162,7 +159,7 @@ namespace HotelBookingApp.Services.Rooms
         private bool RoomNumberAvailable(int roomNumber, int? roomIdToExclude = null)
         {
             return !_dbContext.Rooms
-                .Any(r => 
+                .Any(r =>
                 (roomIdToExclude == null || r.Id != roomIdToExclude) &&
                 r.RoomNumber == roomNumber);
         }

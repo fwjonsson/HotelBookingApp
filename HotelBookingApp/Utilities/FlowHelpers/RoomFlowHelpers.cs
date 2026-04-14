@@ -1,9 +1,4 @@
 ﻿using HotelBookingApp.Enums;
-using HotelBookingApp.Services.Rooms;
-using HotelBookingApp.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Utilities.FlowHelpers
 {
@@ -50,7 +45,7 @@ namespace HotelBookingApp.Utilities.FlowHelpers
             return extraBeds;
         }
 
-        internal static  (RoomType?, int?) ValidateRoomType(RoomType? roomType, int? extraBeds)
+        internal static (RoomType?, int?) ValidateRoomType(RoomType? roomType, int? extraBeds)
         {
             var input = InputHelper.ReadInt("Single or double room (Enter 1 or 2): ");
             switch (input)

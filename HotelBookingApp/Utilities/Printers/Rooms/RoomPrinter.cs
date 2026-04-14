@@ -1,7 +1,5 @@
-﻿using HotelBookingApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using HotelBookingApp.Enums;
+using HotelBookingApp.Models;
 
 namespace HotelBookingApp.Utilities.Printers.Rooms
 {
@@ -9,7 +7,7 @@ namespace HotelBookingApp.Utilities.Printers.Rooms
     {
         internal static string FormatRoom(Room room)
         {
-            if (room.RoomType == Enums.RoomType.Single)
+            if (room.RoomType == RoomType.Single)
                 return $"Room ID: {room.Id}\n" +
                     $"Room Number: {room.RoomNumber}\n" +
                     $"Room Type: Single Room\n" +
@@ -21,10 +19,19 @@ namespace HotelBookingApp.Utilities.Printers.Rooms
                     $"Room Type: Double Room\n" +
                     $"Extra Beds: {room.ExtraBeds}\n";
         }
-        internal static void PrintRoom(Room room)
+        internal static string MenuFormatRoom(Room room)
         {
-            Console.WriteLine(FormatRoom(room));
-            Console.WriteLine();
+            if (room.RoomType == RoomType.Single)
+                return $"Room ID: {room.Id}\n" +
+                    $"  Room Number: {room.RoomNumber}\n" +
+                    $"  Room Type: Single Room\n" +
+                    $"  Extra Beds: {room.ExtraBeds}\n";
+
+
+            else return $"Room ID: {room.Id}\n" +
+                    $"  Room Number: {room.RoomNumber}\n" +
+                    $"  Room Type: Double Room\n" +
+                    $"  Extra Beds: {room.ExtraBeds}\n";
         }
     }
 }

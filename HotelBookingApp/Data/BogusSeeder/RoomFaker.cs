@@ -1,9 +1,6 @@
 ﻿using Bogus;
 using HotelBookingApp.Enums;
 using HotelBookingApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Data.BogusSeeder
 {

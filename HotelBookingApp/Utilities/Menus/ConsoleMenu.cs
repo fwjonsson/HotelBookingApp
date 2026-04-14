@@ -14,7 +14,7 @@
         {
             _title = title;
             _choicesPerPage = BuildPages(choices);
-            _currentChoices = _choicesPerPage[0];
+            _currentChoices = new List<MenuChoice<T>>();
         }
         private List<List<MenuChoice<T>>> BuildPages(List<MenuChoice<T>> choices)
         {
@@ -45,15 +45,18 @@
                 }
 
                 Console.WriteLine();
-                Console.WriteLine();
                 if (_choicesPerPage.Count > 1)
                 {
                     for (int page = 0; page < _choicesPerPage.Count; page++)
                         Console.Write(page == _currentPage ? $">{page}<" : $" {page} ");
+                    Console.WriteLine();
                     Console.WriteLine("Use arrow keys to navigate Up/Down and Left/right to switch page.");
                 }
                 else
+                {
+                    Console.WriteLine();
                     Console.WriteLine("Use arrow keys to navigate Up/Down.");
+                }
                 Console.WriteLine("Enter to select.");
                 Console.WriteLine("Esc to go back.");
                 Console.WriteLine();
@@ -85,7 +88,7 @@
                         if (_choicesPerPage.Count > 1)
                         {
                             _currentPage--;
-                            if (_currentPage < 0) 
+                            if (_currentPage < 0)
                                 _currentPage = _choicesPerPage.Count - 1;
 
                             ClampIndex();
@@ -127,16 +130,16 @@
             _choicesPerPage = BuildPages(choices);
 
             if (_currentPage >= _choicesPerPage.Count)
-                _currentPage = _choicesPerPage.Count -1;
+                _currentPage = _choicesPerPage.Count - 1;
 
             _currentChoices = _choicesPerPage[_currentPage];
 
             if (_index >= _currentChoices.Count)
-                _index = _currentChoices.Count -1;
+                _index = _currentChoices.Count - 1;
 
             if (_index < 0)
                 _index = 0;
-            
+
         }
     }
 }
