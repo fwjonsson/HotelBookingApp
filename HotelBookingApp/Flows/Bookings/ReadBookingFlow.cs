@@ -20,7 +20,7 @@ namespace HotelBookingApp.Flows.Bookings
         {
             _bookingService = bookingService;
             _selectBookingMenu = new SelectObjectMenu<Booking>(BookingPrinter.MenuFormatBooking);
-            _bookingActionMenu = new ActionMenu<Booking>("Booking", BookingPrinter.MenuFormatBooking);
+            _bookingActionMenu = new ActionMenu<Booking>("Booking", BookingPrinter.FormatBooking);
             _updateBookingFlow = new UpdateBookingFlow(bookingService);
             _deleteBookingFlow = new DeleteBookingFlow(bookingService);
 

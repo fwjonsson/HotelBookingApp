@@ -16,7 +16,7 @@ namespace HotelBookingApp.Menus.Rooms
         {
             _menu.SetChoices(new List<MenuChoice<RoomEditorMenuOption>>
             {
-                new(RoomEditorMenuOption.RoomNumber, $"Room number ({roomNumber}"),
+                new(RoomEditorMenuOption.RoomNumber, $"Room number ({roomNumber})"),
                 new(RoomEditorMenuOption.RoomType, $"Room type ({roomType.ToString()})"),
                 new(RoomEditorMenuOption.ExtraBeds, $"Extra beds ({extraBeds})"),
                 new(RoomEditorMenuOption.Save, "Save")

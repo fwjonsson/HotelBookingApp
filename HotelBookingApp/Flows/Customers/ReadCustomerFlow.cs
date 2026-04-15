@@ -21,7 +21,7 @@ namespace HotelBookingApp.Flows.Customers
         {
             _customerService = customerService;
             _selectCustomerMenu = new SelectObjectMenu<Customer>(CustomerPrinter.MenuFormatCustomer);
-            _customerActionMenu = new ActionMenu<Customer>("--Customer--", CustomerPrinter.MenuFormatCustomer);
+            _customerActionMenu = new ActionMenu<Customer>("--Customer--", CustomerPrinter.FormatCustomer);
             _updateCustomerFlow = new UpdateCustomerFlow(customerService);
             _deleteCustomerFlow = new DeleteCustomerFlow(customerService);
         }
