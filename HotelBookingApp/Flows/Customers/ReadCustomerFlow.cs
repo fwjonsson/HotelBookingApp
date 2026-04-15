@@ -97,14 +97,18 @@ namespace HotelBookingApp.Flows.Customers
             string? fullNameInput = InputHelper.ReadFullName("Full Name: ");
             if (fullNameInput is not string fullName)
                 return;
-            SelectCustomerAndChooseAction(() => _customerService.GetByFullName(fullName), CustomerPrinter.MenuFormatCustomer, $"--Customers By Name: {fullName}--");
+            SelectCustomerAndChooseAction(() => _customerService.GetByFullName(fullName), CustomerPrinter.MenuShowAllFormatCustomer,
+                $"--Customers By Name: {fullName}--\n" +
+                "     ID |           Full Name           | Birth Date |             Email             |   Phone Number\n" + new string('-', 103));
         }
         internal void ReadByBirthDate()
         {
             DateOnly? birthDateInput = InputHelper.ReadDateOnly("Birth Date: ");
             if (birthDateInput is not DateOnly birthDate)
                 return;
-            SelectCustomerAndChooseAction(() => _customerService.GetByBirthDate(birthDate), CustomerPrinter.MenuFormatCustomer, $"--Customers With Birth Date: {birthDate:yyyy-MM-dd}--");
+            SelectCustomerAndChooseAction(() => _customerService.GetByBirthDate(birthDate), CustomerPrinter.MenuShowAllFormatCustomer, 
+                $"--Customers With Birth Date: {birthDate:yyyy-MM-dd}--\n" +
+                "     ID |           Full Name           | Birth Date |             Email             |   Phone Number\n" + new string('-', 103));
         }
         internal void ReadByEmail()
         {

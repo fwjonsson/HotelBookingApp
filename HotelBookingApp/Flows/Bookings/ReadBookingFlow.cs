@@ -81,22 +81,24 @@ namespace HotelBookingApp.Flows.Bookings
         }
         internal void ReadAll()
         {
-            SelectBookingAndChooseAction(_bookingService.ListAll, BookingPrinter.MenuShowAllFormatBooking, 
+            SelectBookingAndChooseAction(_bookingService.ListAll, BookingPrinter.MenuShowAllFormatBooking,
                 "--All Bookings--\n" +
                 "     ID |      Booked Dates      | Customer ID | Room ID\n" + new string('-', 60));
         }
 
         internal void ReadByDate()
         {
-            DateOnly? dateInput = InputHelper.ReadDateOnly("Booking Date (yyyy-MM-dd):");
+            DateOnly? dateInput = InputHelper.ReadDateOnly("Booking Date (yyyy-MM-dd): ");
             if (dateInput is not DateOnly date)
                 return;
-            SelectBookingAndChooseAction(() => _bookingService.GetByDate(date), BookingPrinter.MenuFormatBooking, $"--Bookings On Date: {date:yyyy-MM-dd}--");
+            SelectBookingAndChooseAction(() => _bookingService.GetByDate(date), BookingPrinter.MenuShowAllFormatBooking,
+                $"--Bookings On Date: {date:yyyy-MM-dd}--\n" +
+                "     ID |      Booked Dates      | Customer ID | Room ID\n" + new string('-', 60));
         }
 
         internal void ReadById()
         {
-            int? bookingIdInput = InputHelper.ReadInt("Booking ID:");
+            int? bookingIdInput = InputHelper.ReadInt("Booking ID: ");
             if (bookingIdInput is not int bookingId)
                 return;
             ChooseAction(bookingId);
@@ -104,18 +106,22 @@ namespace HotelBookingApp.Flows.Bookings
 
         internal void ReadByRoomId()
         {
-            int? roomIdInput = InputHelper.ReadInt("Room ID:");
+            int? roomIdInput = InputHelper.ReadInt("Room ID: ");
             if (roomIdInput is not int roomId)
                 return;
-            SelectBookingAndChooseAction(() => _bookingService.GetByRoomId(roomId), BookingPrinter.MenuFormatBooking, $"--Bookings On Room ID: {roomId}--");
+            SelectBookingAndChooseAction(() => _bookingService.GetByRoomId(roomId), BookingPrinter.MenuShowAllFormatBooking,
+                $"--Bookings On Room ID: {roomId}--\n" +
+                 "     ID |      Booked Dates      | Customer ID | Room ID\n" + new string('-', 60));
         }
 
         internal void ReadByCustomerId()
         {
-            int? customerIdInput = InputHelper.ReadInt("Customer ID:");
+            int? customerIdInput = InputHelper.ReadInt("Customer ID: ");
             if (customerIdInput is not int customerId)
                 return;
-            SelectBookingAndChooseAction(() => _bookingService.GetByCustomerId(customerId), BookingPrinter.MenuFormatBooking, $"--Bookings By Customer ID: {customerId}--");
+            SelectBookingAndChooseAction(() => _bookingService.GetByCustomerId(customerId), BookingPrinter.MenuShowAllFormatBooking,
+                $"--Bookings By Customer ID: {customerId}--\n" +
+                "     ID |      Booked Dates      | Customer ID | Room ID\n" + new string('-', 60));
 
         }
     }

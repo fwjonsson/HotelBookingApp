@@ -78,7 +78,7 @@ namespace HotelBookingApp.Flows.Rooms
 
         internal void ReadAll()
         {
-            SelectRoomAndChooseAction(_roomService.ListAll, RoomPrinter.MenuShowAllFormatRoom, 
+            SelectRoomAndChooseAction(_roomService.ListAll, RoomPrinter.MenuShowAllFormatRoom,
                 "--All Rooms--\n" +
                 "     ID | Room Number | Extra Beds | Room Type\n" + new string('-', 47));
         }
@@ -98,35 +98,43 @@ namespace HotelBookingApp.Flows.Rooms
         }
         internal void ReadByRoomType()
         {
-            int? roomTypeInput = InputHelper.ReadInt("Single or double room (Enter 1 or 2): ");
-            if (roomTypeInput is not int input)
-                return;
-
-            RoomType? roomType = null;
-
-            switch (input)
+            while (true)
             {
-                case 1:
-                    roomType = RoomType.Single;
-                    break;
-
-                case 2:
-                    roomType = RoomType.Double;
-                    break;
-
-                default:
-                    Console.WriteLine("Must be 1 or 2");
-                    InputHelper.WaitForContinue();
+                int? roomTypeInput = InputHelper.ReadInt("Single or double room (Enter 1 or 2): ");
+                if (roomTypeInput is not int input)
                     return;
+
+                RoomType? roomType = null;
+
+                switch (input)
+                {
+                    case 1:
+                        roomType = RoomType.Single;
+                        break;
+
+                    case 2:
+                        roomType = RoomType.Double;
+                        break;
+
+                    default:
+                        Console.WriteLine("Must be 1 or 2");
+                        InputHelper.WaitForContinue();
+                        continue; ;
+                }
+                SelectRoomAndChooseAction(() => _roomService.GetByRoomType(roomType), RoomPrinter.MenuShowAllFormatRoom,
+                    $"--All {roomType} Rooms--\n" +
+                    "     ID | Room Number | Extra Beds | Room Type\n" + new string('-', 47));
+                return;
             }
-            SelectRoomAndChooseAction(() => _roomService.GetByRoomType(roomType), RoomPrinter.MenuFormatRoom, $"--All {roomType} Rooms--");
         }
         internal void ReadByCustomerId()
         {
             int? customerIdInput = InputHelper.ReadInt("Customer ID: ");
             if (customerIdInput is not int customerId)
                 return;
-            SelectRoomAndChooseAction(() => _roomService.GetByCustomerId(customerId), RoomPrinter.MenuFormatRoom, $"All Rooms Booked By Customer ID: {customerId}--");
+            SelectRoomAndChooseAction(() => _roomService.GetByCustomerId(customerId), RoomPrinter.MenuShowAllFormatRoom,
+                $"--All Rooms Booked By Customer ID: {customerId}--\n" +
+                "     ID | Room Number | Extra Beds | Room Type\n" + new string('-', 47));
         }
         internal void ReadByBookingId()
         {
