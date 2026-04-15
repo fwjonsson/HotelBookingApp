@@ -25,7 +25,7 @@ namespace HotelBookingApp.Utilities.FlowHelpers
         {
             if (roomType == null)
             {
-                Console.WriteLine("Must choose room type first.");
+                Console.WriteLine("Select a room type first.");
                 InputHelper.WaitForContinue();
                 return null;
             }

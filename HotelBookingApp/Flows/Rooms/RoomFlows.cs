@@ -2,7 +2,9 @@
 using HotelBookingApp.Menus.Rooms;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Rooms;
+using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
+using HotelBookingApp.Utilities.Printers.Rooms;
 
 namespace HotelBookingApp.Flows.Rooms
 {
@@ -89,11 +91,19 @@ namespace HotelBookingApp.Flows.Rooms
                         break;
 
                     case RoomMenuOption.ChangeExtraBeds:
-                        int? ExtraBedsInput = RoomFlowHelpers.ValidateExtraBeds(room?.ExtraBeds, room?.RoomType);
-                        if (ExtraBedsInput is int newExtraBeds)
+                        if (room is null)
                         {
-                            _roomService.UpdateRoom(room!.Id, room.RoomNumber, room.RoomType, newExtraBeds);
+                            Console.WriteLine("Select a room first.");
+                            InputHelper.WaitForContinue();
+                            break;
                         }
+                        int? ExtraBedsInput = RoomFlowHelpers.ValidateExtraBeds(room.ExtraBeds, room.RoomType);
+                        if (ExtraBedsInput is not int newExtraBeds)
+                            break;
+
+                        var result = _roomService.UpdateRoom(room.Id, room.RoomNumber, room.RoomType, newExtraBeds);
+                        RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "Room updated.");
+                        InputHelper.WaitForContinue();
                         break;
 
                     case RoomMenuOption.Back:
@@ -107,6 +117,6 @@ namespace HotelBookingApp.Flows.Rooms
                 return room;
             }
         }
-        
+
     }
 }
