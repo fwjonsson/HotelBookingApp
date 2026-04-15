@@ -54,6 +54,7 @@
                 
                 Console.WriteLine("Enter to select.");
                 Console.WriteLine("Esc to go back.");
+                Console.WriteLine();
                 var key = Console.ReadKey(true).Key;
                 switch (key)
                 {

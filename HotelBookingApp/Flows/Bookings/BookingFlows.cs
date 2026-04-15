@@ -1,22 +1,28 @@
 ﻿using HotelBookingApp.Enums.Menus.Bookings;
+using HotelBookingApp.Flows.Customers;
+using HotelBookingApp.Flows.Rooms;
 using HotelBookingApp.Menus.Bookings;
 using HotelBookingApp.Services.Bookings;
+using HotelBookingApp.Services.Customers;
+using HotelBookingApp.Services.Rooms;
 
 namespace HotelBookingApp.Flows.Bookings
 {
     internal class BookingFlows
     {
         private readonly BookingMenu _bookingMenu;
-
         private readonly CreateBookingFlow _create;
         private readonly ReadBookingFlow _read;
+        private readonly CustomerFlows _customerFlows;
+        private readonly RoomFlows _roomFlows;
 
-        internal BookingFlows(BookingService bookingService)
+        internal BookingFlows(BookingService bookingService, CustomerFlows customerFlows, RoomFlows roomFlows)
         {
             _bookingMenu = new BookingMenu();
-
-            _create = new CreateBookingFlow(bookingService);
+            _create = new CreateBookingFlow(bookingService, customerFlows, roomFlows);
             _read = new ReadBookingFlow(bookingService);
+            _customerFlows = customerFlows;
+            _roomFlows = roomFlows;
         }
         internal void Run()
         {

@@ -13,7 +13,7 @@ namespace HotelBookingApp.Services.Customers
             _dbContext = dbContext;
         }
 
-        internal CustomerValidationResult CreateCustomer(string fullName, DateOnly birthDate, string email, string phoneNumber)
+        internal (CustomerValidationResult,Customer?) CreateCustomer(string fullName, DateOnly birthDate, string email, string phoneNumber)
         {
             var result = new CustomerValidationResult();
 
@@ -27,7 +27,7 @@ namespace HotelBookingApp.Services.Customers
                 result.IsAdult = false;
 
             if (!result.Success)
-                return result;
+                return (result, null);
 
             var newCustomer = new Customer
             {
@@ -39,7 +39,7 @@ namespace HotelBookingApp.Services.Customers
             _dbContext.Customers
                 .Add(newCustomer);
             _dbContext.SaveChanges();
-            return result;
+            return (result, newCustomer);
         }
         internal CustomerValidationResult UpdateCustomer(int customerId, string newFullName, DateOnly newBirthDate, string newEmail, string newPhoneNumber)
         {

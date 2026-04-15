@@ -49,6 +49,7 @@ namespace HotelBookingApp.Flows.Customers
                 ChooseAction(_customerService.GetById, customer.Id);
             }
         }
+
         private void ChooseAction<TId>(Func<TId, Customer?> getCustomer, TId identifier)
         {
             while (true)
@@ -85,6 +86,7 @@ namespace HotelBookingApp.Flows.Customers
                 "--All Customers--\n" +
                 "     ID |           Full Name           | Birth Date |             Email             |   Phone Number\n" + new string('-', 103));
         }
+
         internal void ReadById()
         {
             int? customerIdInput = InputHelper.ReadInt("Customer ID: ");
@@ -92,6 +94,7 @@ namespace HotelBookingApp.Flows.Customers
                 return;
             ChooseAction(_customerService.GetById, customerId);
         }
+
         internal void ReadByFullName()
         {
             string? fullNameInput = InputHelper.ReadFullName("Full Name: ");
@@ -101,6 +104,7 @@ namespace HotelBookingApp.Flows.Customers
                 $"--Customers By Name: {fullName}--\n" +
                 "     ID |           Full Name           | Birth Date |             Email             |   Phone Number\n" + new string('-', 103));
         }
+
         internal void ReadByBirthDate()
         {
             DateOnly? birthDateInput = InputHelper.ReadDateOnly("Birth Date: ");
@@ -110,6 +114,7 @@ namespace HotelBookingApp.Flows.Customers
                 $"--Customers With Birth Date: {birthDate:yyyy-MM-dd}--\n" +
                 "     ID |           Full Name           | Birth Date |             Email             |   Phone Number\n" + new string('-', 103));
         }
+
         internal void ReadByEmail()
         {
             string? emailInput = InputHelper.ReadEmail("Email: ");

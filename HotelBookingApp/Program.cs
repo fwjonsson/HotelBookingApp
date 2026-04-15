@@ -21,9 +21,9 @@ namespace HotelBookingApp
             var customerService = new CustomerService(dbContext);
             var roomService = new RoomService(dbContext);
 
-            var bookingFlows = new BookingFlows(bookingService);
             var customerFlows = new CustomerFlows(customerService);
             var roomFlows = new RoomFlows(roomService);
+            var bookingFlows = new BookingFlows(bookingService, customerFlows, roomFlows);
 
             var app = new App(bookingFlows, customerFlows, roomFlows);
             app.Run();

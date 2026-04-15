@@ -1,6 +1,9 @@
 ﻿using HotelBookingApp.Enums.Menus.Bookings;
+using HotelBookingApp.Flows.Customers;
+using HotelBookingApp.Flows.Rooms;
 using HotelBookingApp.Menus.Bookings;
 using HotelBookingApp.Services.Bookings;
+using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.Printers.Bookings;
 
@@ -10,11 +13,15 @@ namespace HotelBookingApp.Flows.Bookings
     {
         private readonly BookingService _bookingService;
         private readonly CreateBookingMenu _createBookingMenu;
+        private readonly CustomerFlows _customerFlows;
+        private readonly RoomFlows _roomFlows;
 
-        internal CreateBookingFlow(BookingService bookingService)
+        internal CreateBookingFlow(BookingService bookingService, CustomerFlows customerFlows, RoomFlows roomFlows)
         {
             _bookingService = bookingService;
             _createBookingMenu = new CreateBookingMenu();
+            _customerFlows = customerFlows;
+            _roomFlows = roomFlows;
         }
         internal void Run()
         {
@@ -30,11 +37,13 @@ namespace HotelBookingApp.Flows.Bookings
                 switch (choice)
                 {
                     case BookingEditorMenuOption.CustomerId:
-                        customerId = InputHelper.ReadInt("Customer ID: ");
+                        var customer = _customerFlows.RunAndGetCustomer();
+                        if (customer is not null)
+                            customerId = customer.Id;
                         break;
 
                     case BookingEditorMenuOption.RoomId:
-                        roomId = InputHelper.ReadInt("Room ID: ");
+                        _roomFlows.Run();
                         break;
 
                     case BookingEditorMenuOption.StartDate:

@@ -1,5 +1,6 @@
 ﻿using HotelBookingApp.Enums.Menus.Customers;
 using HotelBookingApp.Menus.Customers;
+using HotelBookingApp.Models;
 using HotelBookingApp.Services.Customers;
 
 namespace HotelBookingApp.Flows.Customers
@@ -10,6 +11,7 @@ namespace HotelBookingApp.Flows.Customers
 
         private readonly CreateCustomerFlow _create;
         private readonly ReadCustomerFlow _read;
+        private readonly SelectCustomerFlow _select;
 
         internal CustomerFlows(CustomerService customerService)
         {
@@ -17,6 +19,7 @@ namespace HotelBookingApp.Flows.Customers
 
             _create = new CreateCustomerFlow(customerService);
             _read = new ReadCustomerFlow(customerService);
+            _select = new SelectCustomerFlow(customerService);
         }
         internal void Run()
         {
@@ -61,6 +64,44 @@ namespace HotelBookingApp.Flows.Customers
                     case CustomerMenuOption.Back:
                         _customerMenu.ResetIndex();
                         return;
+                }
+            }
+        }
+        internal Customer? RunAndGetCustomer()
+        {
+            while (true)
+            {
+                var choice = _customerMenu.Show();
+
+                switch (choice)
+                {
+                    case CustomerMenuOption.Create:
+                        return _create.Run();
+
+                    case CustomerMenuOption.ShowAll:
+                        return _select.ReadAllAndGetSelected();
+
+                    case CustomerMenuOption.FindByFullName:
+                        return _select.ReadByFullNameAndGetSelected();
+
+                    case CustomerMenuOption.FindByBirthDate:
+                        return _select.ReadByBirthDateAndGetSelected();
+
+                    case CustomerMenuOption.FindByEmail:
+                        return _select.ReadByEmailAndGet();
+
+                    case CustomerMenuOption.FindByPhoneNumber:
+                        return _select.ReadByPhoneNumberAndGet();
+
+                    case CustomerMenuOption.FindByID:
+                        return _select.ReadByIdAndGet();
+                        
+                    case CustomerMenuOption.FindByBookingID:
+                        return _select.ReadByBookingIdAndGet();
+
+                    case CustomerMenuOption.Back:
+                        _customerMenu.ResetIndex();
+                        return null;
                 }
             }
         }
