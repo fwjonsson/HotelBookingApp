@@ -50,6 +50,7 @@
                 else
                 {
                     Console.WriteLine();
+                    Console.WriteLine();
                     Console.WriteLine("Use arrow keys to navigate Up/Down.");
                 }
                 Console.WriteLine("Enter to select.");
@@ -168,6 +169,7 @@
                     Console.Write(page == _currentPage ? $">{page + 1,2}<" : $" {page + 1,2} ");
                 Console.Write(" ...");
             }
+            Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Use arrow keys to navigate Up/Down and Left/right to switch page.");
         }
