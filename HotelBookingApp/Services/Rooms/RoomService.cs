@@ -99,6 +99,14 @@ namespace HotelBookingApp.Services.Rooms
                 .Include(r => r.Bookings)
                 .ToList();
         }
+        internal List<Room> ListAllAvailable(DateOnly startDate, DateOnly endDate)
+        {
+            return _dbContext.Rooms
+                .Where(r => !r.Bookings.Any(b =>
+                startDate < b.EndDate &&
+                b.StartDate < endDate))
+                .ToList();
+        }
         internal Room? GetById(int roomId)
         {
             return _dbContext.Rooms
@@ -111,8 +119,21 @@ namespace HotelBookingApp.Services.Rooms
                 .Include(r => r.Bookings)
                 .FirstOrDefault(r => r.RoomNumber == roomNumber);
         }
+        internal Room? GetByRoomNumberAndIfAvailable(int roomNumber, DateOnly startDate, DateOnly endDate)
+        {
+            return _dbContext.Rooms
+                .Include(r => r.Bookings)
+                .FirstOrDefault(r => r.RoomNumber == roomNumber);
+        }
 
         internal List<Room> GetByRoomType(RoomType? roomType)
+        {
+            return _dbContext.Rooms
+                .Include(r => r.Bookings)
+                .Where(r => r.RoomType == roomType)
+                .ToList();
+        }
+        internal List<Room> GetByRoomTypeAndAvailable(RoomType? roomType, DateOnly startDate, DateOnly endDate)
         {
             return _dbContext.Rooms
                 .Include(r => r.Bookings)

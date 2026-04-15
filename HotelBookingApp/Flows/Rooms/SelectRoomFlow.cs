@@ -40,39 +40,34 @@ namespace HotelBookingApp.Flows.Rooms
                 return room;
             }
         }
-        internal Room? ReadAllAndGetSelected()
+        internal Room? ReadAllAvailableAndGetSelected(DateOnly startDate, DateOnly endDate)
         {
-            return SelectRoom(_roomService.ListAll, RoomPrinter.MenuShowAllFormatRoom,
+            return SelectRoom(() => _roomService.ListAllAvailable(startDate, endDate), RoomPrinter.MenuShowAllFormatRoom,
                 "--All Rooms--\n" +
                 "     ID | Room Number | Extra Beds | Room Type\n" + new string('-', 47));
         }
-        internal Room? ReadByIdAndGet()
-        {
-            int? roomIdInput = InputHelper.ReadInt("Room ID: ");
-            if (roomIdInput is not int roomId)
-                return null;
-            var room = _roomService.GetById(roomId);
-            if (room is null)
-            {
-                Console.WriteLine("Room not found.");
-                InputHelper.WaitForContinue();
-            }
-            return room;
-        }
-        internal Room? ReadByRoomNumberAndGet()
+        internal Room? ReadByRoomNumberAndGetIfAvailable(DateOnly startDate, DateOnly endDate)
         {
             int? roomNumberInput = InputHelper.ReadInt("Room number: ");
             if (roomNumberInput is not int roomNumber)
                 return null;
-            var room = _roomService.GetByRoomNumber(roomNumber);
+            var checkRoomExists = _roomService.GetByRoomNumber(roomNumber);
+            if (checkRoomExists is null)
+            {
+                    Console.WriteLine("Room not found.");
+                    InputHelper.WaitForContinue();
+                return null;
+            }
+
+            var room = _roomService.GetByRoomNumberAndIfAvailable(roomNumber, startDate, endDate);
             if (room is null)
             {
-                Console.WriteLine("Room not found.");
+                Console.WriteLine("Room not available.");
                 InputHelper.WaitForContinue();
             }
             return room;
         }
-        internal Room? ReadByRoomTypeAndGetSelected()
+        internal Room? ReadAllAvailableByRoomTypeAndGetSelected(DateOnly startDate, DateOnly endDate)
         {
             RoomType? roomType = null;
             while (true)
@@ -96,32 +91,10 @@ namespace HotelBookingApp.Flows.Rooms
                         InputHelper.WaitForContinue();
                         continue; ;
                 }
-                return SelectRoom(() => _roomService.GetByRoomType(roomType), RoomPrinter.MenuShowAllFormatRoom,
+                return SelectRoom(() => _roomService.GetByRoomTypeAndAvailable(roomType, startDate, endDate), RoomPrinter.MenuShowAllFormatRoom,
                     $"--All {roomType} Rooms--\n" +
                     "     ID | Room Number | Extra Beds | Room Type\n" + new string('-', 47));
             }
-        }
-        internal Room? ReadByCustomerIdAndGetSelected()
-        {
-            int? customerIdInput = InputHelper.ReadInt("Customer ID: ");
-            if (customerIdInput is not int customerId)
-                return null;
-            return SelectRoom(() => _roomService.GetByCustomerId(customerId), RoomPrinter.MenuShowAllFormatRoom,
-                $"--All Rooms Booked By Customer ID: {customerId}--\n" +
-                "     ID | Room Number | Extra Beds | Room Type\n" + new string('-', 47));
-        }
-        internal Room? ReadByBookingIdAndGet()
-        {
-            int? bookingIdInput = InputHelper.ReadInt("Booking ID: ");
-            if (bookingIdInput is not int bookingId)
-                return null;
-            var room = _roomService.GetByBookingId(bookingId);
-            if (room is null)
-            {
-                Console.WriteLine("Room not found.");
-                InputHelper.WaitForContinue();
-            }
-            return room;
         }
     }
 }

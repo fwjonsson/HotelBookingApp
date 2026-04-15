@@ -6,6 +6,7 @@
         EndDate,
         RoomId,
         CustomerId,
+        ExtraBeds,
         Save,
         Cancel
     }

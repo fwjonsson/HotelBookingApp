@@ -2,12 +2,14 @@
 using HotelBookingApp.Menus.Rooms;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Rooms;
+using HotelBookingApp.Utilities.FlowHelpers;
 
 namespace HotelBookingApp.Flows.Rooms
 {
     internal class RoomFlows
     {
         private readonly RoomMenu _roomMenu;
+        private readonly AvailableRoomsMenu _availableRoomsMenu;
 
         private readonly CreateRoomFlow _create;
         private readonly ReadRoomFlow _read;
@@ -16,6 +18,7 @@ namespace HotelBookingApp.Flows.Rooms
         internal RoomFlows(RoomService roomService)
         {
             _roomMenu = new RoomMenu();
+            _availableRoomsMenu = new AvailableRoomsMenu();
 
             _create = new CreateRoomFlow(roomService);
             _read = new ReadRoomFlow(roomService);
@@ -63,12 +66,12 @@ namespace HotelBookingApp.Flows.Rooms
                 }
             }
         }
-        internal Room? RunAndGetRoom()
+        internal Room? RunAndGetRoom(DateOnly startDate, DateOnly endDate)
         {
             Room? selectedRoom = null;
             while (true)
             {
-                var choice = _roomMenu.Show();
+                var choice = _availableRoomsMenu.Show();
 
                 switch (choice)
                 {
@@ -77,27 +80,15 @@ namespace HotelBookingApp.Flows.Rooms
                         break;
 
                     case RoomMenuOption.ShowAll:
-                        selectedRoom = _select.ReadAllAndGetSelected();
+                        selectedRoom = _select.ReadAllAvailableAndGetSelected(startDate, endDate);
                         break;
 
                     case RoomMenuOption.FindByRoomNR:
-                        selectedRoom = _select.ReadByRoomNumberAndGet();
+                        selectedRoom = _select.ReadByRoomNumberAndGetIfAvailable(startDate, endDate);
                         break;
 
                     case RoomMenuOption.FindByRoomType:
-                        selectedRoom = _select.ReadByRoomTypeAndGetSelected();
-                        break;
-
-                    case RoomMenuOption.FindByID:
-                        selectedRoom = _select.ReadByIdAndGet();
-                        break;
-
-                    case RoomMenuOption.FindByCustomerID:
-                        selectedRoom = _select.ReadByCustomerIdAndGetSelected();
-                        break;
-
-                    case RoomMenuOption.FindByBookingID:
-                        selectedRoom = _select.ReadByBookingIdAndGet();
+                        selectedRoom = _select.ReadAllAvailableByRoomTypeAndGetSelected(startDate, endDate);
                         break;
 
                     case RoomMenuOption.Back:
@@ -111,5 +102,6 @@ namespace HotelBookingApp.Flows.Rooms
                 return selectedRoom;
             }
         }
+        
     }
 }
