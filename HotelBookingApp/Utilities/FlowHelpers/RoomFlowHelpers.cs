@@ -29,9 +29,15 @@ namespace HotelBookingApp.Utilities.FlowHelpers
                 InputHelper.WaitForContinue();
                 return null;
             }
+
+            int? input = null;
             while (true)
             {
-                int? input = InputHelper.ReadInt("Extra beds (Max 1 in single room and max 2 in double room): ");
+                if(roomType == RoomType.Single)
+                    input = InputHelper.ReadInt("Extra beds (Max 1): ");
+
+                else
+                    input = InputHelper.ReadInt("Extra beds (Max 2): ");
                 if (input is not int)
                     return extraBeds;
 
@@ -48,6 +54,10 @@ namespace HotelBookingApp.Utilities.FlowHelpers
                             continue;
                         }
                         return 2;
+                    default:
+                        Console.WriteLine("Must be 1 or 2.");
+                        InputHelper.WaitForContinue();
+                        continue;
                 }
             }
         }
@@ -79,7 +89,7 @@ namespace HotelBookingApp.Utilities.FlowHelpers
                         return (RoomType.Double, null);
 
                     default:
-                        Console.WriteLine("Must be 1 or 2");
+                        Console.WriteLine("Must be 1 or 2.");
                         InputHelper.WaitForContinue();
                         continue;
                 }
