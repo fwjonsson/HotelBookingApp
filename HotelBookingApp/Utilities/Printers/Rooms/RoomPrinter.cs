@@ -25,7 +25,7 @@ namespace HotelBookingApp.Utilities.Printers.Rooms
                 return $"{room.Id,5} |" +
                     $"{room.RoomNumber,12} |" +
                     $"{room.ExtraBeds,11} |" +
-                    $"{room.RoomType.ToString(),10}\n" + new string('-', 47);
+                    $"{room.RoomType.ToString(),10}";
         }
     }
 }

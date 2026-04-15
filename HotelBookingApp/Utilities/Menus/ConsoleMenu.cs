@@ -43,18 +43,17 @@
                     Console.WriteLine($"{_currentChoices[choice].Text}");
                 }
 
-                Console.WriteLine();
+                
                 if (_choicesPerPage.Count > 1)
                     PrintPageNumbers();
                 else
                 {
                     Console.WriteLine();
-                    Console.WriteLine();
                     Console.WriteLine("Use arrow keys to navigate Up/Down.");
                 }
+                
                 Console.WriteLine("Enter to select.");
                 Console.WriteLine("Esc to go back.");
-                Console.WriteLine();
                 var key = Console.ReadKey(true).Key;
                 switch (key)
                 {
