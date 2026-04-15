@@ -21,7 +21,7 @@ namespace HotelBookingApp.Flows.Rooms
         {
             _roomService = roomService;
             _selectRoomMenu = new SelectObjectMenu<Room>(RoomPrinter.MenuFormatRoom);
-            _roomActionMenu = new ActionMenu<Room>("Room", RoomPrinter.FormatRoom);
+            _roomActionMenu = new ActionMenu<Room>("--Room--", RoomPrinter.FormatRoom);
             _updateRoomFlow = new UpdateRoomFlow(roomService);
             _deleteRoomFlow = new DeleteRoomFlow(roomService);
         }

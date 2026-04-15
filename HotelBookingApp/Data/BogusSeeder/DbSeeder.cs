@@ -6,16 +6,14 @@ namespace HotelBookingApp.Data.BogusSeeder
     {
         internal static void Seed(ApplicationDbContext dbContext)
         {
-            var customers = new CustomerFaker().Generate(30);
-            var rooms = new RoomFaker().Generate(10);
+            var customers = new CustomerFaker().Generate(150);
+            var rooms = new RoomFaker().Generate(40);
 
             dbContext.Customers.AddRange(customers);
             dbContext.Rooms.AddRange(rooms);
+            dbContext.SaveChanges();
 
-            var savedCustomers = dbContext.Customers.AsNoTracking().ToList();
-            var savedRooms = dbContext.Rooms.AsNoTracking().ToList();
-
-            var bookings = new BookingFaker(savedCustomers, savedRooms).Generate(35);
+            var bookings = new BookingFaker(customers, rooms).Generate(100);
 
             dbContext.Bookings.AddRange(bookings);
             dbContext.SaveChanges();

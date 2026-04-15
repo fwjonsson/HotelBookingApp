@@ -20,7 +20,7 @@ namespace HotelBookingApp.Flows.Bookings
         {
             _bookingService = bookingService;
             _selectBookingMenu = new SelectObjectMenu<Booking>(BookingPrinter.MenuFormatBooking);
-            _bookingActionMenu = new ActionMenu<Booking>("Booking", BookingPrinter.FormatBooking);
+            _bookingActionMenu = new ActionMenu<Booking>("--Booking--", BookingPrinter.FormatBooking);
             _updateBookingFlow = new UpdateBookingFlow(bookingService);
             _deleteBookingFlow = new DeleteBookingFlow(bookingService);
 
@@ -30,6 +30,7 @@ namespace HotelBookingApp.Flows.Bookings
             while (true)
             {
                 List<Booking> bookings = getBookings();
+
                 if (bookings.Count == 0)
                 {
                     Console.WriteLine("No bookings found.");
@@ -43,6 +44,7 @@ namespace HotelBookingApp.Flows.Bookings
                     _selectBookingMenu.ResetIndex();
                     return;
                 }
+
                 ChooseAction(booking.Id);
             }
         }

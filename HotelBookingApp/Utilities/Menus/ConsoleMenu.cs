@@ -47,10 +47,9 @@
                 Console.WriteLine();
                 if (_choicesPerPage.Count > 1)
                 {
-                    for (int page = 0; page < _choicesPerPage.Count; page++)
-                        Console.Write(page == _currentPage ? $">{page + 1}<" : $" {page + 1} ");
-                    Console.WriteLine();
-                    Console.WriteLine("Use arrow keys to navigate Up/Down and Left/right to switch page.");
+                    
+                    
+
                 }
                 else
                 {
@@ -126,9 +125,15 @@
         }
         internal void SetChoices(List<MenuChoice<T>> choices)
         {
-            _choicesPerPage.Clear();
             _choicesPerPage = BuildPages(choices);
 
+            if (_choicesPerPage.Count == 0)
+            {
+                _currentPage = 0;
+                _index = 0;
+                _currentChoices = new List<MenuChoice<T>>();
+                return;
+            }
             if (_currentPage >= _choicesPerPage.Count)
                 _currentPage = _choicesPerPage.Count - 1;
 
@@ -139,7 +144,41 @@
 
             if (_index < 0)
                 _index = 0;
-
+        }
+        private void PrintPageNumbers()
+        {
+            if (_choicesPerPage.Count < 10)
+            {
+                for (int page = 0; page < _choicesPerPage.Count; page++)
+                    Console.Write(page == _currentPage ? $">{page + 1,3}<" : $" {page + 1,3} ");
+                Console.WriteLine();
+                Console.WriteLine("Use arrow keys to navigate Up/Down and Left/right to switch page.");
+            }
+            else if (_choicesPerPage.Count > 10 && _currentPage > 4 && _choicesPerPage.Count - _currentPage < 5)
+            {
+                Console.Write("..");
+                for (int page = _currentPage - 4; page < _choicesPerPage.Count; page++)
+                    Console.Write(page == _currentPage ? $">{page + 1,3}<" : $" {page + 1,3} ");
+                Console.WriteLine();
+                Console.WriteLine("Use arrow keys to navigate Up/Down and Left/right to switch page.");
+            }
+            else if (_choicesPerPage.Count > 10 && _currentPage > 4)
+            {
+                Console.Write("..");
+                for (int page = _currentPage - 4; page < _currentPage + 5; page++)
+                    Console.Write(page == _currentPage ? $">{page + 1,3}<" : $" {page + 1,3} ");
+                Console.Write("..");
+                Console.WriteLine();
+                Console.WriteLine("Use arrow keys to navigate Up/Down and Left/right to switch page.");
+            }
+            else if (_choicesPerPage.Count > 10)
+            {
+                for (int page = 0; page < 10; page++)
+                    Console.Write(page == _currentPage ? $">{page + 1,3}<" : $" {page + 1,3} ");
+                Console.Write("..");
+                Console.WriteLine();
+                Console.WriteLine("Use arrow keys to navigate Up/Down and Left/right to switch page.");
+            }
         }
     }
 }
