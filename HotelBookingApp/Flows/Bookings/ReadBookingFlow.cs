@@ -54,7 +54,7 @@ namespace HotelBookingApp.Flows.Bookings
             {
                 Booking? booking = _bookingService.GetById(bookingId);
 
-                if (!FlowHelper.CheckItemExists(booking, "Booking not found"))
+                if (!FlowHelper.CheckItemExists(booking, "Booking not found."))
                     return;
 
                 ActionMenuOption choice = _bookingActionMenu.Show(booking!);

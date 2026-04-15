@@ -34,7 +34,7 @@ namespace HotelBookingApp.Flows.Customers
 
                 if (customers.Count == 0)
                 {
-                    Console.WriteLine("No customers found");
+                    Console.WriteLine("No customers found.");
                     InputHelper.WaitForContinue();
                     return;
                 }
