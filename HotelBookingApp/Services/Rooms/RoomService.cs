@@ -141,7 +141,10 @@ namespace HotelBookingApp.Services.Rooms
         {
             return _dbContext.Rooms
                 .Include(r => r.Bookings)
-                .Where(r => r.RoomType == roomType)
+                .Where(r => r.RoomType == roomType &&
+                !r.Bookings.Any(b =>
+                startDate < b.EndDate &&
+                b.StartDate < endDate))
                 .ToList();
         }
         internal Room? GetByBookingId(int bookingId)
