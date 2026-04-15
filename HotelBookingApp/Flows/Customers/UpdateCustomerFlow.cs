@@ -37,26 +37,37 @@ namespace HotelBookingApp.Flows.Customers
                 switch (choice)
                 {
                     case CustomerEditorMenuOption.FullName:
-                        newFullName = InputHelper.ReadFullName("Full name: ");
+                        string? newFullNameInput = InputHelper.ReadFullName("Full name: ");
+                        if (newFullNameInput is string nFullName)
+                            newFullName = nFullName;
                         break;
+
                     case CustomerEditorMenuOption.BirthDate:
-                        newBirthDate = InputHelper.ReadDateOnly("Birth date: ");
+                        DateOnly? newBirthDateInput = InputHelper.ReadDateOnly("Birth date: ");
+                        if (newBirthDateInput is DateOnly nBirthDate)
+                            newBirthDate = nBirthDate;
                         break;
+
                     case CustomerEditorMenuOption.Email:
-                        newEmail = InputHelper.ReadEmail("Email: ");
+                        string? newEmailInput = InputHelper.ReadEmail("Email: ");
+                        if (newEmailInput is string nEmailInput)
+                            newEmail = nEmailInput;
                         break;
+
                     case CustomerEditorMenuOption.PhoneNumber:
-                        newPhoneNumber = InputHelper.ReadPhoneNumber("Phone number: ");
+                        string? newPhoneNumberInput = InputHelper.ReadPhoneNumber("Phone number: ");
+                        if (newPhoneNumberInput is string nPhoneNumber)
+                            newPhoneNumber = nPhoneNumber;
                         break;
+
                     case CustomerEditorMenuOption.Save:
-                        bool saved = TrySave(customer.Id, newFullName, newBirthDate, newEmail, newPhoneNumber);
-                        InputHelper.WaitForContinue();
-                        if (saved)
+                        if (TrySave(customer.Id, newFullName, newBirthDate, newEmail, newPhoneNumber))
                         {
                             _updateCustomerMenu.ResetIndex();
                             return;
                         }
                         break;
+
                     case CustomerEditorMenuOption.Cancel:
                         _updateCustomerMenu.ResetIndex();
                         return;
@@ -68,6 +79,7 @@ namespace HotelBookingApp.Flows.Customers
         {
             CustomerValidationResult result = _customerService.UpdateCustomer(customerId, newFullName, newBirthDate, newEmail, newPhoneNumber);
             CustomerValidationResultPrinter.PrintErrorsOrSuccess(result, "Changes saved");
+            InputHelper.WaitForContinue();
             if (result.Success)
                 return true;
             return false;

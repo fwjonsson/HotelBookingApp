@@ -38,31 +38,32 @@ namespace HotelBookingApp.Flows.Rooms
                 switch (choice)
                 {
                     case RoomEditorMenuOption.RoomNumber:
-                        newRoomNumber = RoomFlowHelpers.ValidateRoomNumber(newRoomNumber) ?? newRoomNumber;
+                        int? newRoomNumberInput = RoomFlowHelpers.ValidateRoomNumber();
+                        if (newRoomNumberInput is int nRoomNumber)
+                            newRoomNumber = nRoomNumber;
                         break;
+
                     case RoomEditorMenuOption.RoomType:
-                        var (tempNewRoomType, tempNewExtraBeds) = RoomFlowHelpers.ValidateRoomType(newRoomType, newExtraBeds);
-                        newRoomType = tempNewRoomType ?? newRoomType;
-                        newExtraBeds = tempNewExtraBeds ?? newExtraBeds;
+                        var (NewRoomType, NewExtraBeds) = RoomFlowHelpers.ValidateRoomType(newRoomType, newExtraBeds);
                         break;
+
                     case RoomEditorMenuOption.ExtraBeds:
                         newExtraBeds = RoomFlowHelpers.ValidateExtraBeds(newExtraBeds, newRoomType) ?? newExtraBeds;
                         break;
+
                     case RoomEditorMenuOption.Save:
-                        bool saved = TrySave(room.Id, newRoomNumber, newRoomType, newExtraBeds);
-                        InputHelper.WaitForContinue();
-                        if (saved)
+                        if (TrySave(room.Id, newRoomNumber, newRoomType, newExtraBeds))
                         {
                             _updateRoomMenu.ResetIndex();
                             return;
                         }
                         break;
+
                     case RoomEditorMenuOption.Cancel:
                         _updateRoomMenu.ResetIndex();
                         return;
                 }
             }
-
         }
         private bool TrySave(int roomId, int newRoomNumber, RoomType newRoomType, int newExtraBeds)
         {

@@ -5,26 +5,35 @@ namespace HotelBookingApp.Utilities
 {
     internal static class InputHelper
     {
-        internal static int ReadInt(string prompt)
+        internal static int? ReadInt(string prompt)
         {
             while (true)
             {
-                Console.WriteLine(prompt);
+                Console.Clear();
+                Console.WriteLine("Leave Empty To Cancel.");
+                Console.Write(prompt);
                 string? input = Console.ReadLine()?.Trim();
+                if (string.IsNullOrWhiteSpace(input))
+                    return null;
 
-                if (int.TryParse(input, out var value)) return value;
+                if (int.TryParse(input, out var value))
+                    return value;
 
                 Console.WriteLine("ERROR: Must be a number. Press any key to try again.");
                 Console.ReadKey(true);
             }
         }
 
-        internal static DateOnly ReadDateOnly(string prompt)
+        internal static DateOnly? ReadDateOnly(string prompt)
         {
             while (true)
             {
+                Console.Clear();
+                Console.WriteLine("Leave Empty To Cancel.");
                 Console.WriteLine(prompt);
                 string? input = Console.ReadLine()?.Trim();
+                if (string.IsNullOrWhiteSpace(input))
+                    return null;
 
                 if (DateOnly.TryParseExact(input, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var value)) return value;
 
@@ -34,6 +43,7 @@ namespace HotelBookingApp.Utilities
         }
         internal static bool WaitForYesOrNo(string prompt)
         {
+            Console.WriteLine();
             Console.WriteLine(prompt);
             while (true)
             {
@@ -54,38 +64,38 @@ namespace HotelBookingApp.Utilities
             Console.ReadKey(true);
         }
 
-        internal static string ReadFullName(string prompt)
+        internal static string? ReadFullName(string prompt)
         {
-            Console.WriteLine(prompt);
             while (true)
             {
+                Console.Clear();
+                Console.WriteLine("Leave Empty To Cancel.");
+                Console.WriteLine(prompt);
+
                 var input = Console.ReadLine()?.Trim();
 
                 if (string.IsNullOrWhiteSpace(input))
-                {
-                    Console.WriteLine("Name cannot be empty.");
-                    WaitForContinue();
-                    continue;
-                }
+                    return null;
+                
                 return input;
             }
         }
 
-        internal static string ReadEmail(string prompt)
+        internal static string? ReadEmail(string prompt)
         {
             var emailValidator = new EmailAddressAttribute();
 
-            Console.WriteLine(prompt);
             while (true)
             {
+                Console.Clear();
+                Console.WriteLine("Leave Empty To Cancel.");
+                Console.WriteLine(prompt);
+
                 var input = Console.ReadLine()?.Trim();
 
                 if (string.IsNullOrWhiteSpace(input))
-                {
-                    Console.WriteLine("Email cannot be empty.");
-                    WaitForContinue();
-                    continue;
-                }
+                    return null;
+
                 if (!emailValidator.IsValid(input))
                 {
                     Console.WriteLine("Bad format.");
@@ -96,22 +106,20 @@ namespace HotelBookingApp.Utilities
             }
         }
 
-        internal static string ReadPhoneNumber(string prompt)
+        internal static string? ReadPhoneNumber(string prompt)
         {
             var phoneNumberValidator = new PhoneAttribute();
-
-            Console.WriteLine(prompt);
-
             while (true)
             {
+                Console.Clear();
+                Console.WriteLine("Leave Empty To Cancel.");
+                Console.WriteLine(prompt);
+
                 var input = Console.ReadLine()?.Trim();
 
                 if (string.IsNullOrWhiteSpace(input))
-                {
-                    Console.WriteLine("Phone number cannot be empty");
-                    WaitForContinue();
-                    continue;
-                }
+                    return null;
+
                 if (!phoneNumberValidator.IsValid(input))
                 {
                     Console.WriteLine("Bad format.");

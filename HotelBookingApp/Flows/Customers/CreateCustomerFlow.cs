@@ -32,15 +32,19 @@ namespace HotelBookingApp.Flows.Customers
                     case CustomerEditorMenuOption.FullName:
                         fullName = InputHelper.ReadFullName("Full name: ");
                         break;
+
                     case CustomerEditorMenuOption.BirthDate:
                         birthDate = InputHelper.ReadDateOnly("Birth date (yyyy-MM-dd): ");
                         break;
+
                     case CustomerEditorMenuOption.Email:
                         email = InputHelper.ReadEmail("Email: ");
                         break;
+
                     case CustomerEditorMenuOption.PhoneNumber:
                         phoneNumber = InputHelper.ReadPhoneNumber("Phone number: ");
                         break;
+
                     case CustomerEditorMenuOption.Save:
                         if (TrySave(fullName, birthDate, email, phoneNumber))
                         {
@@ -48,6 +52,7 @@ namespace HotelBookingApp.Flows.Customers
                             return;
                         }
                         break;
+
                     case CustomerEditorMenuOption.Cancel:
                         _createCustomerMenu.ResetIndex();
                         return;

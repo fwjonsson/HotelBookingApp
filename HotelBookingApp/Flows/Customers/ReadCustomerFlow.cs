@@ -31,18 +31,21 @@ namespace HotelBookingApp.Flows.Customers
             while (true)
             {
                 List<Customer> customers = getCustomers();
+
                 if (customers.Count == 0)
                 {
                     Console.WriteLine("No customers found");
                     InputHelper.WaitForContinue();
                     return;
                 }
+
                 Customer? customer = _selectCustomerMenu.Show(customers, title);
                 if (customer == null)
                 {
                     _selectCustomerMenu.ResetIndex();
                     return;
                 }
+
                 ChooseAction(_customerService.GetById, customer.Id);
             }
         }
@@ -61,6 +64,7 @@ namespace HotelBookingApp.Flows.Customers
                     case ActionMenuOption.Edit:
                         _updateCustomerFlow.Run(customer!.Id);
                         break;
+
                     case ActionMenuOption.Delete:
                         if (_deleteCustomerFlow.TryDelete(customer!.Id))
                         {
@@ -68,6 +72,7 @@ namespace HotelBookingApp.Flows.Customers
                             return;
                         }
                         break;
+
                     case ActionMenuOption.Back:
                         _customerActionMenu.ResetIndex();
                         return;
@@ -80,32 +85,44 @@ namespace HotelBookingApp.Flows.Customers
         }
         internal void ReadById()
         {
-            var customerId = InputHelper.ReadInt("Customer ID: ");
+            int? customerIdInput = InputHelper.ReadInt("Customer ID: ");
+            if (customerIdInput is not int customerId)
+                return;
             ChooseAction(_customerService.GetById, customerId);
         }
         internal void ReadByFullName()
         {
-            var fullName = InputHelper.ReadFullName("Full Name: ");
+            string? fullNameInput = InputHelper.ReadFullName("Full Name: ");
+            if (fullNameInput is not string fullName)
+                return;
             SelectCustomerAndChooseAction(() => _customerService.GetByFullName(fullName), $"--Customers By Name: {fullName}--");
         }
         internal void ReadByBirthDate()
         {
-            var birthDate = InputHelper.ReadDateOnly("Birth Date: ");
+            DateOnly? birthDateInput = InputHelper.ReadDateOnly("Birth Date: ");
+            if (birthDateInput is not DateOnly birthDate)
+                return;
             SelectCustomerAndChooseAction(() => _customerService.GetByBirthDate(birthDate), $"--Customers With Birth Date: {birthDate:yyyy-MM-dd}--");
         }
         internal void ReadByEmail()
         {
-            var email = InputHelper.ReadEmail("Email: ");
+            string? emailInput = InputHelper.ReadEmail("Email: ");
+            if (emailInput is not string email)
+                return;
             ChooseAction(_customerService.GetByEmail, email);
         }
         internal void ReadByPhoneNumber()
         {
-            var phoneNumber = InputHelper.ReadPhoneNumber("Phone Number: ");
+            string? phoneNumberInput = InputHelper.ReadPhoneNumber("Phone Number: ");
+            if (phoneNumberInput is not string phoneNumber)
+                return;
             ChooseAction(_customerService.GetByPhoneNumber, phoneNumber);
         }
         internal void ReadByBookingId()
         {
-            var bookingId = InputHelper.ReadInt("Booking ID: ");
+            int? bookingIdInput = InputHelper.ReadInt("Booking ID: ");
+            if (bookingIdInput is not int bookingId)
+                return;
             ChooseAction(_customerService.GetByBookingId, bookingId);
         }
     }

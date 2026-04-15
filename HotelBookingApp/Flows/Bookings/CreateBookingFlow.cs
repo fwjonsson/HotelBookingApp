@@ -32,15 +32,19 @@ namespace HotelBookingApp.Flows.Bookings
                     case BookingEditorMenuOption.CustomerId:
                         customerId = InputHelper.ReadInt("Customer ID: ");
                         break;
+
                     case BookingEditorMenuOption.RoomId:
                         roomId = InputHelper.ReadInt("Room ID: ");
                         break;
+
                     case BookingEditorMenuOption.StartDate:
                         startDate = InputHelper.ReadDateOnly("Start date (yyyy-MM-dd): ");
                         break;
+
                     case BookingEditorMenuOption.EndDate:
                         endDate = InputHelper.ReadDateOnly("End date (yyyy-MM-dd): ");
                         break;
+
                     case BookingEditorMenuOption.Save:
                         if (TrySave(customerId, roomId, startDate, endDate))
                         {
@@ -48,6 +52,7 @@ namespace HotelBookingApp.Flows.Bookings
                             return;
                         }
                         break;
+
                     case BookingEditorMenuOption.Cancel:
                         _createBookingMenu.ResetIndex();
                         return;

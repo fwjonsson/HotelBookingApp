@@ -32,14 +32,17 @@ namespace HotelBookingApp.Flows.Rooms
                 switch (choice)
                 {
                     case RoomEditorMenuOption.RoomNumber:
-                        roomNumber = RoomFlowHelpers.ValidateRoomNumber(roomNumber);
+                        roomNumber = RoomFlowHelpers.ValidateRoomNumber();
                         break;
+
                     case RoomEditorMenuOption.RoomType:
                         (roomType, extraBeds) = RoomFlowHelpers.ValidateRoomType(roomType, extraBeds);
                         break;
+
                     case RoomEditorMenuOption.ExtraBeds:
                         extraBeds = RoomFlowHelpers.ValidateExtraBeds(extraBeds, roomType);
                         break;
+
                     case RoomEditorMenuOption.Save:
                         if (TrySave(roomNumber, roomType, extraBeds))
                         {
@@ -47,6 +50,7 @@ namespace HotelBookingApp.Flows.Rooms
                             return;
                         }
                         break;
+
                     case RoomEditorMenuOption.Cancel:
                         _createRoomMenu.ResetIndex();
                         return;

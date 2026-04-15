@@ -36,31 +36,41 @@ namespace HotelBookingApp.Flows.Bookings
                 switch (choice)
                 {
                     case BookingEditorMenuOption.StartDate:
-                        newStartDate = InputHelper.ReadDateOnly("Start date (yyyy-MM-dd): ");
+                        DateOnly? newStartDateInput = InputHelper.ReadDateOnly("Start date (yyyy-MM-dd): ");
+                        if (newStartDateInput is DateOnly nStartDate)
+                            newStartDate = nStartDate;
                         continue;
+
                     case BookingEditorMenuOption.EndDate:
-                        newEndDate = InputHelper.ReadDateOnly("End date (yyyy-MM-dd): ");
+                        DateOnly? newEndDateInput = InputHelper.ReadDateOnly("End date (yyyy-MM-dd): ");
+                        if (newEndDateInput is DateOnly nEndDate)
+                            newEndDate = nEndDate;
                         continue;
+
                     case BookingEditorMenuOption.RoomId:
-                        newRoomId = InputHelper.ReadInt("Room (room ID): ");
+                        int? newRoomIdInput = InputHelper.ReadInt("Room (room ID): ");
+                        if (newRoomIdInput is int nRoomId)
+                            newRoomId = nRoomId;
                         continue;
+
                     case BookingEditorMenuOption.CustomerId:
-                        newCustomerId = InputHelper.ReadInt("Customer (customer ID): ");
+                        int? newCustomerIdInpud = InputHelper.ReadInt("Customer (customer ID): ");
+                        if (newCustomerIdInpud is int nCustomerId)
+                            newCustomerId = nCustomerId;
                         continue;
+
                     case BookingEditorMenuOption.Save:
-                        bool saved = TrySave(bookingId, newStartDate, newEndDate, newCustomerId, newRoomId);
-                        InputHelper.WaitForContinue();
-                        if (saved)
+                        if (TrySave(bookingId, newStartDate, newEndDate, newCustomerId, newRoomId))
                         {
                             _updateBookingMenu.ResetIndex();
                             return;
                         }
                         break;
+
                     case BookingEditorMenuOption.Cancel:
                         _updateBookingMenu.ResetIndex();
                         return;
                 }
-                InputHelper.WaitForContinue();
             }
         }
 

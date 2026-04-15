@@ -29,21 +29,27 @@ namespace HotelBookingApp.Flows.Bookings
                     case BookingMenuOption.Create:
                         _create.Run();
                         break;
+
                     case BookingMenuOption.ShowAll:
                         _read.ReadAll();
                         break;
+
                     case BookingMenuOption.FindByDate:
                         _read.ReadByDate();
                         break;
+
                     case BookingMenuOption.FindById:
                         _read.ReadById();
                         break;
+
                     case BookingMenuOption.FindByRoomId:
                         _read.ReadByRoomId();
                         break;
+
                     case BookingMenuOption.FindByCustomerId:
                         _read.ReadByCustomerId();
                         break;
+
                     case BookingMenuOption.Back:
                         _bookingMenu.ResetIndex();
                         return;
