@@ -63,15 +63,9 @@ namespace HotelBookingApp.Flows.Bookings
                             InputHelper.WaitForContinue();
                             break;
                         }
-                        var selectedRoom = _roomFlows.RunAndGetRoom(sDate, eDate);
+                        var selectedRoom = _roomFlows.RunAndGetRoom(sDate, eDate, room);
                         if (selectedRoom is not null)
                             room = selectedRoom;
-                        break;
-
-                    case BookingEditorMenuOption.ExtraBeds:
-                        int? ExtraBedsInput = RoomFlowHelpers.ValidateExtraBeds(room?.ExtraBeds, room?.RoomType);
-                        if (ExtraBedsInput is int newExtraBeds)
-                            room?.ExtraBeds = newExtraBeds;
                         break;
 
                     case BookingEditorMenuOption.Save:

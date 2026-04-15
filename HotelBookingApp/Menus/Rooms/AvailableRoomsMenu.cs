@@ -13,10 +13,10 @@ namespace HotelBookingApp.Menus.Rooms
         {
             _menu = new ConsoleMenu<RoomMenuOption>("--Room Menu--", new List<MenuChoice<RoomMenuOption>>
             {
-                new(RoomMenuOption.Create, "Create New Room"),
                 new(RoomMenuOption.ShowAll, "Show All Available Rooms"),
                 new(RoomMenuOption.FindByRoomNR, "Find By Room Number"),
-                new(RoomMenuOption.FindByRoomType, "Find Available Rooms By Size (1 or 2)")
+                new(RoomMenuOption.FindByRoomType, "Find Available Rooms By Size (1 or 2)"),
+                new(RoomMenuOption.ChangeExtraBeds, "Change Extra Beds")
             });
         }
         internal RoomMenuOption Show()

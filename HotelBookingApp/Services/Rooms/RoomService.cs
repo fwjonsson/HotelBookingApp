@@ -123,7 +123,11 @@ namespace HotelBookingApp.Services.Rooms
         {
             return _dbContext.Rooms
                 .Include(r => r.Bookings)
-                .FirstOrDefault(r => r.RoomNumber == roomNumber);
+                .FirstOrDefault(r =>
+                r.RoomNumber == roomNumber &&
+                !r.Bookings.Any(b =>
+                startDate < b.EndDate &&
+                b.StartDate < endDate));
         }
 
         internal List<Room> GetByRoomType(RoomType? roomType)

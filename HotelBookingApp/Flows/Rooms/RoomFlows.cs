@@ -10,6 +10,7 @@ namespace HotelBookingApp.Flows.Rooms
     {
         private readonly RoomMenu _roomMenu;
         private readonly AvailableRoomsMenu _availableRoomsMenu;
+        private readonly RoomService _roomService;
 
         private readonly CreateRoomFlow _create;
         private readonly ReadRoomFlow _read;
@@ -19,6 +20,7 @@ namespace HotelBookingApp.Flows.Rooms
         {
             _roomMenu = new RoomMenu();
             _availableRoomsMenu = new AvailableRoomsMenu();
+            _roomService = roomService;
 
             _create = new CreateRoomFlow(roomService);
             _read = new ReadRoomFlow(roomService);
@@ -66,40 +68,43 @@ namespace HotelBookingApp.Flows.Rooms
                 }
             }
         }
-        internal Room? RunAndGetRoom(DateOnly startDate, DateOnly endDate)
+        internal Room? RunAndGetRoom(DateOnly startDate, DateOnly endDate, Room? room)
         {
-            Room? selectedRoom = null;
             while (true)
             {
                 var choice = _availableRoomsMenu.Show();
 
                 switch (choice)
                 {
-                    case RoomMenuOption.Create:
-                        selectedRoom = _create.Run();
-                        break;
-
                     case RoomMenuOption.ShowAll:
-                        selectedRoom = _select.ReadAllAvailableAndGetSelected(startDate, endDate);
+                        room = _select.ReadAllAvailableAndGetSelected(startDate, endDate);
                         break;
 
                     case RoomMenuOption.FindByRoomNR:
-                        selectedRoom = _select.ReadByRoomNumberAndGetIfAvailable(startDate, endDate);
+                        room = _select.ReadByRoomNumberAndGetIfAvailable(startDate, endDate);
                         break;
 
                     case RoomMenuOption.FindByRoomType:
-                        selectedRoom = _select.ReadAllAvailableByRoomTypeAndGetSelected(startDate, endDate);
+                        room = _select.ReadAllAvailableByRoomTypeAndGetSelected(startDate, endDate);
+                        break;
+
+                    case RoomMenuOption.ChangeExtraBeds:
+                        int? ExtraBedsInput = RoomFlowHelpers.ValidateExtraBeds(room?.ExtraBeds, room?.RoomType);
+                        if (ExtraBedsInput is int newExtraBeds)
+                        {
+                            _roomService.UpdateRoom(room!.Id, room.RoomNumber, room.RoomType, newExtraBeds);
+                        }
                         break;
 
                     case RoomMenuOption.Back:
                         _roomMenu.ResetMenu();
                         return null;
                 }
-                if (selectedRoom is null)
+                if (room is null)
                     continue;
 
                 _roomMenu.ResetMenu();
-                return selectedRoom;
+                return room;
             }
         }
         

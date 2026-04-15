@@ -9,6 +9,7 @@
         FindByRoomType,
         FindByCustomerID,
         FindByBookingID,
+        ChangeExtraBeds,
         Back
     }
 }
