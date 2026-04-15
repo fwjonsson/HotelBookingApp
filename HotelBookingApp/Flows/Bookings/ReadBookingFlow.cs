@@ -19,13 +19,13 @@ namespace HotelBookingApp.Flows.Bookings
         internal ReadBookingFlow(BookingService bookingService)
         {
             _bookingService = bookingService;
-            _selectBookingMenu = new SelectObjectMenu<Booking>(BookingPrinter.MenuFormatBooking);
+            _selectBookingMenu = new SelectObjectMenu<Booking>();
             _bookingActionMenu = new ActionMenu<Booking>("--Booking--", BookingPrinter.FormatBooking);
             _updateBookingFlow = new UpdateBookingFlow(bookingService);
             _deleteBookingFlow = new DeleteBookingFlow(bookingService);
 
         }
-        private void SelectBookingAndChooseAction(Func<List<Booking>> getBookings, string title)
+        private void SelectBookingAndChooseAction(Func<List<Booking>> getBookings, Func<Booking, string> formatter, string title)
         {
             while (true)
             {
@@ -38,7 +38,7 @@ namespace HotelBookingApp.Flows.Bookings
                     return;
                 }
 
-                Booking? booking = _selectBookingMenu.Show(bookings, title);
+                Booking? booking = _selectBookingMenu.Show(bookings, formatter, title);
                 if (booking == null)
                 {
                     _selectBookingMenu.ResetIndex();
@@ -54,7 +54,7 @@ namespace HotelBookingApp.Flows.Bookings
             {
                 Booking? booking = _bookingService.GetById(bookingId);
 
-                if (!FlowHelper.CheckItemExists(booking, "Booking not found."))
+                if (!FlowHelper.CheckItemExists(booking, "Booking not found"))
                     return;
 
                 ActionMenuOption choice = _bookingActionMenu.Show(booking!);
@@ -81,7 +81,9 @@ namespace HotelBookingApp.Flows.Bookings
         }
         internal void ReadAll()
         {
-            SelectBookingAndChooseAction(_bookingService.ListAll, "--All Bookings--");
+            SelectBookingAndChooseAction(_bookingService.ListAll, BookingPrinter.MenuShowAllFormatBooking, 
+                "--All Bookings--\n" +
+                "     ID |      Booked Dates      | Customer ID | Room ID\n" + new string('-', 60));
         }
 
         internal void ReadByDate()
@@ -89,7 +91,7 @@ namespace HotelBookingApp.Flows.Bookings
             DateOnly? dateInput = InputHelper.ReadDateOnly("Booking Date (yyyy-MM-dd):");
             if (dateInput is not DateOnly date)
                 return;
-            SelectBookingAndChooseAction(() => _bookingService.GetByDate(date), $"--Bookings On Date: {date:yyyy-MM-dd}--");
+            SelectBookingAndChooseAction(() => _bookingService.GetByDate(date), BookingPrinter.MenuFormatBooking, $"--Bookings On Date: {date:yyyy-MM-dd}--");
         }
 
         internal void ReadById()
@@ -105,7 +107,7 @@ namespace HotelBookingApp.Flows.Bookings
             int? roomIdInput = InputHelper.ReadInt("Room ID:");
             if (roomIdInput is not int roomId)
                 return;
-            SelectBookingAndChooseAction(() => _bookingService.GetByRoomId(roomId), $"--Bookings On Room ID: {roomId}--");
+            SelectBookingAndChooseAction(() => _bookingService.GetByRoomId(roomId), BookingPrinter.MenuFormatBooking, $"--Bookings On Room ID: {roomId}--");
         }
 
         internal void ReadByCustomerId()
@@ -113,7 +115,7 @@ namespace HotelBookingApp.Flows.Bookings
             int? customerIdInput = InputHelper.ReadInt("Customer ID:");
             if (customerIdInput is not int customerId)
                 return;
-            SelectBookingAndChooseAction(() => _bookingService.GetByCustomerId(customerId), $"--Bookings By Customer ID: {customerId}--");
+            SelectBookingAndChooseAction(() => _bookingService.GetByCustomerId(customerId), BookingPrinter.MenuFormatBooking, $"--Bookings By Customer ID: {customerId}--");
 
         }
     }

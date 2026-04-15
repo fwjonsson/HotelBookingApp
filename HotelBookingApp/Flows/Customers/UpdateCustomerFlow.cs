@@ -37,13 +37,13 @@ namespace HotelBookingApp.Flows.Customers
                 switch (choice)
                 {
                     case CustomerEditorMenuOption.FullName:
-                        string? newFullNameInput = InputHelper.ReadFullName("Full name: ");
+                        string? newFullNameInput = InputHelper.ReadFullName("Full Name: ");
                         if (newFullNameInput is string nFullName)
                             newFullName = nFullName;
                         break;
 
                     case CustomerEditorMenuOption.BirthDate:
-                        DateOnly? newBirthDateInput = InputHelper.ReadDateOnly("Birth date: ");
+                        DateOnly? newBirthDateInput = InputHelper.ReadDateOnly("Birth Date: ");
                         if (newBirthDateInput is DateOnly nBirthDate)
                             newBirthDate = nBirthDate;
                         break;
@@ -55,7 +55,7 @@ namespace HotelBookingApp.Flows.Customers
                         break;
 
                     case CustomerEditorMenuOption.PhoneNumber:
-                        string? newPhoneNumberInput = InputHelper.ReadPhoneNumber("Phone number: ");
+                        string? newPhoneNumberInput = InputHelper.ReadPhoneNumber("Phone Number: ");
                         if (newPhoneNumberInput is string nPhoneNumber)
                             newPhoneNumber = nPhoneNumber;
                         break;

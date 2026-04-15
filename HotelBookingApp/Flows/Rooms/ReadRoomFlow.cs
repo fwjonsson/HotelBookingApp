@@ -20,12 +20,12 @@ namespace HotelBookingApp.Flows.Rooms
         internal ReadRoomFlow(RoomService roomService)
         {
             _roomService = roomService;
-            _selectRoomMenu = new SelectObjectMenu<Room>(RoomPrinter.MenuFormatRoom);
+            _selectRoomMenu = new SelectObjectMenu<Room>();
             _roomActionMenu = new ActionMenu<Room>("--Room--", RoomPrinter.FormatRoom);
             _updateRoomFlow = new UpdateRoomFlow(roomService);
             _deleteRoomFlow = new DeleteRoomFlow(roomService);
         }
-        private void SelectRoomAndChooseAction(Func<List<Room>> getRooms, string title)
+        private void SelectRoomAndChooseAction(Func<List<Room>> getRooms, Func<Room, string> formatter, string title)
         {
             while (true)
             {
@@ -36,7 +36,7 @@ namespace HotelBookingApp.Flows.Rooms
                     InputHelper.WaitForContinue();
                     return;
                 }
-                Room? room = _selectRoomMenu.Show(rooms, title);
+                Room? room = _selectRoomMenu.Show(rooms, formatter, title);
                 if (room == null)
                 {
                     _selectRoomMenu.ResetIndex();
@@ -60,6 +60,7 @@ namespace HotelBookingApp.Flows.Rooms
                     case ActionMenuOption.Edit:
                         _updateRoomFlow.Run(room!.Id);
                         break;
+
                     case ActionMenuOption.Delete:
                         if (_deleteRoomFlow.TryDelete(room!.Id))
                         {
@@ -67,6 +68,7 @@ namespace HotelBookingApp.Flows.Rooms
                             return;
                         }
                         break;
+
                     case ActionMenuOption.Back:
                         _roomActionMenu.ResetIndex();
                         return;
@@ -76,7 +78,9 @@ namespace HotelBookingApp.Flows.Rooms
 
         internal void ReadAll()
         {
-            SelectRoomAndChooseAction(_roomService.ListAll, "--All Rooms--");
+            SelectRoomAndChooseAction(_roomService.ListAll, RoomPrinter.MenuShowAllFormatRoom, 
+                "--All Rooms--\n" +
+                "     ID | Room Number | Extra Beds | Room Type\n" + new string('-', 47));
         }
         internal void ReadById()
         {
@@ -115,14 +119,14 @@ namespace HotelBookingApp.Flows.Rooms
                     InputHelper.WaitForContinue();
                     return;
             }
-            SelectRoomAndChooseAction(() => _roomService.GetByRoomType(roomType), $"--All {roomType} Rooms--");
+            SelectRoomAndChooseAction(() => _roomService.GetByRoomType(roomType), RoomPrinter.MenuFormatRoom, $"--All {roomType} Rooms--");
         }
         internal void ReadByCustomerId()
         {
             int? customerIdInput = InputHelper.ReadInt("Customer ID: ");
             if (customerIdInput is not int customerId)
                 return;
-            SelectRoomAndChooseAction(() => _roomService.GetByCustomerId(customerId), $"All Rooms Booked By Customer ID: {customerId}--");
+            SelectRoomAndChooseAction(() => _roomService.GetByCustomerId(customerId), RoomPrinter.MenuFormatRoom, $"All Rooms Booked By Customer ID: {customerId}--");
         }
         internal void ReadByBookingId()
         {

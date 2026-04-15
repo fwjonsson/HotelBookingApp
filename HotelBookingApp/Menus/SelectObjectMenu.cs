@@ -5,14 +5,13 @@ namespace HotelBookingApp.Menus
     internal class SelectObjectMenu<T> where T : class
     {
         private readonly ConsoleMenu<T> _menu;
-        private readonly Func<T, string> _formatter;
 
-        internal SelectObjectMenu(Func<T, string> formatter)
+        internal SelectObjectMenu()
         {
             _menu = new ConsoleMenu<T>("", new List<MenuChoice<T>>());
-            _formatter = formatter;
+            
         }
-        internal T? Show(List<T> items, string title)
+        internal T? Show(List<T> items, Func<T, string> formatter, string title)
         {
             if (items.Count == 0)
                 return null;
@@ -20,7 +19,7 @@ namespace HotelBookingApp.Menus
             _menu.SetTitle(title);
 
             var choices = items
-                .Select(item => new MenuChoice<T>(item, _formatter(item)))
+                .Select(item => new MenuChoice<T>(item, formatter(item)))
                 .ToList();
 
             _menu.SetChoices(choices);

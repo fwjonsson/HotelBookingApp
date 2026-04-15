@@ -30,7 +30,7 @@ namespace HotelBookingApp.Utilities
             {
                 Console.Clear();
                 Console.WriteLine("Leave Empty To Cancel.");
-                Console.WriteLine(prompt);
+                Console.Write(prompt);
                 string? input = Console.ReadLine()?.Trim();
                 if (string.IsNullOrWhiteSpace(input))
                     return null;
@@ -70,7 +70,7 @@ namespace HotelBookingApp.Utilities
             {
                 Console.Clear();
                 Console.WriteLine("Leave Empty To Cancel.");
-                Console.WriteLine(prompt);
+                Console.Write(prompt);
 
                 var input = Console.ReadLine()?.Trim();
 
@@ -89,7 +89,7 @@ namespace HotelBookingApp.Utilities
             {
                 Console.Clear();
                 Console.WriteLine("Leave Empty To Cancel.");
-                Console.WriteLine(prompt);
+                Console.Write(prompt);
 
                 var input = Console.ReadLine()?.Trim();
 
@@ -113,7 +113,7 @@ namespace HotelBookingApp.Utilities
             {
                 Console.Clear();
                 Console.WriteLine("Leave Empty To Cancel.");
-                Console.WriteLine(prompt);
+                Console.Write(prompt);
 
                 var input = Console.ReadLine()?.Trim();
 

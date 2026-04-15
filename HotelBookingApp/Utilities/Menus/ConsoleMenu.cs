@@ -35,7 +35,6 @@
             {
                 Console.Clear();
                 Console.WriteLine(_title);
-                Console.WriteLine();
 
                 _currentChoices = _choicesPerPage[_currentPage];
                 for (int choice = 0; choice < _currentChoices.Count; choice++)
@@ -95,6 +94,7 @@
                         return MenuResult<T>.Selected(_currentChoices[_index].Value);
 
                     case ConsoleKey.Escape:
+                        ResetPage();
                         return MenuResult<T>.Cancelled();
                 }
             }
@@ -150,20 +150,20 @@
                     Console.Write(page == _currentPage ? $">{page + 1,2}<" : $" {page + 1,2} ");
                 
             }
-            else if (_choicesPerPage.Count > 10 && _currentPage > 4 && _choicesPerPage.Count - _currentPage < 5)
+            else if (_choicesPerPage.Count >= 10 && _currentPage > 4 && _choicesPerPage.Count - _currentPage < 5)
             {
                 Console.Write("... ");
                 for (int page = _currentPage - 4; page < _choicesPerPage.Count; page++)
                     Console.Write(page == _currentPage ? $">{page + 1,2}<" : $" {page + 1,2} ");
             }
-            else if (_choicesPerPage.Count > 10 && _currentPage > 4)
+            else if (_choicesPerPage.Count >= 10 && _currentPage > 4)
             {
                 Console.Write("... ");
                 for (int page = _currentPage - 4; page < _currentPage + 5; page++)
                     Console.Write(page == _currentPage ? $">{page + 1,2}<" : $" {page + 1,2} ");
                 Console.Write(" ...");
             }
-            else if (_choicesPerPage.Count > 10)
+            else if (_choicesPerPage.Count >= 10)
             {
                 for (int page = 0; page < 10; page++)
                     Console.Write(page == _currentPage ? $">{page + 1,2}<" : $" {page + 1,2} ");

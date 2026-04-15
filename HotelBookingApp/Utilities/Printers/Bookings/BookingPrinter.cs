@@ -21,13 +21,13 @@ namespace HotelBookingApp.Utilities.Printers.Bookings
                 $"  Customer ID: {booking.CustomerId}\n" +
                 $"  Room ID: {booking.RoomId}\n";
         }
-        //internal static string MenuFormatBooking(Booking booking)
-        //{
-        //    return $"Booking ID: {booking.Id}" +
-        //        $"  Dates: {booking.StartDate} - {booking.EndDate}" +
-        //        $"  Customer ID: {booking.CustomerId}" +
-        //        $"  Room ID: {booking.RoomId}";
+        internal static string MenuShowAllFormatBooking(Booking booking)
+        {
+            return $"{booking.Id,5} |" +
+                $"{booking.StartDate,10:yyyy-MM-dd} - {booking.EndDate,10:yyyy-MM-dd} |" +
+                $"{booking.CustomerId,12} |" +
+                $"{booking.RoomId,5}";
 
-        //}
+        }
     }
 }

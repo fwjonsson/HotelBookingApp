@@ -30,11 +30,11 @@ namespace HotelBookingApp.Flows.Customers
                 switch (choice)
                 {
                     case CustomerEditorMenuOption.FullName:
-                        fullName = InputHelper.ReadFullName("Full name: ");
+                        fullName = InputHelper.ReadFullName("Full Name: ");
                         break;
 
                     case CustomerEditorMenuOption.BirthDate:
-                        birthDate = InputHelper.ReadDateOnly("Birth date (yyyy-MM-dd): ");
+                        birthDate = InputHelper.ReadDateOnly("Birth Date (yyyy-MM-dd): ");
                         break;
 
                     case CustomerEditorMenuOption.Email:
@@ -42,7 +42,7 @@ namespace HotelBookingApp.Flows.Customers
                         break;
 
                     case CustomerEditorMenuOption.PhoneNumber:
-                        phoneNumber = InputHelper.ReadPhoneNumber("Phone number: ");
+                        phoneNumber = InputHelper.ReadPhoneNumber("Phone Number: ");
                         break;
 
                     case CustomerEditorMenuOption.Save:

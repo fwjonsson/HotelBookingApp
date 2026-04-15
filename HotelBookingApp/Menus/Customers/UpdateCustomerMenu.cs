@@ -10,7 +10,7 @@ namespace HotelBookingApp.Menus.Customers
         internal UpdateCustomerMenu()
         {
             _menu = new ConsoleMenu<CustomerEditorMenuOption>(
-                "--Update Customer--"
+                "--Edit Customer--"
                 , new List<MenuChoice<CustomerEditorMenuOption>>());
         }
         internal CustomerEditorMenuOption Show(string fullName, DateOnly birthDate, string email, string phoneNumber)

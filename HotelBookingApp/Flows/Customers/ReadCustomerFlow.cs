@@ -20,13 +20,13 @@ namespace HotelBookingApp.Flows.Customers
         internal ReadCustomerFlow(CustomerService customerService)
         {
             _customerService = customerService;
-            _selectCustomerMenu = new SelectObjectMenu<Customer>(CustomerPrinter.MenuFormatCustomer);
+            _selectCustomerMenu = new SelectObjectMenu<Customer>();
             _customerActionMenu = new ActionMenu<Customer>("--Customer--", CustomerPrinter.FormatCustomer);
             _updateCustomerFlow = new UpdateCustomerFlow(customerService);
             _deleteCustomerFlow = new DeleteCustomerFlow(customerService);
         }
 
-        private void SelectCustomerAndChooseAction(Func<List<Customer>> getCustomers, string title)
+        private void SelectCustomerAndChooseAction(Func<List<Customer>> getCustomers, Func<Customer, string> formatter, string title)
         {
             while (true)
             {
@@ -39,7 +39,7 @@ namespace HotelBookingApp.Flows.Customers
                     return;
                 }
 
-                Customer? customer = _selectCustomerMenu.Show(customers, title);
+                Customer? customer = _selectCustomerMenu.Show(customers, formatter, title);
                 if (customer == null)
                 {
                     _selectCustomerMenu.ResetIndex();
@@ -81,7 +81,9 @@ namespace HotelBookingApp.Flows.Customers
         }
         internal void ReadAll()
         {
-            SelectCustomerAndChooseAction(_customerService.ListAll, "--All Customers--");
+            SelectCustomerAndChooseAction(_customerService.ListAll, CustomerPrinter.MenuShowAllFormatCustomer,
+                "--All Customers--\n" +
+                "     ID |           Full Name           | Birth Date |             Email             |   Phone Number\n" + new string('-', 103));
         }
         internal void ReadById()
         {
@@ -95,14 +97,14 @@ namespace HotelBookingApp.Flows.Customers
             string? fullNameInput = InputHelper.ReadFullName("Full Name: ");
             if (fullNameInput is not string fullName)
                 return;
-            SelectCustomerAndChooseAction(() => _customerService.GetByFullName(fullName), $"--Customers By Name: {fullName}--");
+            SelectCustomerAndChooseAction(() => _customerService.GetByFullName(fullName), CustomerPrinter.MenuFormatCustomer, $"--Customers By Name: {fullName}--");
         }
         internal void ReadByBirthDate()
         {
             DateOnly? birthDateInput = InputHelper.ReadDateOnly("Birth Date: ");
             if (birthDateInput is not DateOnly birthDate)
                 return;
-            SelectCustomerAndChooseAction(() => _customerService.GetByBirthDate(birthDate), $"--Customers With Birth Date: {birthDate:yyyy-MM-dd}--");
+            SelectCustomerAndChooseAction(() => _customerService.GetByBirthDate(birthDate), CustomerPrinter.MenuFormatCustomer, $"--Customers With Birth Date: {birthDate:yyyy-MM-dd}--");
         }
         internal void ReadByEmail()
         {

@@ -7,31 +7,25 @@ namespace HotelBookingApp.Utilities.Printers.Rooms
     {
         internal static string FormatRoom(Room room)
         {
-            if (room.RoomType == RoomType.Single)
                 return $"Room ID: {room.Id}\n" +
                     $"Room Number: {room.RoomNumber}\n" +
-                    $"Room Type: Single Room\n" +
+                    $"Room Type: {room.RoomType} Room\n" +
                     $"Extra Beds: {room.ExtraBeds}\n";
 
-
-            else return $"Room ID: {room.Id}\n" +
-                    $"Room Number: {room.RoomNumber}\n" +
-                    $"Room Type: Double Room\n" +
-                    $"Extra Beds: {room.ExtraBeds}\n";
         }
         internal static string MenuFormatRoom(Room room)
         {
-            if (room.RoomType == RoomType.Single)
                 return $"Room ID: {room.Id}\n" +
                     $"  Room Number: {room.RoomNumber}\n" +
-                    $"  Room Type: Single Room\n" +
+                    $"  Room Type: {room.RoomType} Room\n" +
                     $"  Extra Beds: {room.ExtraBeds}\n";
-
-
-            else return $"Room ID: {room.Id}\n" +
-                    $"  Room Number: {room.RoomNumber}\n" +
-                    $"  Room Type: Double Room\n" +
-                    $"  Extra Beds: {room.ExtraBeds}\n";
+        }
+        internal static string MenuShowAllFormatRoom(Room room)
+        {
+                return $"{room.Id,5} |" +
+                    $"{room.RoomNumber,12} |" +
+                    $"{room.ExtraBeds,11} |" +
+                    $"{room.RoomType.ToString(),10}\n" + new string('-', 47);
         }
     }
 }
