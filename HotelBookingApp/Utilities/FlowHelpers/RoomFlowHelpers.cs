@@ -43,6 +43,8 @@ namespace HotelBookingApp.Utilities.FlowHelpers
 
                 switch (input)
                 {
+                    case 0:
+                        return 0;
                     case 1:
                         return 1;
 
@@ -55,7 +57,7 @@ namespace HotelBookingApp.Utilities.FlowHelpers
                         }
                         return 2;
                     default:
-                        Console.WriteLine("Must be 1 or 2.");
+                        Console.WriteLine("Must be between 0 and 2.");
                         InputHelper.WaitForContinue();
                         continue;
                 }
