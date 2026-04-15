@@ -122,7 +122,7 @@ namespace HotelBookingApp.Flows.Rooms
             int? customerIdInput = InputHelper.ReadInt("Customer ID: ");
             if (customerIdInput is not int customerId)
                 return;
-            SelectRoomAndChooseAction(() => _roomService.GetByCustomerId(customerId), $"All Rooms By Customer ID: {customerId}--");
+            SelectRoomAndChooseAction(() => _roomService.GetByCustomerId(customerId), $"All Rooms Booked By Customer ID: {customerId}--");
         }
         internal void ReadByBookingId()
         {

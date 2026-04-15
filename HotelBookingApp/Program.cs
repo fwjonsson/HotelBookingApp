@@ -1,4 +1,5 @@
 ﻿using HotelBookingApp.Data;
+using HotelBookingApp.Data.BogusSeeder;
 using HotelBookingApp.Flows.Bookings;
 using HotelBookingApp.Flows.Customers;
 using HotelBookingApp.Flows.Rooms;

@@ -10,7 +10,7 @@ namespace HotelBookingApp.Data.BogusSeeder
             RuleFor(c => c.FullName, f => f.Name.FullName());
 
             RuleFor(c => c.BirthDate, f =>
-            DateOnly.FromDateTime(f.Date.Past(60, DateTime.Today.AddYears(18))));
+            DateOnly.FromDateTime(f.Date.Past(-80, DateTime.Today.AddYears(-18))));
 
             RuleFor(c => c.Email, f =>
             $"guest{f.UniqueIndex}@example.com");

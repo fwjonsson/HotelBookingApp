@@ -48,7 +48,7 @@
                 if (_choicesPerPage.Count > 1)
                 {
                     for (int page = 0; page < _choicesPerPage.Count; page++)
-                        Console.Write(page == _currentPage ? $">{page}<" : $" {page} ");
+                        Console.Write(page == _currentPage ? $">{page + 1}<" : $" {page + 1} ");
                     Console.WriteLine();
                     Console.WriteLine("Use arrow keys to navigate Up/Down and Left/right to switch page.");
                 }

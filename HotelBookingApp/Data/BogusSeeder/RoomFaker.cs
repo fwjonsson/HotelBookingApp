@@ -8,7 +8,7 @@ namespace HotelBookingApp.Data.BogusSeeder
     {
         internal RoomFaker()
         {
-            RuleFor(r => r.RoomNumber, f => 100 + f.UniqueIndex);
+            RuleFor(r => r.RoomNumber, f => 200 + f.UniqueIndex);
 
             RuleFor(r => r.RoomType, f =>
                 f.PickRandom<RoomType>());

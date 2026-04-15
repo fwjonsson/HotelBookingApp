@@ -87,7 +87,7 @@ namespace HotelBookingApp.Flows.Bookings
             DateOnly? dateInput = InputHelper.ReadDateOnly("Booking Date (yyyy-MM-dd):");
             if (dateInput is not DateOnly date)
                 return;
-            SelectBookingAndChooseAction(() => _bookingService.GetByDate(date), $"--Bookings On Date {date:yyyy-MM-dd}--");
+            SelectBookingAndChooseAction(() => _bookingService.GetByDate(date), $"--Bookings On Date: {date:yyyy-MM-dd}--");
         }
 
         internal void ReadById()
@@ -103,7 +103,7 @@ namespace HotelBookingApp.Flows.Bookings
             int? roomIdInput = InputHelper.ReadInt("Room ID:");
             if (roomIdInput is not int roomId)
                 return;
-            SelectBookingAndChooseAction(() => _bookingService.GetByRoomId(roomId), $"--Bookings On Room ID {roomId}--");
+            SelectBookingAndChooseAction(() => _bookingService.GetByRoomId(roomId), $"--Bookings On Room ID: {roomId}--");
         }
 
         internal void ReadByCustomerId()
