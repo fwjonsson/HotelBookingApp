@@ -49,13 +49,13 @@ namespace HotelBookingApp.Flows.Customers
                         (bool saved, Customer? createdCustomer) = TrySave(fullName, birthDate, email, phoneNumber);
                         if (saved)
                         {
-                            _createCustomerMenu.ResetIndex();
+                            _createCustomerMenu.ResetMenu();
                                 return createdCustomer;
                         }
                         break;
 
                     case CustomerEditorMenuOption.Cancel:
-                        _createCustomerMenu.ResetIndex();
+                        _createCustomerMenu.ResetMenu();
                         return null;
                 }
             }

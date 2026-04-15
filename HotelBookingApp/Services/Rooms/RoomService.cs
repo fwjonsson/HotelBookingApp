@@ -14,7 +14,7 @@ namespace HotelBookingApp.Services.Rooms
             _dbContext = dbContext;
         }
 
-        internal RoomValidationResult CreateRoom(int rNumber, RoomType rType, int eBeds)
+        internal (RoomValidationResult, Room?) CreateRoom(int rNumber, RoomType rType, int eBeds)
         {
             var result = new RoomValidationResult();
 
@@ -28,7 +28,7 @@ namespace HotelBookingApp.Services.Rooms
                 result.ExtraBedsValid = false;
 
             if (!result.Success)
-                return result;
+                return (result, null);
 
             var newRoom = new Room
             {
@@ -39,7 +39,7 @@ namespace HotelBookingApp.Services.Rooms
             _dbContext.Rooms
                 .Add(newRoom);
             _dbContext.SaveChanges();
-            return result;
+            return (result, newRoom);
         }
         internal RoomValidationResult UpdateRoom(int roomId, int newRoomNumber, RoomType newRoomType, int newExtraBeds)
         {

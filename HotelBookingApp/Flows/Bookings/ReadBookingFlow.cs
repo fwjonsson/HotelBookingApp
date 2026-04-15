@@ -41,7 +41,7 @@ namespace HotelBookingApp.Flows.Bookings
                 Booking? booking = _selectBookingMenu.Show(bookings, formatter, title);
                 if (booking == null)
                 {
-                    _selectBookingMenu.ResetIndex();
+                    _selectBookingMenu.ResetMenu();
                     return;
                 }
 
@@ -68,13 +68,13 @@ namespace HotelBookingApp.Flows.Bookings
                     case ActionMenuOption.Delete:
                         if (_deleteBookingFlow.TryDelete(bookingId))
                         {
-                            _bookingActionMenu.ResetIndex();
+                            _bookingActionMenu.ResetMenu();
                             return;
                         }
                         break;
 
                     case ActionMenuOption.Back:
-                        _bookingActionMenu.ResetIndex();
+                        _bookingActionMenu.ResetMenu();
                         return;
                 }
             }

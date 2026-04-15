@@ -24,9 +24,6 @@ namespace HotelBookingApp.Menus
                 return MainMenuOption.Exit;
             return result.Value;
         }
-        internal void ResetIndex()
-        {
-            _menu.ResetIndex();
-        }
+        internal void ResetIndex() => _menu.ResetMenu();
     }
 }

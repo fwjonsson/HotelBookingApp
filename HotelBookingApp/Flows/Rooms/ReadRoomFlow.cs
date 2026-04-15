@@ -39,7 +39,7 @@ namespace HotelBookingApp.Flows.Rooms
                 Room? room = _selectRoomMenu.Show(rooms, formatter, title);
                 if (room == null)
                 {
-                    _selectRoomMenu.ResetIndex();
+                    _selectRoomMenu.ResetMenu();
                     return;
                 }
                 ChooseAction(_roomService.GetById, room.Id);
@@ -64,13 +64,13 @@ namespace HotelBookingApp.Flows.Rooms
                     case ActionMenuOption.Delete:
                         if (_deleteRoomFlow.TryDelete(room!.Id))
                         {
-                            _roomActionMenu.ResetIndex();
+                            _roomActionMenu.ResetMenu();
                             return;
                         }
                         break;
 
                     case ActionMenuOption.Back:
-                        _roomActionMenu.ResetIndex();
+                        _roomActionMenu.ResetMenu();
                         return;
                 }
             }
@@ -98,13 +98,12 @@ namespace HotelBookingApp.Flows.Rooms
         }
         internal void ReadByRoomType()
         {
+            RoomType? roomType = null;
             while (true)
             {
                 int? roomTypeInput = InputHelper.ReadInt("Single or double room (Enter 1 or 2): ");
                 if (roomTypeInput is not int input)
                     return;
-
-                RoomType? roomType = null;
 
                 switch (input)
                 {

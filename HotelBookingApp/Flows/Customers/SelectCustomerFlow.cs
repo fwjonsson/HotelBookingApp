@@ -35,10 +35,10 @@ namespace HotelBookingApp.Flows.Customers
                 Customer? customer = _selectCustomerMenu.Show(customers, formatter, title);
                 if (customer == null)
                 {
-                    _selectCustomerMenu.ResetIndex();
+                    _selectCustomerMenu.ResetMenu();
                     return null;
                 }
-
+                _selectCustomerMenu.ResetMenu();
                 return customer;
             }
         }
@@ -53,7 +53,13 @@ namespace HotelBookingApp.Flows.Customers
             int? customerIdInput = InputHelper.ReadInt("Customer ID: ");
             if (customerIdInput is not int customerId)
                 return null;
-            return _customerService.GetById(customerId);
+            var customer = _customerService.GetById(customerId);
+            if (customer == null)
+            {
+                Console.WriteLine("Customer not found.");
+                InputHelper.WaitForContinue();
+            }
+            return customer;
         }
         internal Customer? ReadByFullNameAndGetSelected()
         {
@@ -78,21 +84,39 @@ namespace HotelBookingApp.Flows.Customers
             string? emailInput = InputHelper.ReadEmail("Email: ");
             if (emailInput is not string email)
                 return null;
-            return _customerService.GetByEmail(email);
+            var customer = _customerService.GetByEmail(email);
+            if (customer == null)
+            {
+                Console.WriteLine("Customer not found.");
+                InputHelper.WaitForContinue();
+            }
+            return customer;
         }
         internal Customer? ReadByPhoneNumberAndGet()
         {
             string? phoneNumberInput = InputHelper.ReadPhoneNumber("Phone Number: ");
             if (phoneNumberInput is not string phoneNumber)
                 return null;
-            return _customerService.GetByPhoneNumber(phoneNumber);
+            var customer = _customerService.GetByPhoneNumber(phoneNumber);
+            if (customer == null)
+            {
+                Console.WriteLine("Customer not found.");
+                InputHelper.WaitForContinue();
+            }
+            return customer;
         }
         internal Customer? ReadByBookingIdAndGet()
         {
             int? bookingIdInput = InputHelper.ReadInt("Booking ID: ");
             if (bookingIdInput is not int bookingId)
                 return null;
-            return _customerService.GetByBookingId(bookingId);
+            var customer = _customerService.GetByBookingId(bookingId);
+            if(customer == null)
+            {
+                Console.WriteLine("Customer not found.");
+                InputHelper.WaitForContinue();
+            }
+            return customer;
         }
     }
 }

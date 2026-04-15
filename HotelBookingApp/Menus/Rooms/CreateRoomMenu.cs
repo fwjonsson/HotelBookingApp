@@ -50,9 +50,6 @@ namespace HotelBookingApp.Menus.Rooms
                 return RoomEditorMenuOption.Cancel;
             return result.Value;
         }
-        internal void ResetIndex()
-        {
-            _menu.ResetIndex();
-        }
+        internal void ResetMenu() => _menu.ResetMenu();
     }
 }

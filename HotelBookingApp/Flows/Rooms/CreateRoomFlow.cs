@@ -1,6 +1,7 @@
 ﻿using HotelBookingApp.Enums;
 using HotelBookingApp.Enums.Menus.Rooms;
 using HotelBookingApp.Menus.Rooms;
+using HotelBookingApp.Models;
 using HotelBookingApp.Services.Rooms;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
@@ -20,7 +21,7 @@ namespace HotelBookingApp.Flows.Rooms
             _createRoomMenu = new CreateRoomMenu();
         }
 
-        internal void Run()
+        internal Room? Run()
         {
             int? roomNumber = null;
             RoomType? roomType = null;
@@ -44,21 +45,22 @@ namespace HotelBookingApp.Flows.Rooms
                         break;
 
                     case RoomEditorMenuOption.Save:
-                        if (TrySave(roomNumber, roomType, extraBeds))
+                        (bool saved, Room? createdRoom) = TrySave(roomNumber, roomType, extraBeds);
+                        if (saved)
                         {
-                            _createRoomMenu.ResetIndex();
-                            return;
+                            _createRoomMenu.ResetMenu();
+                            return createdRoom;
                         }
                         break;
 
                     case RoomEditorMenuOption.Cancel:
-                        _createRoomMenu.ResetIndex();
-                        return;
+                        _createRoomMenu.ResetMenu();
+                        return null;
                 }
             }
         }
 
-        private bool TrySave(int? roomNumber, RoomType? roomType, int? extraBeds)
+        private (bool, Room?) TrySave(int? roomNumber, RoomType? roomType, int? extraBeds)
         {
             if (roomNumber is not int rNumber ||
                 roomType is not RoomType rType ||
@@ -66,14 +68,14 @@ namespace HotelBookingApp.Flows.Rooms
             {
                 Console.WriteLine("You must fill in all values before creating.");
                 InputHelper.WaitForContinue();
-                return false;
+                return (false, null);
             }
-            RoomValidationResult result = _roomService.CreateRoom(rNumber, rType, eBeds);
+            (RoomValidationResult result, Room? createdRoom) = _roomService.CreateRoom(rNumber, rType, eBeds);
             RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "Room created.");
             InputHelper.WaitForContinue();
             if (result.Success)
-                return true;
-            return false;
+                return (true, createdRoom);
+            return (false, null);
         }
     }
 }

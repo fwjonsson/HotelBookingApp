@@ -42,7 +42,7 @@ namespace HotelBookingApp.Flows.Customers
                 Customer? customer = _selectCustomerMenu.Show(customers, formatter, title);
                 if (customer == null)
                 {
-                    _selectCustomerMenu.ResetIndex();
+                    _selectCustomerMenu.ResetMenu();
                     return;
                 }
 
@@ -69,13 +69,13 @@ namespace HotelBookingApp.Flows.Customers
                     case ActionMenuOption.Delete:
                         if (_deleteCustomerFlow.TryDelete(customer!.Id))
                         {
-                            _customerActionMenu.ResetIndex();
+                            _customerActionMenu.ResetMenu();
                             return;
                         }
                         break;
 
                     case ActionMenuOption.Back:
-                        _customerActionMenu.ResetIndex();
+                        _customerActionMenu.ResetMenu();
                         return;
                 }
             }

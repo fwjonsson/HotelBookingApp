@@ -54,13 +54,13 @@ namespace HotelBookingApp.Flows.Rooms
                     case RoomEditorMenuOption.Save:
                         if (TrySave(room.Id, newRoomNumber, newRoomType, newExtraBeds))
                         {
-                            _updateRoomMenu.ResetIndex();
+                            _updateRoomMenu.ResetMenu();
                             return;
                         }
                         break;
 
                     case RoomEditorMenuOption.Cancel:
-                        _updateRoomMenu.ResetIndex();
+                        _updateRoomMenu.ResetMenu();
                         return;
                 }
             }

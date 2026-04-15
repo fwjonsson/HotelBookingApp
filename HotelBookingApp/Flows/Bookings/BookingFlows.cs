@@ -57,7 +57,7 @@ namespace HotelBookingApp.Flows.Bookings
                         break;
 
                     case BookingMenuOption.Back:
-                        _bookingMenu.ResetIndex();
+                        _bookingMenu.ResetMenu();
                         return;
                 }
             }

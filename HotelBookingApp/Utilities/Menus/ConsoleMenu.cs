@@ -120,6 +120,11 @@
         {
             _index = 0;
         }
+        internal void ResetMenu()
+        {
+            _index = 0;
+            _currentPage = 0;
+        }
         internal void SetChoices(List<MenuChoice<T>> choices)
         {
             _choicesPerPage = BuildPages(choices);

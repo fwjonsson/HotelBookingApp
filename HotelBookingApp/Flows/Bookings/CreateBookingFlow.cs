@@ -43,7 +43,9 @@ namespace HotelBookingApp.Flows.Bookings
                         break;
 
                     case BookingEditorMenuOption.RoomId:
-                        _roomFlows.Run();
+                        var room = _roomFlows.RunAndGetRoom();
+                        if (room is not null)
+                            roomId = room.Id;
                         break;
 
                     case BookingEditorMenuOption.StartDate:
@@ -57,13 +59,13 @@ namespace HotelBookingApp.Flows.Bookings
                     case BookingEditorMenuOption.Save:
                         if (TrySave(customerId, roomId, startDate, endDate))
                         {
-                            _createBookingMenu.ResetIndex();
+                            _createBookingMenu.ResetMenu();
                             return;
                         }
                         break;
 
                     case BookingEditorMenuOption.Cancel:
-                        _createBookingMenu.ResetIndex();
+                        _createBookingMenu.ResetMenu();
                         return;
                 }
             }
