@@ -76,7 +76,7 @@ namespace HotelBookingApp.Utilities
 
                 if (string.IsNullOrWhiteSpace(input))
                     return null;
-                
+
                 return input;
             }
         }
