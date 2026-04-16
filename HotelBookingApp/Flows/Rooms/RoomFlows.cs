@@ -101,10 +101,13 @@ namespace HotelBookingApp.Flows.Rooms
                         int? ExtraBedsInput = RoomFlowHelper.ValidateExtraBeds(room.ExtraBeds, room.RoomType);
                         if (ExtraBedsInput is not int newExtraBeds)
                             break;
-                        room.ExtraBeds = newExtraBeds;
+                        
                         var result = _roomService.UpdateRoom(room.Id, room.RoomNumber, room.RoomType, newExtraBeds);
                         if (result.Success)
+                        {
+                            room.ExtraBeds = newExtraBeds;
                             continue;
+                        }
                         RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "");
                         InputHelper.WaitForContinue();
                         continue;
