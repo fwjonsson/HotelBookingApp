@@ -29,15 +29,14 @@ namespace HotelBookingApp.Utilities.FlowHelpers
                 InputHelper.WaitForContinue();
                 return null;
             }
-
             int? input = null;
             while (true)
             {
                 if (roomType == RoomType.Single)
-                    input = InputHelper.ReadInt("Extra beds (Max 1): ");
+                    input = InputHelper.ReadInt($"Current extra beds: {extraBeds}\nExtra beds (Max 1): ");
 
                 else
-                    input = InputHelper.ReadInt("Extra beds (Max 2): ");
+                    input = InputHelper.ReadInt($"Current extra beds: {extraBeds}\nExtra beds (Max 2): ");
                 if (input is not int)
                     return extraBeds;
 

@@ -1,9 +1,13 @@
-﻿using HotelBookingApp.Enums.Menus;
+﻿using HotelBookingApp.Enums.Menus.Bookings;
+using HotelBookingApp.Enums.Menus.Customers;
+using HotelBookingApp.Flows.Bookings;
 using HotelBookingApp.Menus;
+using HotelBookingApp.Menus.Customers;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
+using HotelBookingApp.Utilities.Printers.Bookings;
 using HotelBookingApp.Utilities.Printers.Customers;
 
 namespace HotelBookingApp.Flows.Customers
@@ -12,7 +16,7 @@ namespace HotelBookingApp.Flows.Customers
     {
         private readonly CustomerService _customerService;
         private readonly SelectObjectMenu<Customer> _selectCustomerMenu;
-        private readonly ActionMenu<Customer> _customerActionMenu;
+        private readonly CustomerActionMenu<Customer> _customerActionMenu;
         private readonly UpdateCustomerFlow _updateCustomerFlow;
         private readonly DeleteCustomerFlow _deleteCustomerFlow;
 
@@ -21,7 +25,7 @@ namespace HotelBookingApp.Flows.Customers
         {
             _customerService = customerService;
             _selectCustomerMenu = new SelectObjectMenu<Customer>();
-            _customerActionMenu = new ActionMenu<Customer>("--Customer--", CustomerPrinter.FormatCustomer);
+            _customerActionMenu = new CustomerActionMenu<Customer>("--Customer--", CustomerPrinter.FormatCustomer);
             _updateCustomerFlow = new UpdateCustomerFlow(customerService);
             _deleteCustomerFlow = new DeleteCustomerFlow(customerService);
         }
@@ -58,15 +62,19 @@ namespace HotelBookingApp.Flows.Customers
                 if (!FlowHelper.CheckItemExists(customer, "Customer not found."))
                     return;
 
-                ActionMenuOption choice = _customerActionMenu.Show(customer!);
+                CustomerActionMenuOption choice = _customerActionMenu.Show(customer!);
 
                 switch (choice)
                 {
-                    case ActionMenuOption.Edit:
+                    case CustomerActionMenuOption.ShowBookings:
+                        ReadAllBookingsByCustomer(customer!.Id);
+                            break;
+
+                    case CustomerActionMenuOption.Edit:
                         _updateCustomerFlow.Run(customer!.Id);
                         break;
 
-                    case ActionMenuOption.Delete:
+                    case CustomerActionMenuOption.Delete:
                         if (_deleteCustomerFlow.TryDelete(customer!.Id))
                         {
                             _customerActionMenu.ResetMenu();
@@ -74,7 +82,7 @@ namespace HotelBookingApp.Flows.Customers
                         }
                         break;
 
-                    case ActionMenuOption.Back:
+                    case CustomerActionMenuOption.Back:
                         _customerActionMenu.ResetMenu();
                         return;
                 }
@@ -135,6 +143,21 @@ namespace HotelBookingApp.Flows.Customers
             if (bookingIdInput is not int bookingId)
                 return;
             ChooseAction(_customerService.GetByBookingId, bookingId);
+        }
+        internal void ReadAllBookingsByCustomer(int customerId)
+        {
+            List<Booking> bookingsByCustomer = _customerService.GetAllBookingsByCustomer(customerId);
+            if (bookingsByCustomer.Count == 0)
+            {
+                Console.WriteLine("No bookings found.");
+                InputHelper.WaitForContinue();
+                return;
+            }
+            foreach (Booking booking in bookingsByCustomer)
+            {
+                Console.WriteLine(BookingPrinter.FormatBooking(booking)); 
+            }
+            InputHelper.WaitForContinue();
         }
     }
 }

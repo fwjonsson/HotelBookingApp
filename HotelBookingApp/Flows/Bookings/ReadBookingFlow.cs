@@ -1,12 +1,15 @@
-﻿using HotelBookingApp.Enums.Menus;
+﻿using HotelBookingApp.Enums.Menus.Bookings;
 using HotelBookingApp.Flows.Customers;
 using HotelBookingApp.Flows.Rooms;
 using HotelBookingApp.Menus;
+using HotelBookingApp.Menus.Bookings;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Bookings;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
 using HotelBookingApp.Utilities.Printers.Bookings;
+using HotelBookingApp.Utilities.Printers.Customers;
+using HotelBookingApp.Utilities.Printers.Rooms;
 
 namespace HotelBookingApp.Flows.Bookings
 {
@@ -14,17 +17,21 @@ namespace HotelBookingApp.Flows.Bookings
     {
         private readonly BookingService _bookingService;
         private readonly SelectObjectMenu<Booking> _selectBookingMenu;
-        private readonly ActionMenu<Booking> _bookingActionMenu;
+        private readonly BookingActionMenu<Booking> _bookingActionMenu;
         private readonly UpdateBookingFlow _updateBookingFlow;
         private readonly DeleteBookingFlow _deleteBookingFlow;
+        private readonly CustomerFlows _customerFlows;
+        private readonly RoomFlows _roomFlows;
 
         internal ReadBookingFlow(BookingService bookingService, CustomerFlows customerFlows, RoomFlows roomFlows)
         {
             _bookingService = bookingService;
             _selectBookingMenu = new SelectObjectMenu<Booking>();
-            _bookingActionMenu = new ActionMenu<Booking>("--Booking--", BookingPrinter.FormatBooking);
+            _bookingActionMenu = new BookingActionMenu<Booking>("--Booking--", BookingPrinter.FormatBooking);
             _updateBookingFlow = new UpdateBookingFlow(bookingService, customerFlows, roomFlows);
             _deleteBookingFlow = new DeleteBookingFlow(bookingService);
+            _customerFlows = customerFlows;
+            _roomFlows = roomFlows;
 
         }
         private void SelectBookingAndChooseAction(Func<List<Booking>> getBookings, Func<Booking, string> formatter, string title)
@@ -56,18 +63,26 @@ namespace HotelBookingApp.Flows.Bookings
             {
                 Booking? booking = _bookingService.GetById(bookingId);
 
-                if (!FlowHelper.CheckItemExists(booking, "Booking not found"))
+                if (!FlowHelper.CheckItemExists(booking, "Booking not found."))
                     return;
 
-                ActionMenuOption choice = _bookingActionMenu.Show(booking!);
+                BookingActionMenuOption choice = _bookingActionMenu.Show(booking!);
 
                 switch (choice)
                 {
-                    case ActionMenuOption.Edit:
+                    case BookingActionMenuOption.ShowCustomer:
+                        ShowCustomerDetails(booking!.CustomerId);
+                        break;
+
+                    case BookingActionMenuOption.ShowRoom:
+                        ShowRoomDetails(booking!.RoomId);
+                        break;
+
+                    case BookingActionMenuOption.Edit:
                         _updateBookingFlow.Run(bookingId);
                         break;
 
-                    case ActionMenuOption.Delete:
+                    case BookingActionMenuOption.Delete:
                         if (_deleteBookingFlow.TryDelete(bookingId))
                         {
                             _bookingActionMenu.ResetMenu();
@@ -75,11 +90,29 @@ namespace HotelBookingApp.Flows.Bookings
                         }
                         break;
 
-                    case ActionMenuOption.Back:
+                    case BookingActionMenuOption.Back:
                         _bookingActionMenu.ResetMenu();
                         return;
                 }
             }
+        }
+        internal void ShowCustomerDetails(int customerId)
+        {
+            Customer? customer = _bookingService.GetCustomer(customerId);
+            if (!FlowHelper.CheckItemExists(customer, "Customer not found."))
+                return;
+            
+            Console.WriteLine(CustomerPrinter.FormatCustomer(customer!));
+            InputHelper.WaitForContinue();
+        }
+        internal void ShowRoomDetails(int roomId)
+        {
+            Room? room = _bookingService.GetRoom(roomId);
+            if (!FlowHelper.CheckItemExists(room, "Room not found."))
+                return;
+
+            Console.WriteLine(RoomPrinter.FormatRoom(room!));
+            InputHelper.WaitForContinue();
         }
         internal void ReadAll()
         {

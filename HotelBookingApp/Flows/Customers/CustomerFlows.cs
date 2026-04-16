@@ -1,7 +1,10 @@
 ﻿using HotelBookingApp.Enums.Menus.Customers;
+using HotelBookingApp.Flows.Bookings;
 using HotelBookingApp.Menus.Customers;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Customers;
+using HotelBookingApp.Utilities;
+using HotelBookingApp.Utilities.Printers.Customers;
 
 namespace HotelBookingApp.Flows.Customers
 {
@@ -13,6 +16,8 @@ namespace HotelBookingApp.Flows.Customers
         private readonly ReadCustomerFlow _read;
         private readonly SelectCustomerFlow _select;
 
+        private readonly CustomerService _customerService;
+
         internal CustomerFlows(CustomerService customerService)
         {
             _customerMenu = new CustomerMenu();
@@ -20,7 +25,20 @@ namespace HotelBookingApp.Flows.Customers
             _create = new CreateCustomerFlow(customerService);
             _read = new ReadCustomerFlow(customerService);
             _select = new SelectCustomerFlow(customerService);
+
+            _customerService = customerService;
         }
+
+        internal void DisplayBookingsCustomer(int customerId)
+        {
+            Customer? customer = _customerService.GetById(customerId);
+            if (customer is null)
+                Console.WriteLine("Customer not found.");
+            else
+                Console.WriteLine(CustomerPrinter.FormatCustomer(customer));
+            InputHelper.WaitForContinue();
+        }
+
         internal void Run()
         {
             while (true)

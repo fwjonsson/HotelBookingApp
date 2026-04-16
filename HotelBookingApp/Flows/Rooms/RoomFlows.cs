@@ -28,6 +28,18 @@ namespace HotelBookingApp.Flows.Rooms
             _read = new ReadRoomFlow(roomService);
             _select = new SelectRoomFlow(roomService);
         }
+
+        internal void DisplayBookingsRoom(int roomId)
+        {
+            Room? room = _roomService.GetById(roomId);
+            if (room is null)
+                Console.WriteLine("No room found.");
+            else
+                Console.WriteLine(RoomPrinter.FormatRoom(room));
+
+            InputHelper.WaitForContinue();
+        }
+
         internal void Run()
         {
             while (true)
@@ -100,11 +112,13 @@ namespace HotelBookingApp.Flows.Rooms
                         int? ExtraBedsInput = RoomFlowHelper.ValidateExtraBeds(room.ExtraBeds, room.RoomType);
                         if (ExtraBedsInput is not int newExtraBeds)
                             break;
-
+                        room.ExtraBeds = newExtraBeds;
                         var result = _roomService.UpdateRoom(room.Id, room.RoomNumber, room.RoomType, newExtraBeds);
-                        RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "Room updated.");
+                        if (result.Success)
+                            continue;
+                        RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "");
                         InputHelper.WaitForContinue();
-                        break;
+                        continue;
 
                     case RoomMenuOption.Back:
                         _availableRoomsMenu.ResetMenu();

@@ -161,5 +161,17 @@ namespace HotelBookingApp.Services.Bookings
             return _dbContext.Rooms
                 .Any(r => r.Id == roomId);
         }
+
+        internal Customer? GetCustomer(int customerId)
+        {
+            return _dbContext.Customers
+                .FirstOrDefault(c => c.Id == customerId);
+        }
+
+        internal Room? GetRoom(int roomId)
+        {
+            return _dbContext.Rooms
+                .FirstOrDefault(r => r.Id == roomId);
+        }
     }
 }

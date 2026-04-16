@@ -199,5 +199,12 @@ namespace HotelBookingApp.Services.Rooms
                 .Any(b => b.RoomId == roomId &&
                 b.EndDate > today);
         }
+
+        internal List<Booking> GetAllBookingsOnRoom(int roomId)
+        {
+            return _dbContext.Bookings
+                .Where(b => b.RoomId == roomId)
+                .ToList();
+        }
     }
 }

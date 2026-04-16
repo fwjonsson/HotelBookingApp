@@ -1,10 +1,13 @@
 ﻿using HotelBookingApp.Enums;
-using HotelBookingApp.Enums.Menus;
+using HotelBookingApp.Enums.Menus.Bookings;
+using HotelBookingApp.Enums.Menus.Rooms;
 using HotelBookingApp.Menus;
+using HotelBookingApp.Menus.Rooms;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Rooms;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
+using HotelBookingApp.Utilities.Printers.Bookings;
 using HotelBookingApp.Utilities.Printers.Rooms;
 
 namespace HotelBookingApp.Flows.Rooms
@@ -13,7 +16,7 @@ namespace HotelBookingApp.Flows.Rooms
     {
         private readonly RoomService _roomService;
         private readonly SelectObjectMenu<Room> _selectRoomMenu;
-        private readonly ActionMenu<Room> _roomActionMenu;
+        private readonly RoomActionMenu<Room> _roomActionMenu;
         private readonly UpdateRoomFlow _updateRoomFlow;
         private readonly DeleteRoomFlow _deleteRoomFlow;
 
@@ -21,7 +24,7 @@ namespace HotelBookingApp.Flows.Rooms
         {
             _roomService = roomService;
             _selectRoomMenu = new SelectObjectMenu<Room>();
-            _roomActionMenu = new ActionMenu<Room>("--Room--", RoomPrinter.FormatRoom);
+            _roomActionMenu = new RoomActionMenu<Room>("--Room--", RoomPrinter.FormatRoom);
             _updateRoomFlow = new UpdateRoomFlow(roomService);
             _deleteRoomFlow = new DeleteRoomFlow(roomService);
         }
@@ -53,15 +56,19 @@ namespace HotelBookingApp.Flows.Rooms
                 if (!FlowHelper.CheckItemExists(room, "Room not found"))
                     return;
 
-                ActionMenuOption choice = _roomActionMenu.Show(room!);
+                RoomActionMenuOption choice = _roomActionMenu.Show(room!);
 
                 switch (choice)
                 {
-                    case ActionMenuOption.Edit:
+                    case RoomActionMenuOption.ShowBookings:
+
+                        break;
+
+                    case RoomActionMenuOption.Edit:
                         _updateRoomFlow.Run(room!.Id);
                         break;
 
-                    case ActionMenuOption.Delete:
+                    case RoomActionMenuOption.Delete:
                         if (_deleteRoomFlow.TryDelete(room!.Id))
                         {
                             _roomActionMenu.ResetMenu();
@@ -69,11 +76,26 @@ namespace HotelBookingApp.Flows.Rooms
                         }
                         break;
 
-                    case ActionMenuOption.Back:
+                    case RoomActionMenuOption.Back:
                         _roomActionMenu.ResetMenu();
                         return;
                 }
             }
+        }
+        internal void ReadAllBookingsOnRoom(int roomId)
+        {
+            List<Booking> allBookingsOnRoom = _roomService.GetAllBookingsOnRoom(roomId);
+            if (allBookingsOnRoom.Count == 0)
+            {
+                Console.WriteLine("No bookings found.");
+                return;
+            }
+            foreach (Booking booking in allBookingsOnRoom)
+            {
+                Console.WriteLine(BookingPrinter.FormatBooking(booking));
+            }
+            InputHelper.WaitForContinue();
+
         }
 
         internal void ReadAll()

@@ -143,6 +143,12 @@ namespace HotelBookingApp.Services.Customers
                 .FirstOrDefault(c => c.Bookings
                 .Any(b => b.Id == bookingId));
         }
+        internal List<Booking> GetAllBookingsByCustomer(int customerId)
+        {
+            return _dbContext.Bookings
+                .Where(b => b.CustomerId == customerId)
+                .ToList();
+        }
         private bool IsAdult(DateOnly birthDate)
         {
             var today = DateOnly.FromDateTime(DateTime.Today);
