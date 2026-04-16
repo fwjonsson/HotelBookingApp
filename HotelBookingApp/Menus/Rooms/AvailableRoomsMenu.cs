@@ -1,4 +1,5 @@
 ﻿using HotelBookingApp.Enums.Menus.Rooms;
+using HotelBookingApp.Models;
 using HotelBookingApp.Utilities.Menus;
 
 namespace HotelBookingApp.Menus.Rooms
@@ -8,16 +9,21 @@ namespace HotelBookingApp.Menus.Rooms
         private readonly ConsoleMenu<RoomMenuOption> _menu;
         internal AvailableRoomsMenu()
         {
-            _menu = new ConsoleMenu<RoomMenuOption>("--Room Menu--", new List<MenuChoice<RoomMenuOption>>
-            {
-                new(RoomMenuOption.ShowAll, "Show All Available Rooms"),
-                new(RoomMenuOption.FindByRoomNR, "Find By Room Number"),
-                new(RoomMenuOption.FindByRoomType, "Find Available Rooms By Size (1 or 2)"),
-                new(RoomMenuOption.ChangeExtraBeds, "Change Extra Beds")
-            });
+            _menu = new ConsoleMenu<RoomMenuOption>("--Room Menu--", 
+                new List<MenuChoice<RoomMenuOption>>{});
         }
-        internal RoomMenuOption Show()
+        internal RoomMenuOption Show(Room? room)
         {
+            _menu.SetTitle(room is null ? "Select Room" : $"Selected Room Number: {room.RoomNumber}");
+            _menu.SetChoices
+                (
+                new List<MenuChoice<RoomMenuOption>>{
+                new(RoomMenuOption.ShowAll, "Show All Available Rooms"),
+                new(RoomMenuOption.FindByRoomNr, "Find By Room Nr"),
+                new(RoomMenuOption.FindByRoomType, "Find Available Rooms By Size (1 or 2)"),
+                new(RoomMenuOption.ChangeExtraBeds, $"Extra Beds: {room?.ExtraBeds.ToString() ?? "Not set"}"),
+                new(RoomMenuOption.Back, "Back")}
+                );
             var result = _menu.Show();
             if (result.WasCancelled)
                 return RoomMenuOption.Back;

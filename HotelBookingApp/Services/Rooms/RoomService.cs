@@ -203,6 +203,8 @@ namespace HotelBookingApp.Services.Rooms
         internal List<Booking> GetAllBookingsOnRoom(int roomId)
         {
             return _dbContext.Bookings
+                .Include(b => b.Room)
+                .Include(b => b.Customer)
                 .Where(b => b.RoomId == roomId)
                 .ToList();
         }

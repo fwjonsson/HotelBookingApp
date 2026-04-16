@@ -13,11 +13,11 @@ namespace HotelBookingApp.Menus.Rooms
             {
                 new(RoomMenuOption.Create, "Create New Room"),
                 new(RoomMenuOption.ShowAll, "Show All Rooms"),
-                new(RoomMenuOption.FindByRoomNR, "Find By Room Number"),
+                new(RoomMenuOption.FindByRoomNr, "Find By Room Number"),
                 new(RoomMenuOption.FindByRoomType, "Find By Size (1 or 2)"),
-                new(RoomMenuOption.FindByID, "Find By Room ID"),
-                new(RoomMenuOption.FindByCustomerID, "Find By Customer ID"),
-                new(RoomMenuOption.FindByBookingID, "Find By Booking ID")
+                new(RoomMenuOption.FindById, "Find By Room ID"),
+                new(RoomMenuOption.FindByCustomerId, "Find By Customer ID"),
+                new(RoomMenuOption.FindByBookingId, "Find By Booking ID")
             });
         }
         internal RoomMenuOption Show()

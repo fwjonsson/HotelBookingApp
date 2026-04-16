@@ -7,7 +7,7 @@ namespace HotelBookingApp.Utilities.Printers.Rooms
         internal static string FormatRoom(Room room)
         {
             return $"Room ID: {room.Id}\n" +
-                $"Room Number: {room.RoomNumber}\n" +
+                $"Room Nr: {room.RoomNumber}\n" +
                 $"Room Type: {room.RoomType} Room\n" +
                 $"Extra Beds: {room.ExtraBeds}\n";
 
@@ -15,7 +15,7 @@ namespace HotelBookingApp.Utilities.Printers.Rooms
         internal static string MenuFormatRoom(Room room)
         {
             return $"Room ID: {room.Id}\n" +
-                $"  Room Number: {room.RoomNumber}\n" +
+                $"  Room Nr: {room.RoomNumber}\n" +
                 $"  Room Type: {room.RoomType} Room\n" +
                 $"  Extra Beds: {room.ExtraBeds}\n";
         }

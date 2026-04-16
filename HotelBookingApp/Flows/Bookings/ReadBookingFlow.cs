@@ -118,7 +118,7 @@ namespace HotelBookingApp.Flows.Bookings
         {
             SelectBookingAndChooseAction(_bookingService.ListAll, BookingPrinter.MenuShowAllFormatBooking,
                 "--All Bookings--\n" +
-                "     ID |      Booked Dates      | Customer ID | Room ID\n" + new string('-', 60));
+                "     ID |      Booked Dates      | Customer ID | Room Nr\n" + new string('-', 60));
         }
 
         internal void ReadByDate()
@@ -128,7 +128,7 @@ namespace HotelBookingApp.Flows.Bookings
                 return;
             SelectBookingAndChooseAction(() => _bookingService.GetByDate(date), BookingPrinter.MenuShowAllFormatBooking,
                 $"--Bookings On Date: {date:yyyy-MM-dd}--\n" +
-                "     ID |      Booked Dates      | Customer ID | Room ID\n" + new string('-', 60));
+                "     ID |      Booked Dates      | Customer ID | Room Nr\n" + new string('-', 60));
         }
 
         internal void ReadById()
@@ -146,7 +146,7 @@ namespace HotelBookingApp.Flows.Bookings
                 return;
             SelectBookingAndChooseAction(() => _bookingService.GetByRoomId(roomId), BookingPrinter.MenuShowAllFormatBooking,
                 $"--Bookings On Room ID: {roomId}--\n" +
-                 "     ID |      Booked Dates      | Customer ID | Room ID\n" + new string('-', 60));
+                 "     ID |      Booked Dates      | Customer ID | Room Nr\n" + new string('-', 60));
         }
 
         internal void ReadByCustomerId()
@@ -156,7 +156,7 @@ namespace HotelBookingApp.Flows.Bookings
                 return;
             SelectBookingAndChooseAction(() => _bookingService.GetByCustomerId(customerId), BookingPrinter.MenuShowAllFormatBooking,
                 $"--Bookings By Customer ID: {customerId}--\n" +
-                "     ID |      Booked Dates      | Customer ID | Room ID\n" + new string('-', 60));
+                "     ID |      Booked Dates      | Customer ID | Room Nr\n" + new string('-', 60));
 
         }
     }

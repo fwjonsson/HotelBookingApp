@@ -92,7 +92,7 @@ namespace HotelBookingApp.Flows.Customers
         {
             SelectCustomerAndChooseAction(_customerService.ListAll, CustomerPrinter.MenuShowAllFormatCustomer,
                 "--All Customers--\n" +
-                "     ID |           Full Name           | Birth Date |             Email             |   Phone Number\n" + new string('-', 103));
+                "     ID |           Full Name           | Birth Date |             Email             |     Phone Nr  \n" + new string('-', 103));
         }
 
         internal void ReadById()
@@ -110,7 +110,7 @@ namespace HotelBookingApp.Flows.Customers
                 return;
             SelectCustomerAndChooseAction(() => _customerService.GetByFullName(fullName), CustomerPrinter.MenuShowAllFormatCustomer,
                 $"--Customers By Name: {fullName}--\n" +
-                "     ID |           Full Name           | Birth Date |             Email             |   Phone Number\n" + new string('-', 103));
+                "     ID |           Full Name           | Birth Date |             Email             |     Phone Nr  \n" + new string('-', 103));
         }
 
         internal void ReadByBirthDate()
@@ -120,7 +120,7 @@ namespace HotelBookingApp.Flows.Customers
                 return;
             SelectCustomerAndChooseAction(() => _customerService.GetByBirthDate(birthDate), CustomerPrinter.MenuShowAllFormatCustomer,
                 $"--Customers With Birth Date: {birthDate:yyyy-MM-dd}--\n" +
-                "     ID |           Full Name           | Birth Date |             Email             |   Phone Number\n" + new string('-', 103));
+                "     ID |           Full Name           | Birth Date |             Email             |     Phone Nr  \n" + new string('-', 103));
         }
 
         internal void ReadByEmail()
@@ -153,6 +153,7 @@ namespace HotelBookingApp.Flows.Customers
                 InputHelper.WaitForContinue();
                 return;
             }
+            Console.Clear();
             foreach (Booking booking in bookingsByCustomer)
             {
                 Console.WriteLine(BookingPrinter.FormatBooking(booking)); 

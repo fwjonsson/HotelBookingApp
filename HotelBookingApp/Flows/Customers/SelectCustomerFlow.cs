@@ -43,7 +43,7 @@ namespace HotelBookingApp.Flows.Customers
         {
             return SelectCustomer(_customerService.ListAll, CustomerPrinter.MenuShowAllFormatCustomer,
                 "--All Customers--\n" +
-                "     ID |           Full Name           | Birth Date |             Email             |   Phone Number\n" + new string('-', 103));
+                "     ID |           Full Name           | Birth Date |             Email             |     Phone Nr  \n" + new string('-', 103));
         }
         internal Customer? ReadByIdAndGet()
         {
@@ -65,7 +65,7 @@ namespace HotelBookingApp.Flows.Customers
                 return null;
             return SelectCustomer(() => _customerService.GetByFullName(fullName), CustomerPrinter.MenuShowAllFormatCustomer,
                 $"--Customers By Name: {fullName}--\n" +
-                "     ID |           Full Name           | Birth Date |             Email             |   Phone Number\n" + new string('-', 103));
+                "     ID |           Full Name           | Birth Date |             Email             |     Phone Nr  \n" + new string('-', 103));
         }
         internal Customer? ReadByBirthDateAndGetSelected()
         {
@@ -74,7 +74,7 @@ namespace HotelBookingApp.Flows.Customers
                 return null;
             return SelectCustomer(() => _customerService.GetByBirthDate(birthDate), CustomerPrinter.MenuShowAllFormatCustomer,
                 $"--Customers With Birth Date: {birthDate:yyyy-MM-dd}--\n" +
-                "     ID |           Full Name           | Birth Date |             Email             |   Phone Number\n" + new string('-', 103));
+                "     ID |           Full Name           | Birth Date |             Email             |     Phone Nr  \n" + new string('-', 103));
         }
         internal Customer? ReadByEmailAndGet()
         {
@@ -91,7 +91,7 @@ namespace HotelBookingApp.Flows.Customers
         }
         internal Customer? ReadByPhoneNumberAndGet()
         {
-            string? phoneNumberInput = InputHelper.ReadPhoneNumber("Phone Number: ");
+            string? phoneNumberInput = InputHelper.ReadPhoneNumber("Phone Nr: ");
             if (phoneNumberInput is not string phoneNumber)
                 return null;
             var customer = _customerService.GetByPhoneNumber(phoneNumber);

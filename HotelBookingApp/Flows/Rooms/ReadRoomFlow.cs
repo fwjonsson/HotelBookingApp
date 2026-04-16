@@ -53,7 +53,7 @@ namespace HotelBookingApp.Flows.Rooms
             while (true)
             {
                 Room? room = getRoom(identifier);
-                if (!FlowHelper.CheckItemExists(room, "Room not found"))
+                if (!FlowHelper.CheckItemExists(room, "Room not found."))
                     return;
 
                 RoomActionMenuOption choice = _roomActionMenu.Show(room!);
@@ -90,6 +90,7 @@ namespace HotelBookingApp.Flows.Rooms
                 Console.WriteLine("No bookings found.");
                 return;
             }
+            Console.Clear();
             foreach (Booking booking in allBookingsOnRoom)
             {
                 Console.WriteLine(BookingPrinter.FormatBooking(booking));
@@ -102,7 +103,7 @@ namespace HotelBookingApp.Flows.Rooms
         {
             SelectRoomAndChooseAction(_roomService.ListAll, RoomPrinter.MenuShowAllFormatRoom,
                 "--All Rooms--\n" +
-                "     ID | Room Number | Extra Beds | Room Type\n" + new string('-', 47));
+                "     ID |   Room Nr   | Extra Beds | Room Type\n" + new string('-', 47));
         }
         internal void ReadById()
         {
@@ -144,7 +145,7 @@ namespace HotelBookingApp.Flows.Rooms
                 }
                 SelectRoomAndChooseAction(() => _roomService.GetByRoomType(roomType), RoomPrinter.MenuShowAllFormatRoom,
                     $"--All {roomType} Rooms--\n" +
-                    "     ID | Room Number | Extra Beds | Room Type\n" + new string('-', 47));
+                    "     ID |   Room Nr   | Extra Beds | Room Type\n" + new string('-', 47));
                 return;
             }
         }
@@ -155,7 +156,7 @@ namespace HotelBookingApp.Flows.Rooms
                 return;
             SelectRoomAndChooseAction(() => _roomService.GetByCustomerId(customerId), RoomPrinter.MenuShowAllFormatRoom,
                 $"--All Rooms Booked By Customer ID: {customerId}--\n" +
-                "     ID | Room Number | Extra Beds | Room Type\n" + new string('-', 47));
+                "     ID |   Room Nr   | Extra Beds | Room Type\n" + new string('-', 47));
         }
         internal void ReadByBookingId()
         {

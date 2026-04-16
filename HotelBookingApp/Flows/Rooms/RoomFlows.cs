@@ -28,18 +28,6 @@ namespace HotelBookingApp.Flows.Rooms
             _read = new ReadRoomFlow(roomService);
             _select = new SelectRoomFlow(roomService);
         }
-
-        internal void DisplayBookingsRoom(int roomId)
-        {
-            Room? room = _roomService.GetById(roomId);
-            if (room is null)
-                Console.WriteLine("No room found.");
-            else
-                Console.WriteLine(RoomPrinter.FormatRoom(room));
-
-            InputHelper.WaitForContinue();
-        }
-
         internal void Run()
         {
             while (true)
@@ -56,7 +44,7 @@ namespace HotelBookingApp.Flows.Rooms
                         _read.ReadAll();
                         break;
 
-                    case RoomMenuOption.FindByRoomNR:
+                    case RoomMenuOption.FindByRoomNr:
                         _read.ReadByRoomNumber();
                         break;
 
@@ -64,15 +52,15 @@ namespace HotelBookingApp.Flows.Rooms
                         _read.ReadByRoomType();
                         break;
 
-                    case RoomMenuOption.FindByID:
+                    case RoomMenuOption.FindById:
                         _read.ReadById();
                         break;
 
-                    case RoomMenuOption.FindByCustomerID:
+                    case RoomMenuOption.FindByCustomerId:
                         _read.ReadByCustomerId();
                         break;
 
-                    case RoomMenuOption.FindByBookingID:
+                    case RoomMenuOption.FindByBookingId:
                         _read.ReadByBookingId();
                         break;
 
@@ -84,22 +72,23 @@ namespace HotelBookingApp.Flows.Rooms
         }
         internal Room? RunAndGetRoom(DateOnly startDate, DateOnly endDate, Room? room)
         {
+            Room? selectedRoom = null;
             while (true)
             {
-                var choice = _availableRoomsMenu.Show();
+                var choice = _availableRoomsMenu.Show(room);
 
                 switch (choice)
                 {
                     case RoomMenuOption.ShowAll:
-                        room = _select.ReadAllAvailableAndGetSelected(startDate, endDate);
+                        selectedRoom = _select.ReadAllAvailableAndGetSelected(startDate, endDate);
                         break;
 
-                    case RoomMenuOption.FindByRoomNR:
-                        room = _select.ReadByRoomNumberAndGetIfAvailable(startDate, endDate);
+                    case RoomMenuOption.FindByRoomNr:
+                        selectedRoom = _select.ReadByRoomNumberAndGetIfAvailable(startDate, endDate);
                         break;
 
                     case RoomMenuOption.FindByRoomType:
-                        room = _select.ReadAllAvailableByRoomTypeAndGetSelected(startDate, endDate);
+                        selectedRoom = _select.ReadAllAvailableByRoomTypeAndGetSelected(startDate, endDate);
                         break;
 
                     case RoomMenuOption.ChangeExtraBeds:
@@ -124,11 +113,9 @@ namespace HotelBookingApp.Flows.Rooms
                         _availableRoomsMenu.ResetMenu();
                         return null;
                 }
-                if (room is null)
-                    continue;
+                if (selectedRoom is not null)
+                    room = selectedRoom;
 
-                _availableRoomsMenu.ResetMenu();
-                return room;
             }
         }
 

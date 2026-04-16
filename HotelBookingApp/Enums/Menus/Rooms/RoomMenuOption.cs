@@ -4,11 +4,11 @@
     {
         Create,
         ShowAll,
-        FindByID,
-        FindByRoomNR,
+        FindById,
+        FindByRoomNr,
         FindByRoomType,
-        FindByCustomerID,
-        FindByBookingID,
+        FindByCustomerId,
+        FindByBookingId,
         ChangeExtraBeds,
         Back
     }

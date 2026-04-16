@@ -19,7 +19,7 @@ namespace HotelBookingApp.Menus.Bookings
                 new(BookingEditorMenuOption.StartDate, $"Start Date: {startDate:yyyy-MM-dd}"),
                 new(BookingEditorMenuOption.EndDate, $"End Date: {endDate:yyyy-MM-dd}"),
                 new(BookingEditorMenuOption.CustomerId, $"Customer ID: {customerId}"),
-                new(BookingEditorMenuOption.RoomId, $"Room ID: {roomId}"),
+                new(BookingEditorMenuOption.RoomNr, $"Room Nr: {roomId}"),
                 new(BookingEditorMenuOption.Save, "Save")
             });
             var result = _menu.Show();

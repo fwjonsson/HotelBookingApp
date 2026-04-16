@@ -4,7 +4,7 @@
     {
         StartDate,
         EndDate,
-        RoomId,
+        RoomNr,
         CustomerId,
         ExtraBeds,
         Save,

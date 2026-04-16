@@ -20,7 +20,7 @@ namespace HotelBookingApp.Menus.Bookings
                 new(BookingEditorMenuOption.CustomerId, $"Customer ID: {customer?.FullName.ToString() ?? "Not set"}"),
                 new(BookingEditorMenuOption.StartDate, $"Start Date: {startDate?.ToString("yyyy-MM-dd") ?? "Not set"}"),
                 new(BookingEditorMenuOption.EndDate, $"End Date: {endDate?.ToString("yyyy-MM-dd")?? "Not set"}"),
-                new(BookingEditorMenuOption.RoomId, room is null
+                new(BookingEditorMenuOption.RoomNr, room is null
                 ? $"Check Available Rooms"
                 : $"Change Room/Extra Beds. Current Room: {room.RoomNumber} Extra Beds: {room.ExtraBeds}"),
                 new(BookingEditorMenuOption.Save, $"Save")

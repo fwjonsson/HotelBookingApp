@@ -15,7 +15,7 @@ namespace HotelBookingApp.Menus.Bookings
                 new(BookingMenuOption.ShowAll, "Show All Bookings"),
                 new(BookingMenuOption.FindByDate, "Find By Date"),
                 new(BookingMenuOption.FindById, "Find By Booking ID"),
-                new(BookingMenuOption.FindByRoomId, "Find By Room ID"),
+                new(BookingMenuOption.FindByRoomNr, "Find By Room Number"),
                 new(BookingMenuOption.FindByCustomerId, "Find By Customer ID")
             });
         }

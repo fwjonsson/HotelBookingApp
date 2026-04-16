@@ -10,7 +10,8 @@ namespace HotelBookingApp.Utilities.Printers.Bookings
                 $"Start Date: {booking.StartDate}\n" +
                 $"End Date: {booking.EndDate}\n" +
                 $"Customer ID: {booking.CustomerId}\n" +
-                $"Room ID: {booking.RoomId}\n";
+                $"Customer Name: {booking.Customer.FullName}\n" +
+                $"Room Nr: {booking.Room.RoomNumber}\n";
 
         }
         internal static string MenuFormatBooking(Booking booking)
@@ -19,14 +20,15 @@ namespace HotelBookingApp.Utilities.Printers.Bookings
                 $"  Start Date: {booking.StartDate}\n" +
                 $"  End Date: {booking.EndDate}\n" +
                 $"  Customer ID: {booking.CustomerId}\n" +
-                $"  Room ID: {booking.RoomId}\n";
+                $"Customer Name: {booking.Customer.FullName}\n" +
+                $"  Room Nr: {booking.Room.RoomNumber}\n";
         }
         internal static string MenuShowAllFormatBooking(Booking booking)
         {
             return $"{booking.Id,5} |" +
                 $"{booking.StartDate,10:yyyy-MM-dd} - {booking.EndDate,10:yyyy-MM-dd} |" +
                 $"{booking.CustomerId,12} |" +
-                $"{booking.RoomId,5}";
+                $"{booking.Room.RoomNumber,5}";
 
         }
     }

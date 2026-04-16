@@ -24,7 +24,7 @@ namespace HotelBookingApp.Flows.Rooms
                 List<Room> rooms = getRooms();
                 if (rooms.Count == 0)
                 {
-                    Console.WriteLine("No rooms found");
+                    Console.WriteLine("No rooms found.");
                     InputHelper.WaitForContinue();
                     return null;
                 }
@@ -85,7 +85,7 @@ namespace HotelBookingApp.Flows.Rooms
                         break;
 
                     default:
-                        Console.WriteLine("Must be 1 or 2");
+                        Console.WriteLine("Must be 1 or 2.");
                         InputHelper.WaitForContinue();
                         continue; ;
                 }

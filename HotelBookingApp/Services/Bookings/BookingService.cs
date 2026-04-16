@@ -111,12 +111,16 @@ namespace HotelBookingApp.Services.Bookings
         internal List<Booking> ListAll()
         {
             return _dbContext.Bookings
+                .Include(b => b.Customer)
+                .Include(b => b.Room)
                 .ToList();
         }
 
         internal List<Booking> GetByDate(DateOnly date)
         {
             return _dbContext.Bookings
+                .Include(b => b.Room)
+                .Include(b => b.Customer)
                 .Where(b => b.StartDate <= date && b.EndDate > date)
                 .ToList();
         }
@@ -125,12 +129,15 @@ namespace HotelBookingApp.Services.Bookings
         {
             return _dbContext.Bookings
                 .Include(b => b.Room)
+                .Include(b => b.Customer)
                 .FirstOrDefault(b => b.Id == bookingId);
         }
 
         internal List<Booking> GetByRoomId(int roomId)
         {
             return _dbContext.Bookings
+                .Include(b => b.Room)
+                .Include(b => b.Customer)
                 .Where(b => b.RoomId == roomId)
                 .ToList();
         }
@@ -138,6 +145,8 @@ namespace HotelBookingApp.Services.Bookings
         internal List<Booking> GetByCustomerId(int customerId)
         {
             return _dbContext.Bookings
+                .Include(b => b.Room)
+                .Include(b => b.Customer)
                 .Where(b => b.CustomerId == customerId)
                 .ToList();
         }

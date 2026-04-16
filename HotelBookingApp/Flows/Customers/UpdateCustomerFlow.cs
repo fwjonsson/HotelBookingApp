@@ -55,7 +55,7 @@ namespace HotelBookingApp.Flows.Customers
                         break;
 
                     case CustomerEditorMenuOption.PhoneNumber:
-                        string? newPhoneNumberInput = InputHelper.ReadPhoneNumber("Phone Number: ");
+                        string? newPhoneNumberInput = InputHelper.ReadPhoneNumber("Phone Nr: ");
                         if (newPhoneNumberInput is string nPhoneNumber)
                             newPhoneNumber = nPhoneNumber;
                         break;

@@ -6,7 +6,7 @@
         ShowAll,
         FindById,
         FindByDate,
-        FindByRoomId,
+        FindByRoomNr,
         FindByCustomerId,
         Back
     }
