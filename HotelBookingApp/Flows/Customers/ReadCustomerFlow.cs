@@ -1,6 +1,4 @@
-﻿using HotelBookingApp.Enums.Menus.Bookings;
-using HotelBookingApp.Enums.Menus.Customers;
-using HotelBookingApp.Flows.Bookings;
+﻿using HotelBookingApp.Enums.Menus.Customers;
 using HotelBookingApp.Menus;
 using HotelBookingApp.Menus.Customers;
 using HotelBookingApp.Models;
@@ -68,7 +66,7 @@ namespace HotelBookingApp.Flows.Customers
                 {
                     case CustomerActionMenuOption.ShowBookings:
                         ReadAllBookingsByCustomer(customer!.Id);
-                            break;
+                        break;
 
                     case CustomerActionMenuOption.Edit:
                         _updateCustomerFlow.Run(customer!.Id);
@@ -156,7 +154,7 @@ namespace HotelBookingApp.Flows.Customers
             Console.Clear();
             foreach (Booking booking in bookingsByCustomer)
             {
-                Console.WriteLine(BookingPrinter.FormatBooking(booking)); 
+                Console.WriteLine(BookingPrinter.FormatBooking(booking));
             }
             InputHelper.WaitForContinue();
         }

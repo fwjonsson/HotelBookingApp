@@ -101,7 +101,7 @@ namespace HotelBookingApp.Flows.Bookings
             Customer? customer = _bookingService.GetCustomer(customerId);
             if (!FlowHelper.CheckItemExists(customer, "Customer not found."))
                 return;
-            
+
             Console.WriteLine(CustomerPrinter.FormatCustomer(customer!));
             InputHelper.WaitForContinue();
         }

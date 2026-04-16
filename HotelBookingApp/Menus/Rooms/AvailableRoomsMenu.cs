@@ -9,8 +9,8 @@ namespace HotelBookingApp.Menus.Rooms
         private readonly ConsoleMenu<RoomMenuOption> _menu;
         internal AvailableRoomsMenu()
         {
-            _menu = new ConsoleMenu<RoomMenuOption>("--Room Menu--", 
-                new List<MenuChoice<RoomMenuOption>>{});
+            _menu = new ConsoleMenu<RoomMenuOption>("--Room Menu--",
+                new List<MenuChoice<RoomMenuOption>> { });
         }
         internal RoomMenuOption Show(Room? room)
         {

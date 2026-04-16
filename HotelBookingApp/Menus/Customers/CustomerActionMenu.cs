@@ -1,9 +1,5 @@
-﻿using HotelBookingApp.Enums.Menus.Bookings;
-using HotelBookingApp.Enums.Menus.Customers;
+﻿using HotelBookingApp.Enums.Menus.Customers;
 using HotelBookingApp.Utilities.Menus;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Menus.Customers
 {
