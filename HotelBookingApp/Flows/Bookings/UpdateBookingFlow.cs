@@ -31,13 +31,13 @@ namespace HotelBookingApp.Flows.Bookings
                 return;
             DateOnly newStartDate = booking!.StartDate;
             DateOnly newEndDate = booking.EndDate;
-            Customer newCustomer = booking.Customer;
+            int newCustomerId = booking.CustomerId;
             Room newRoom = booking.Room;
 
 
             while (true)
             {
-                BookingEditorMenuOption choice = _updateBookingMenu.Show(newStartDate, newEndDate, newRoom.Id, newCustomer.Id);
+                BookingEditorMenuOption choice = _updateBookingMenu.Show(newStartDate, newEndDate, newRoom.Id, newCustomerId);
 
                 switch (choice)
                 {
@@ -63,7 +63,7 @@ namespace HotelBookingApp.Flows.Bookings
                     case BookingEditorMenuOption.CustomerId:
                         Customer? selectedCustomer = _customerFlows.RunAndGetCustomer();
                         if (selectedCustomer is not null)
-                            newCustomer = selectedCustomer;
+                            newCustomerId = selectedCustomer.Id;
                         break;
 
                     case BookingEditorMenuOption.RoomId:
@@ -73,7 +73,7 @@ namespace HotelBookingApp.Flows.Bookings
                         break;
 
                     case BookingEditorMenuOption.Save:
-                        if (TrySave(bookingId, newCustomer.Id, newRoom.Id, newStartDate, newEndDate))
+                        if (TrySave(bookingId, newCustomerId, newRoom.Id, newStartDate, newEndDate))
                         {
                             _updateBookingMenu.ResetIndex();
                             return;

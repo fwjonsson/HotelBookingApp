@@ -1,5 +1,6 @@
 ﻿using HotelBookingApp.Data;
 using HotelBookingApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelBookingApp.Services.Bookings
 {
@@ -123,6 +124,7 @@ namespace HotelBookingApp.Services.Bookings
         internal Booking? GetById(int bookingId)
         {
             return _dbContext.Bookings
+                .Include(b => b.Room)
                 .FirstOrDefault(b => b.Id == bookingId);
         }
 
