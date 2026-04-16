@@ -7,6 +7,7 @@ using HotelBookingApp.Services.Bookings;
 using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Services.Rooms;
 using HotelBookingApp.Startup;
+using HotelBookingApp.Utilities;
 namespace HotelBookingApp
 {
     internal class Program
@@ -14,6 +15,13 @@ namespace HotelBookingApp
         static void Main(string[] args)
         {
             using ApplicationDbContext dbContext = AppStartup.CreateDbContext();
+
+            if (!dbContext.Database.CanConnect())
+            {
+                Console.WriteLine("Could not connect to the database.");
+                InputHelper.WaitForContinue();
+                return;
+            }
 
             //DbSeeder.Seed(dbContext);
 
