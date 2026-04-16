@@ -36,13 +36,13 @@ namespace HotelBookingApp.Flows.Bookings
                 switch (choice)
                 {
                     case BookingEditorMenuOption.StartDate:
-                        DateOnly? newStartDateInput = InputHelper.ReadDateOnly("Start date (yyyy-MM-dd): ");
+                        DateOnly? newStartDateInput = InputHelper.ReadDateOnly("Start date: ");
                         if (newStartDateInput is DateOnly nStartDate)
                             newStartDate = nStartDate;
                         continue;
 
                     case BookingEditorMenuOption.EndDate:
-                        DateOnly? newEndDateInput = InputHelper.ReadDateOnly("End date (yyyy-MM-dd): ");
+                        DateOnly? newEndDateInput = InputHelper.ReadDateOnly("End date: ");
                         if (newEndDateInput is DateOnly nEndDate)
                             newEndDate = nEndDate;
                         continue;

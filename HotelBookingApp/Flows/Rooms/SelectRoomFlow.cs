@@ -37,6 +37,7 @@ namespace HotelBookingApp.Flows.Rooms
                     _selectRoomMenu.ResetMenu();
                     return null;
                 }
+                _selectRoomMenu.ResetMenu();
                 return room;
             }
         }

@@ -88,7 +88,7 @@ namespace HotelBookingApp.Flows.Bookings
 
         internal void ReadByDate()
         {
-            DateOnly? dateInput = InputHelper.ReadDateOnly("Booking Date (yyyy-MM-dd): ");
+            DateOnly? dateInput = InputHelper.ReadDateOnly("Booking Date: ");
             if (dateInput is not DateOnly date)
                 return;
             SelectBookingAndChooseAction(() => _bookingService.GetByDate(date), BookingPrinter.MenuShowAllFormatBooking,

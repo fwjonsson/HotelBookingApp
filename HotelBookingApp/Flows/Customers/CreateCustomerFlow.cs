@@ -34,7 +34,7 @@ namespace HotelBookingApp.Flows.Customers
                         break;
 
                     case CustomerEditorMenuOption.BirthDate:
-                        birthDate = InputHelper.ReadDateOnly("Birth Date (yyyy-MM-dd): ");
+                        birthDate = InputHelper.ReadDateOnly("Birth Date: ");
                         break;
 
                     case CustomerEditorMenuOption.Email:

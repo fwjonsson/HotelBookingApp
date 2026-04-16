@@ -29,6 +29,7 @@ namespace HotelBookingApp.Utilities
             while (true)
             {
                 Console.Clear();
+                Console.WriteLine("Format: (yyyy-MM-dd)");
                 Console.WriteLine("Leave Empty To Cancel.");
                 Console.Write(prompt);
                 string? input = Console.ReadLine()?.Trim();

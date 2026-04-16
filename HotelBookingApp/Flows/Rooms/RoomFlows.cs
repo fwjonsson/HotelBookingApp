@@ -107,13 +107,13 @@ namespace HotelBookingApp.Flows.Rooms
                         break;
 
                     case RoomMenuOption.Back:
-                        _roomMenu.ResetMenu();
+                        _availableRoomsMenu.ResetMenu();
                         return null;
                 }
                 if (room is null)
                     continue;
 
-                _roomMenu.ResetMenu();
+                _availableRoomsMenu.ResetMenu();
                 return room;
             }
         }
