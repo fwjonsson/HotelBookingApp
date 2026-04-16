@@ -87,13 +87,16 @@ namespace HotelBookingApp.Flows.Rooms
             if (allBookingsOnRoom.Count == 0)
             {
                 Console.WriteLine("No bookings found.");
+                InputHelper.WaitForContinue();
                 return;
             }
+
             Console.Clear();
             foreach (Booking booking in allBookingsOnRoom)
             {
                 Console.WriteLine(BookingPrinter.FormatBooking(booking));
             }
+
             InputHelper.WaitForContinue();
 
         }
