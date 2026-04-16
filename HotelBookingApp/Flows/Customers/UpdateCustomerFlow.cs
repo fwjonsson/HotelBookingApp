@@ -80,9 +80,8 @@ namespace HotelBookingApp.Flows.Customers
             CustomerValidationResult result = _customerService.UpdateCustomer(customerId, newFullName, newBirthDate, newEmail, newPhoneNumber);
             CustomerValidationResultPrinter.PrintErrorsOrSuccess(result, "Changes saved");
             InputHelper.WaitForContinue();
-            if (result.Success)
-                return true;
-            return false;
+
+            return result.Success;
         }
     }
 }

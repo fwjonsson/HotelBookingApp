@@ -13,16 +13,12 @@ namespace HotelBookingApp.Flows.Bookings
         private readonly BookingMenu _bookingMenu;
         private readonly CreateBookingFlow _create;
         private readonly ReadBookingFlow _read;
-        private readonly CustomerFlows _customerFlows;
-        private readonly RoomFlows _roomFlows;
 
         internal BookingFlows(BookingService bookingService, CustomerFlows customerFlows, RoomFlows roomFlows)
         {
             _bookingMenu = new BookingMenu();
             _create = new CreateBookingFlow(bookingService, customerFlows, roomFlows);
-            _read = new ReadBookingFlow(bookingService);
-            _customerFlows = customerFlows;
-            _roomFlows = roomFlows;
+            _read = new ReadBookingFlow(bookingService, customerFlows, roomFlows);
         }
         internal void Run()
         {

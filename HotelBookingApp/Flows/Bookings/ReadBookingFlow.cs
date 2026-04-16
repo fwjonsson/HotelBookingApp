@@ -1,4 +1,6 @@
 ﻿using HotelBookingApp.Enums.Menus;
+using HotelBookingApp.Flows.Customers;
+using HotelBookingApp.Flows.Rooms;
 using HotelBookingApp.Menus;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Bookings;
@@ -16,12 +18,12 @@ namespace HotelBookingApp.Flows.Bookings
         private readonly UpdateBookingFlow _updateBookingFlow;
         private readonly DeleteBookingFlow _deleteBookingFlow;
 
-        internal ReadBookingFlow(BookingService bookingService)
+        internal ReadBookingFlow(BookingService bookingService, CustomerFlows customerFlows, RoomFlows roomFlows)
         {
             _bookingService = bookingService;
             _selectBookingMenu = new SelectObjectMenu<Booking>();
             _bookingActionMenu = new ActionMenu<Booking>("--Booking--", BookingPrinter.FormatBooking);
-            _updateBookingFlow = new UpdateBookingFlow(bookingService);
+            _updateBookingFlow = new UpdateBookingFlow(bookingService, customerFlows, roomFlows);
             _deleteBookingFlow = new DeleteBookingFlow(bookingService);
 
         }

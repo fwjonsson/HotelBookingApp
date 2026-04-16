@@ -70,9 +70,8 @@ namespace HotelBookingApp.Flows.Rooms
             RoomValidationResult result = _roomService.UpdateRoom(roomId, newRoomNumber, newRoomType, newExtraBeds);
             RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "Changes saved.");
             InputHelper.WaitForContinue();
-            if (result.Success)
-                return true;
-            return false;
+
+            return result.Success;
         }
     }
 }

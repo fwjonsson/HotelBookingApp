@@ -16,6 +16,10 @@ namespace HotelBookingApp.Utilities.Printers.Bookings
                 Console.WriteLine("Booking not found.");
                 return;
             }
+
+            if (!result.EndDateIsAfterStartDate)
+                Console.WriteLine("End date must be after start date.");
+
             if (!result.ValidDateRange)
                 Console.WriteLine("Invalid date range.");
 

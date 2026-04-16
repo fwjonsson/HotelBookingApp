@@ -50,7 +50,7 @@ namespace HotelBookingApp.Flows.Customers
                         if (saved)
                         {
                             _createCustomerMenu.ResetMenu();
-                                return createdCustomer;
+                            return createdCustomer;
                         }
                         break;
 
@@ -61,7 +61,7 @@ namespace HotelBookingApp.Flows.Customers
             }
         }
 
-        private (bool,Customer?) TrySave(string? fullName, DateOnly? birthDate, string? email, string? phoneNumber)
+        private (bool, Customer?) TrySave(string? fullName, DateOnly? birthDate, string? email, string? phoneNumber)
         {
             if (fullName is not string fName ||
                 birthDate is not DateOnly bDate ||
@@ -75,9 +75,7 @@ namespace HotelBookingApp.Flows.Customers
             (CustomerValidationResult result, Customer? createdCustomer) = _customerService.CreateCustomer(fName, bDate, e, pNumber);
             CustomerValidationResultPrinter.PrintErrorsOrSuccess(result, "Customer created.");
             InputHelper.WaitForContinue();
-            if (result.Success)
-                return (true, createdCustomer);
-            return (false, null);
+            return (result.Success, createdCustomer);
         }
     }
 }
