@@ -25,7 +25,7 @@ namespace HotelBookingApp.Utilities.Printers.Customers
             return $"{customer.Id,5} |" +
                 $"{customer.FullName,30} |" +
                 $"{customer.BirthDate,11:yyyy-MM-dd} |" +
-                $"{customer.Email, 30} |" +
+                $"{customer.Email,30} |" +
                 $"{customer.PhoneNumber,15}";
         }
     }

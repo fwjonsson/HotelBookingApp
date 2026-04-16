@@ -13,7 +13,7 @@ namespace HotelBookingApp.Services.Customers
             _dbContext = dbContext;
         }
 
-        internal (CustomerValidationResult,Customer?) CreateCustomer(string fullName, DateOnly birthDate, string email, string phoneNumber)
+        internal (CustomerValidationResult, Customer?) CreateCustomer(string fullName, DateOnly birthDate, string email, string phoneNumber)
         {
             var result = new CustomerValidationResult();
 

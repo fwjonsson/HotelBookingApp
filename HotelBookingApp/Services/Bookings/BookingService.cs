@@ -62,7 +62,7 @@ namespace HotelBookingApp.Services.Bookings
                 return result;
             }
 
-            if (newEndDate <= newStartDate )
+            if (newEndDate <= newStartDate)
                 result.EndDateIsAfterStartDate = false;
 
             if (newStartDate < DateOnly.FromDateTime(DateTime.Today))

@@ -4,9 +4,6 @@ using HotelBookingApp.Models;
 using HotelBookingApp.Services.Rooms;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.Printers.Rooms;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Flows.Rooms
 {
@@ -55,8 +52,8 @@ namespace HotelBookingApp.Flows.Rooms
             var checkRoomExists = _roomService.GetByRoomNumber(roomNumber);
             if (checkRoomExists is null)
             {
-                    Console.WriteLine("Room not found.");
-                    InputHelper.WaitForContinue();
+                Console.WriteLine("Room not found.");
+                InputHelper.WaitForContinue();
                 return null;
             }
 

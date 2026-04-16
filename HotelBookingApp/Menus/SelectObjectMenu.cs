@@ -9,7 +9,7 @@ namespace HotelBookingApp.Menus
         internal SelectObjectMenu()
         {
             _menu = new ConsoleMenu<T>("", new List<MenuChoice<T>>());
-            
+
         }
         internal T? Show(List<T> items, Func<T, string> formatter, string title)
         {

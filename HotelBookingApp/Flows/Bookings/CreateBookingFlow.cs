@@ -4,7 +4,6 @@ using HotelBookingApp.Flows.Rooms;
 using HotelBookingApp.Menus.Bookings;
 using HotelBookingApp.Models;
 using HotelBookingApp.Services.Bookings;
-using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
 using HotelBookingApp.Utilities.Printers.Bookings;
@@ -49,7 +48,10 @@ namespace HotelBookingApp.Flows.Bookings
                         if (startDateInput is not DateOnly sDateInput)
                             break;
                         else
+                        {
                             startDate = sDateInput;
+                            room = null;
+                        }
                         break;
 
                     case BookingEditorMenuOption.EndDate:
@@ -57,7 +59,10 @@ namespace HotelBookingApp.Flows.Bookings
                         if (endDateInput is not DateOnly eDateInput)
                             break;
                         else
+                        {
                             endDate = eDateInput;
+                            room = null;
+                        }
                         break;
 
                     case BookingEditorMenuOption.RoomId:
@@ -67,8 +72,8 @@ namespace HotelBookingApp.Flows.Bookings
                             InputHelper.WaitForContinue();
                             break;
                         }
-                        var selectedRoom = _roomFlows.RunAndGetRoom(sDate, eDate, room);
-                        if (selectedRoom is not null)
+                        Room? selectedRoom = _roomFlows.RunAndGetRoom(sDate, eDate, room?.Id);
+                        if (selectedRoom is Room)
                             room = selectedRoom;
                         break;
 

@@ -53,22 +53,23 @@ namespace HotelBookingApp.Flows.Bookings
                     case BookingEditorMenuOption.EndDate:
                         var newEndDateInput = BookingFlowHelper.TrySetBookingEndDate(newStartDate);
 
-                        if(newEndDateInput is not DateOnly nEndDateInput)
-                        break;
+                        if (newEndDateInput is not DateOnly nEndDateInput)
+                            break;
 
                         newEndDate = nEndDateInput;
                         break;
 
-                    case BookingEditorMenuOption.RoomId:
-                        Room? room = _roomFlows.RunAndGetRoom(newStartDate, newEndDate, booking.Room);
-                        if (room is Room)
-                            newRoomId = room.Id;
-                        break;
 
                     case BookingEditorMenuOption.CustomerId:
                         Customer? customer = _customerFlows.RunAndGetCustomer();
                         if (customer is Customer)
                             newCustomerId = customer.Id;
+                        break;
+
+                    case BookingEditorMenuOption.RoomId:
+                        Room? room = _roomFlows.RunAndGetRoom(newStartDate, newEndDate, newRoomId);
+                        if (room is Room)
+                            newRoomId = room.Id;
                         break;
 
                     case BookingEditorMenuOption.Save:

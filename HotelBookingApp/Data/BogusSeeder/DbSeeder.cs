@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace HotelBookingApp.Data.BogusSeeder
+﻿namespace HotelBookingApp.Data.BogusSeeder
 {
     internal static class DbSeeder
     {

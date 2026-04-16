@@ -33,7 +33,7 @@ namespace HotelBookingApp.Utilities.FlowHelpers
             int? input = null;
             while (true)
             {
-                if(roomType == RoomType.Single)
+                if (roomType == RoomType.Single)
                     input = InputHelper.ReadInt("Extra beds (Max 1): ");
 
                 else

@@ -3,8 +3,6 @@ using HotelBookingApp.Flows.Customers;
 using HotelBookingApp.Flows.Rooms;
 using HotelBookingApp.Menus.Bookings;
 using HotelBookingApp.Services.Bookings;
-using HotelBookingApp.Services.Customers;
-using HotelBookingApp.Services.Rooms;
 
 namespace HotelBookingApp.Flows.Bookings
 {

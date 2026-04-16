@@ -43,7 +43,7 @@
                     Console.WriteLine($"{_currentChoices[choice].Text}");
                 }
 
-                
+
                 if (_choicesPerPage.Count > 1)
                     PrintPageNumbers();
                 else
@@ -51,7 +51,7 @@
                     Console.WriteLine();
                     Console.WriteLine("Use arrow keys to navigate Up/Down.");
                 }
-                
+
                 Console.WriteLine("Enter to select.");
                 Console.WriteLine("Esc to go back.");
                 Console.WriteLine();
@@ -153,7 +153,7 @@
             {
                 for (int page = 0; page < _choicesPerPage.Count; page++)
                     Console.Write(page == _currentPage ? $">{page + 1,2}<" : $" {page + 1,2} ");
-                
+
             }
 
             else if (_choicesPerPage.Count > 10 && _currentPage > 5 && _choicesPerPage.Count - _currentPage < 6)

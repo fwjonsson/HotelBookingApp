@@ -70,8 +70,12 @@ namespace HotelBookingApp.Flows.Rooms
                 }
             }
         }
-        internal Room? RunAndGetRoom(DateOnly startDate, DateOnly endDate, Room? room)
+        internal Room? RunAndGetRoom(DateOnly startDate, DateOnly endDate, int? roomId)
         {
+            Room? room = null;
+
+            if (roomId is int rId)
+                room = _roomService.GetById(rId);
             while (true)
             {
                 var choice = _availableRoomsMenu.Show();

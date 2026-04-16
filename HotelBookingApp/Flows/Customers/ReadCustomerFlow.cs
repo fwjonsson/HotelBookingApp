@@ -110,7 +110,7 @@ namespace HotelBookingApp.Flows.Customers
             DateOnly? birthDateInput = InputHelper.ReadDateOnly("Birth Date: ");
             if (birthDateInput is not DateOnly birthDate)
                 return;
-            SelectCustomerAndChooseAction(() => _customerService.GetByBirthDate(birthDate), CustomerPrinter.MenuShowAllFormatCustomer, 
+            SelectCustomerAndChooseAction(() => _customerService.GetByBirthDate(birthDate), CustomerPrinter.MenuShowAllFormatCustomer,
                 $"--Customers With Birth Date: {birthDate:yyyy-MM-dd}--\n" +
                 "     ID |           Full Name           | Birth Date |             Email             |   Phone Number\n" + new string('-', 103));
         }

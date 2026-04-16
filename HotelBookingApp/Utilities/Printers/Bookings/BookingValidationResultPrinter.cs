@@ -21,7 +21,7 @@ namespace HotelBookingApp.Utilities.Printers.Bookings
                 Console.WriteLine("End date must be after start date.");
 
             if (!result.ValidDateRange)
-                Console.WriteLine("Invalid date range.");
+                Console.WriteLine("Invalid date input.");
 
             if (!result.CustomerFound)
                 Console.WriteLine("Customer not found.");

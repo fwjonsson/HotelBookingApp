@@ -3,9 +3,6 @@ using HotelBookingApp.Models;
 using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.Printers.Customers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelBookingApp.Flows.Customers
 {
@@ -111,7 +108,7 @@ namespace HotelBookingApp.Flows.Customers
             if (bookingIdInput is not int bookingId)
                 return null;
             var customer = _customerService.GetByBookingId(bookingId);
-            if(customer == null)
+            if (customer == null)
             {
                 Console.WriteLine("Customer not found.");
                 InputHelper.WaitForContinue();
