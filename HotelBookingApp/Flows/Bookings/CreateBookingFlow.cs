@@ -48,22 +48,26 @@ namespace HotelBookingApp.Flows.Bookings
                         DateOnly? startDateInput = InputHelper.ReadDateOnly("Start date: ");
                         if (startDateInput is null)
                             break;
-                        if (FlowHelper.ValidateBookingDateInput(startDateInput, endDate))
+                        if (BookingFlowHelper.ValidateBookingDateInput(startDateInput, endDate))
+                        {
                             startDate = startDateInput;
+                            room = null;
+                        }
                         else
                             InputHelper.WaitForContinue();
-                        room = null;
                         break;
 
                     case BookingEditorMenuOption.EndDate:
                         DateOnly? endDateInput = InputHelper.ReadDateOnly("End date: ");
                         if (endDateInput is null)
                             break;
-                        if (FlowHelper.ValidateBookingDateInput(startDate, endDateInput))
+                        if (BookingFlowHelper.ValidateBookingDateInput(startDate, endDateInput))
+                        {
                             endDate = endDateInput;
+                            room = null;
+                        }
                         else
                             InputHelper.WaitForContinue();
-                        room = null;
                         break;
 
                     case BookingEditorMenuOption.RoomId:
@@ -106,9 +110,8 @@ namespace HotelBookingApp.Flows.Bookings
             BookingValidationResult result = _bookingService.CreateBooking(cId, rId, sDate, eDate);
             BookingValidationResultPrinter.PrintErrorsOrSuccess(result, "Booking created.");
             InputHelper.WaitForContinue();
-            if (result.Success)
-                return true;
-            return false;
+
+            return result.Success;
         }
     }
 }

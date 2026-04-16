@@ -37,27 +37,31 @@ namespace HotelBookingApp.Flows.Bookings
                 {
                     case BookingEditorMenuOption.StartDate:
                         DateOnly? newStartDateInput = InputHelper.ReadDateOnly("Start date: ");
-                        if (newStartDateInput is DateOnly nStartDate)
-                            newStartDate = nStartDate;
-                        continue;
+                        if (newStartDateInput is not DateOnly nStartDateInput)
+                            break;
+                        if (BookingFlowHelper.ValidateBookingDateInput(nStartDateInput, newEndDate))
+                            newStartDate = nStartDateInput;
+                        break;
 
                     case BookingEditorMenuOption.EndDate:
                         DateOnly? newEndDateInput = InputHelper.ReadDateOnly("End date: ");
-                        if (newEndDateInput is DateOnly nEndDate)
-                            newEndDate = nEndDate;
-                        continue;
+                        if (newEndDateInput is not DateOnly nEndDateInput)
+                            break;
+                        if (BookingFlowHelper.ValidateBookingDateInput(newStartDate, nEndDateInput))
+                            newEndDate = nEndDateInput;
+                        break;
 
                     case BookingEditorMenuOption.RoomId:
                         int? newRoomIdInput = InputHelper.ReadInt("Room (room ID): ");
                         if (newRoomIdInput is int nRoomId)
                             newRoomId = nRoomId;
-                        continue;
+                        break;
 
                     case BookingEditorMenuOption.CustomerId:
                         int? newCustomerIdInpud = InputHelper.ReadInt("Customer (customer ID): ");
                         if (newCustomerIdInpud is int nCustomerId)
                             newCustomerId = nCustomerId;
-                        continue;
+                        break;
 
                     case BookingEditorMenuOption.Save:
                         if (TrySave(bookingId, newStartDate, newEndDate, newCustomerId, newRoomId))
@@ -79,9 +83,8 @@ namespace HotelBookingApp.Flows.Bookings
             BookingValidationResult result = _bookingService.UpdateBooking(bookingId, newStartDate, newEndDate, newRoomId, newCustomerId);
             BookingValidationResultPrinter.PrintErrorsOrSuccess(result, "Changes saved.");
             InputHelper.WaitForContinue();
-            if (result.Success)
-                return true;
-            return false;
+
+            return result.Success;
         }
     }
 }

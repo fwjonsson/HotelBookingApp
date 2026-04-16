@@ -2,7 +2,7 @@
 
 namespace HotelBookingApp.Utilities.FlowHelpers
 {
-    internal static class RoomFlowHelpers
+    internal static class RoomFlowHelper
     {
         internal static int? ValidateRoomNumber()
         {

@@ -38,17 +38,17 @@ namespace HotelBookingApp.Flows.Rooms
                 switch (choice)
                 {
                     case RoomEditorMenuOption.RoomNumber:
-                        int? newRoomNumberInput = RoomFlowHelpers.ValidateRoomNumber();
+                        int? newRoomNumberInput = RoomFlowHelper.ValidateRoomNumber();
                         if (newRoomNumberInput is int nRoomNumber)
                             newRoomNumber = nRoomNumber;
                         break;
 
                     case RoomEditorMenuOption.RoomType:
-                        var (NewRoomType, NewExtraBeds) = RoomFlowHelpers.ValidateRoomType(newRoomType, newExtraBeds);
+                        var (NewRoomType, NewExtraBeds) = RoomFlowHelper.ValidateRoomType(newRoomType, newExtraBeds);
                         break;
 
                     case RoomEditorMenuOption.ExtraBeds:
-                        newExtraBeds = RoomFlowHelpers.ValidateExtraBeds(newExtraBeds, newRoomType) ?? newExtraBeds;
+                        newExtraBeds = RoomFlowHelper.ValidateExtraBeds(newExtraBeds, newRoomType) ?? newExtraBeds;
                         break;
 
                     case RoomEditorMenuOption.Save:
