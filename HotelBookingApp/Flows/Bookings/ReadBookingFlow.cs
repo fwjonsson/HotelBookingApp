@@ -17,11 +17,13 @@ namespace HotelBookingApp.Flows.Bookings
     {
         private readonly BookingService _bookingService;
         private readonly SelectObjectMenu<Booking> _selectBookingMenu;
+        private readonly string _tableHeader =
+            " Booking ID  |       Booked Dates      | Customer ID | Room Nr\n" + new string('-', 62);
+
         private readonly BookingActionMenu<Booking> _bookingActionMenu;
         private readonly UpdateBookingFlow _updateBookingFlow;
         private readonly DeleteBookingFlow _deleteBookingFlow;
-        private readonly CustomerFlows _customerFlows;
-        private readonly RoomFlows _roomFlows;
+        
 
         internal ReadBookingFlow(BookingService bookingService, CustomerFlows customerFlows, RoomFlows roomFlows)
         {
@@ -30,8 +32,6 @@ namespace HotelBookingApp.Flows.Bookings
             _bookingActionMenu = new BookingActionMenu<Booking>("--Booking--", BookingPrinter.FormatBooking);
             _updateBookingFlow = new UpdateBookingFlow(bookingService, customerFlows, roomFlows);
             _deleteBookingFlow = new DeleteBookingFlow(bookingService);
-            _customerFlows = customerFlows;
-            _roomFlows = roomFlows;
 
         }
         private void SelectBookingAndChooseAction(Func<List<Booking>> getBookings, Func<Booking, string> formatter, string title)
@@ -117,8 +117,7 @@ namespace HotelBookingApp.Flows.Bookings
         internal void ReadAll()
         {
             SelectBookingAndChooseAction(_bookingService.ListAll, BookingPrinter.MenuShowAllFormatBooking,
-                "--All Bookings--\n" +
-                "     ID |      Booked Dates      | Customer ID | Room Nr\n" + new string('-', 60));
+                "--All Bookings--\n" + _tableHeader);
         }
 
         internal void ReadByDate()
@@ -127,8 +126,7 @@ namespace HotelBookingApp.Flows.Bookings
             if (dateInput is not DateOnly date)
                 return;
             SelectBookingAndChooseAction(() => _bookingService.GetByDate(date), BookingPrinter.MenuShowAllFormatBooking,
-                $"--Bookings On Date: {date:yyyy-MM-dd}--\n" +
-                "     ID |      Booked Dates      | Customer ID | Room Nr\n" + new string('-', 60));
+                $"--Bookings On Date: {date:yyyy-MM-dd}--\n" + _tableHeader);
         }
 
         internal void ReadById()
@@ -139,14 +137,13 @@ namespace HotelBookingApp.Flows.Bookings
             ChooseAction(bookingId);
         }
 
-        internal void ReadByRoomId()
+        internal void ReadByRoomNr()
         {
-            int? roomIdInput = InputHelper.ReadInt("Room ID: ");
-            if (roomIdInput is not int roomId)
+            int? roomNrInput = InputHelper.ReadInt("Room Nr: ");
+            if (roomNrInput is not int roomNr)
                 return;
-            SelectBookingAndChooseAction(() => _bookingService.GetByRoomId(roomId), BookingPrinter.MenuShowAllFormatBooking,
-                $"--Bookings On Room ID: {roomId}--\n" +
-                 "     ID |      Booked Dates      | Customer ID | Room Nr\n" + new string('-', 60));
+            SelectBookingAndChooseAction(() => _bookingService.GetByRoomNr(roomNr), BookingPrinter.MenuShowAllFormatBooking,
+                $"--Bookings On Room Nr: {roomNr}--\n" + _tableHeader);
         }
 
         internal void ReadByCustomerId()
@@ -155,8 +152,7 @@ namespace HotelBookingApp.Flows.Bookings
             if (customerIdInput is not int customerId)
                 return;
             SelectBookingAndChooseAction(() => _bookingService.GetByCustomerId(customerId), BookingPrinter.MenuShowAllFormatBooking,
-                $"--Bookings By Customer ID: {customerId}--\n" +
-                "     ID |      Booked Dates      | Customer ID | Room Nr\n" + new string('-', 60));
+                $"--Bookings By Customer ID: {customerId}--\n" + _tableHeader);
 
         }
     }

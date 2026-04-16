@@ -12,14 +12,14 @@ namespace HotelBookingApp.Menus.Bookings
                 "--Edit Booking--"
                 , new List<MenuChoice<BookingEditorMenuOption>>());
         }
-        internal BookingEditorMenuOption Show(DateOnly startDate, DateOnly endDate, int roomId, int customerId)
+        internal BookingEditorMenuOption Show(DateOnly startDate, DateOnly endDate,  int customerId, int roomNr)
         {
             _menu.SetChoices(new List<MenuChoice<BookingEditorMenuOption>>
             {
                 new(BookingEditorMenuOption.StartDate, $"Start Date: {startDate:yyyy-MM-dd}"),
                 new(BookingEditorMenuOption.EndDate, $"End Date: {endDate:yyyy-MM-dd}"),
                 new(BookingEditorMenuOption.CustomerId, $"Customer ID: {customerId}"),
-                new(BookingEditorMenuOption.RoomNr, $"Room Nr: {roomId}"),
+                new(BookingEditorMenuOption.RoomNr, $"Room Nr: {roomNr}"),
                 new(BookingEditorMenuOption.Save, "Save")
             });
             var result = _menu.Show();

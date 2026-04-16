@@ -10,6 +10,7 @@
         FindByCustomerId,
         FindByBookingId,
         ChangeExtraBeds,
+        Save,
         Back
     }
 }

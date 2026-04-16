@@ -15,6 +15,9 @@ namespace HotelBookingApp.Flows.Rooms
     {
         private readonly RoomService _roomService;
         private readonly SelectObjectMenu<Room> _selectRoomMenu;
+        private readonly string _tableHeader =
+            " Room ID |   Room Nr   | Extra Beds | Room Type\n" + new string('-', 47);
+
         private readonly RoomActionMenu<Room> _roomActionMenu;
         private readonly UpdateRoomFlow _updateRoomFlow;
         private readonly DeleteRoomFlow _deleteRoomFlow;
@@ -105,7 +108,7 @@ namespace HotelBookingApp.Flows.Rooms
         {
             SelectRoomAndChooseAction(_roomService.ListAll, RoomPrinter.MenuShowAllFormatRoom,
                 "--All Rooms--\n" +
-                "     ID |   Room Nr   | Extra Beds | Room Type\n" + new string('-', 47));
+                _tableHeader);
         }
         internal void ReadById()
         {
@@ -147,7 +150,7 @@ namespace HotelBookingApp.Flows.Rooms
                 }
                 SelectRoomAndChooseAction(() => _roomService.GetByRoomType(roomType), RoomPrinter.MenuShowAllFormatRoom,
                     $"--All {roomType} Rooms--\n" +
-                    "     ID |   Room Nr   | Extra Beds | Room Type\n" + new string('-', 47));
+                    _tableHeader);
                 return;
             }
         }
@@ -158,7 +161,7 @@ namespace HotelBookingApp.Flows.Rooms
                 return;
             SelectRoomAndChooseAction(() => _roomService.GetByCustomerId(customerId), RoomPrinter.MenuShowAllFormatRoom,
                 $"--All Rooms Booked By Customer ID: {customerId}--\n" +
-                "     ID |   Room Nr   | Extra Beds | Room Type\n" + new string('-', 47));
+                _tableHeader);
         }
         internal void ReadByBookingId()
         {

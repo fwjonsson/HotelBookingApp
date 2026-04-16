@@ -21,7 +21,7 @@ namespace HotelBookingApp.Utilities.Printers.Rooms
         }
         internal static string MenuShowAllFormatRoom(Room room)
         {
-            return $"{room.Id,5} |" +
+            return $"{room.Id,6} |" +
                 $"{room.RoomNumber,12} |" +
                 $"{room.ExtraBeds,11} |" +
                 $"{room.RoomType.ToString(),10}";

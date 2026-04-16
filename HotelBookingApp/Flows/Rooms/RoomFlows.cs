@@ -72,10 +72,19 @@ namespace HotelBookingApp.Flows.Rooms
         }
         internal Room? RunAndGetRoom(DateOnly startDate, DateOnly endDate, Room? room)
         {
-            Room? selectedRoom = null;
+            Room? selectedRoom = room;
+            int? newExtraBedsInput = null;
+            int newExtraBeds = 0;
+
+            if (selectedRoom is not null)
+                newExtraBeds = selectedRoom.ExtraBeds;
+            
             while (true)
             {
-                var choice = _availableRoomsMenu.Show(room);
+                if (selectedRoom is not null)
+                    room = selectedRoom;
+
+                var choice = _availableRoomsMenu.Show(room, newExtraBeds);
 
                 switch (choice)
                 {
@@ -98,26 +107,29 @@ namespace HotelBookingApp.Flows.Rooms
                             InputHelper.WaitForContinue();
                             break;
                         }
-                        int? ExtraBedsInput = RoomFlowHelper.ValidateExtraBeds(room.ExtraBeds, room.RoomType);
-                        if (ExtraBedsInput is not int newExtraBeds)
+                        newExtraBedsInput = RoomFlowHelper.ValidateExtraBeds(newExtraBeds, room.RoomType);
+                        if (newExtraBedsInput is not int nExtraBeds)
                             break;
-                        
-                        var result = _roomService.UpdateRoom(room.Id, room.RoomNumber, room.RoomType, newExtraBeds);
-                        if (result.Success)
+
+                        newExtraBeds = nExtraBeds;
+                        break;
+
+                    case RoomMenuOption.Save:
+                        if (room is not null)
                         {
-                            room.ExtraBeds = newExtraBeds;
-                            continue;
+                            RoomValidationResult result = _roomService.UpdateRoom(room.Id, room.RoomNumber, room.RoomType, newExtraBeds);
+                            RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "Room updated.");
+                            InputHelper.WaitForContinue();
+                            return room;
                         }
-                        RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "");
+                        Console.WriteLine("Select room first.");
                         InputHelper.WaitForContinue();
-                        continue;
+                        break;
 
                     case RoomMenuOption.Back:
                         _availableRoomsMenu.ResetMenu();
                         return null;
                 }
-                if (selectedRoom is not null)
-                    room = selectedRoom;
 
             }
         }

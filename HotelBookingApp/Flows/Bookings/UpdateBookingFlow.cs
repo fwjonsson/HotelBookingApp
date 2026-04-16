@@ -37,7 +37,7 @@ namespace HotelBookingApp.Flows.Bookings
 
             while (true)
             {
-                BookingEditorMenuOption choice = _updateBookingMenu.Show(newStartDate, newEndDate, newRoom.Id, newCustomerId);
+                BookingEditorMenuOption choice = _updateBookingMenu.Show(newStartDate, newEndDate, newCustomerId, newRoom.RoomNumber);
 
                 switch (choice)
                 {

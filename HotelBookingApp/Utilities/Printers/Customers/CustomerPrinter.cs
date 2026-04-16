@@ -10,7 +10,7 @@ namespace HotelBookingApp.Utilities.Printers.Customers
                 $"Full Name: {customer.FullName}\n" +
                 $"Birth Date: {customer.BirthDate:yyyy-MM-dd}\n" +
                 $"Email: {customer.Email}\n" +
-                $"Phone Number: {customer.PhoneNumber}\n";
+                $"Phone Nr: {customer.PhoneNumber}\n";
         }
         internal static string MenuFormatCustomer(Customer customer)
         {
@@ -18,11 +18,11 @@ namespace HotelBookingApp.Utilities.Printers.Customers
                 $"  Full Name: {customer.FullName}\n" +
                 $"  Birth Date: {customer.BirthDate:yyyy-MM-dd}\n" +
                 $"  Email: {customer.Email}\n" +
-                $"  Phone Number: {customer.PhoneNumber}\n";
+                $"  Phone Nr: {customer.PhoneNumber}\n";
         }
         internal static string MenuShowAllFormatCustomer(Customer customer)
         {
-            return $"{customer.Id,5} |" +
+            return $"{customer.Id,10} |" +
                 $"{customer.FullName,30} |" +
                 $"{customer.BirthDate,11:yyyy-MM-dd} |" +
                 $"{customer.Email,30} |" +

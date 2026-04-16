@@ -133,12 +133,12 @@ namespace HotelBookingApp.Services.Bookings
                 .FirstOrDefault(b => b.Id == bookingId);
         }
 
-        internal List<Booking> GetByRoomId(int roomId)
+        internal List<Booking> GetByRoomNr(int roomNr)
         {
             return _dbContext.Bookings
                 .Include(b => b.Room)
                 .Include(b => b.Customer)
-                .Where(b => b.RoomId == roomId)
+                .Where(b => b.Room.RoomNumber == roomNr)
                 .ToList();
         }
 
@@ -174,12 +174,14 @@ namespace HotelBookingApp.Services.Bookings
         internal Customer? GetCustomer(int customerId)
         {
             return _dbContext.Customers
+                .Include(c => c.Bookings)
                 .FirstOrDefault(c => c.Id == customerId);
         }
 
         internal Room? GetRoom(int roomId)
         {
             return _dbContext.Rooms
+                .Include(r => r.Bookings)
                 .FirstOrDefault(r => r.Id == roomId);
         }
     }

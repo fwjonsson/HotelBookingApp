@@ -25,10 +25,10 @@ namespace HotelBookingApp.Utilities.Printers.Bookings
         }
         internal static string MenuShowAllFormatBooking(Booking booking)
         {
-            return $"{booking.Id,5} |" +
-                $"{booking.StartDate,10:yyyy-MM-dd} - {booking.EndDate,10:yyyy-MM-dd} |" +
+            return $"{booking.Id,10} |" +
+                $" {booking.StartDate,10:yyyy-MM-dd} - {booking.EndDate,10:yyyy-MM-dd} |" +
                 $"{booking.CustomerId,12} |" +
-                $"{booking.Room.RoomNumber,5}";
+                $"{booking.Room.RoomNumber,8}";
 
         }
     }

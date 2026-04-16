@@ -13,7 +13,11 @@ namespace HotelBookingApp.Flows.Customers
     internal class ReadCustomerFlow
     {
         private readonly CustomerService _customerService;
+
         private readonly SelectObjectMenu<Customer> _selectCustomerMenu;
+        private readonly string _tableHeader = 
+            " Customer ID |           Full Name           | Birth Date |             Email             |       Phone Nr\n" + new string('-', 106);
+
         private readonly CustomerActionMenu<Customer> _customerActionMenu;
         private readonly UpdateCustomerFlow _updateCustomerFlow;
         private readonly DeleteCustomerFlow _deleteCustomerFlow;
@@ -90,7 +94,7 @@ namespace HotelBookingApp.Flows.Customers
         {
             SelectCustomerAndChooseAction(_customerService.ListAll, CustomerPrinter.MenuShowAllFormatCustomer,
                 "--All Customers--\n" +
-                "     ID |           Full Name           | Birth Date |             Email             |     Phone Nr  \n" + new string('-', 103));
+                _tableHeader);
         }
 
         internal void ReadById()
@@ -108,7 +112,7 @@ namespace HotelBookingApp.Flows.Customers
                 return;
             SelectCustomerAndChooseAction(() => _customerService.GetByFullName(fullName), CustomerPrinter.MenuShowAllFormatCustomer,
                 $"--Customers By Name: {fullName}--\n" +
-                "     ID |           Full Name           | Birth Date |             Email             |     Phone Nr  \n" + new string('-', 103));
+                _tableHeader);
         }
 
         internal void ReadByBirthDate()
@@ -118,7 +122,7 @@ namespace HotelBookingApp.Flows.Customers
                 return;
             SelectCustomerAndChooseAction(() => _customerService.GetByBirthDate(birthDate), CustomerPrinter.MenuShowAllFormatCustomer,
                 $"--Customers With Birth Date: {birthDate:yyyy-MM-dd}--\n" +
-                "     ID |           Full Name           | Birth Date |             Email             |     Phone Nr  \n" + new string('-', 103));
+                _tableHeader);
         }
 
         internal void ReadByEmail()
@@ -130,7 +134,7 @@ namespace HotelBookingApp.Flows.Customers
         }
         internal void ReadByPhoneNumber()
         {
-            string? phoneNumberInput = InputHelper.ReadPhoneNumber("Phone Number: ");
+            string? phoneNumberInput = InputHelper.ReadPhoneNumber("Phone Nr: ");
             if (phoneNumberInput is not string phoneNumber)
                 return;
             ChooseAction(_customerService.GetByPhoneNumber, phoneNumber);
