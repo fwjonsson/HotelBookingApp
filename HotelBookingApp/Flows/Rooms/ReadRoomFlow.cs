@@ -61,7 +61,7 @@ namespace HotelBookingApp.Flows.Rooms
                 switch (choice)
                 {
                     case RoomActionMenuOption.ShowBookings:
-
+                        ReadAllBookingsOnRoom(room!.Id);
                         break;
 
                     case RoomActionMenuOption.Edit:
