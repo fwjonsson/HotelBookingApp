@@ -42,7 +42,7 @@ namespace HotelBookingApp.Flows.Bookings
                 switch (choice)
                 {
                     case BookingEditorMenuOption.StartDate:
-                        var newStartDateInput = BookingFlowHelper.TryUpdateBookingStartDate(newEndDate);
+                        var newStartDateInput = BookingFlowHelper.TrySetBookingStartDate(newEndDate);
 
                         if (newStartDateInput is not DateOnly nStartDateInput)
                             break;
@@ -51,7 +51,7 @@ namespace HotelBookingApp.Flows.Bookings
                         break;
 
                     case BookingEditorMenuOption.EndDate:
-                        var newEndDateInput = BookingFlowHelper.TryUpdateBookingEndDate(newStartDate);
+                        var newEndDateInput = BookingFlowHelper.TrySetBookingEndDate(newStartDate);
 
                         if(newEndDateInput is not DateOnly nEndDateInput)
                         break;

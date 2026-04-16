@@ -45,29 +45,19 @@ namespace HotelBookingApp.Flows.Bookings
                         break;
 
                     case BookingEditorMenuOption.StartDate:
-                        DateOnly? startDateInput = InputHelper.ReadDateOnly("Start date: ");
-                        if (startDateInput is null)
+                        DateOnly? startDateInput = BookingFlowHelper.TrySetBookingStartDate(endDate);
+                        if (startDateInput is not DateOnly sDateInput)
                             break;
-                        if (BookingFlowHelper.ValidateBookingDateInput(startDateInput, endDate))
-                        {
-                            startDate = startDateInput;
-                            room = null;
-                        }
                         else
-                            InputHelper.WaitForContinue();
+                            startDate = sDateInput;
                         break;
 
                     case BookingEditorMenuOption.EndDate:
-                        DateOnly? endDateInput = InputHelper.ReadDateOnly("End date: ");
-                        if (endDateInput is null)
+                        DateOnly? endDateInput = BookingFlowHelper.TrySetBookingEndDate(startDate);
+                        if (endDateInput is not DateOnly eDateInput)
                             break;
-                        if (BookingFlowHelper.ValidateBookingDateInput(startDate, endDateInput))
-                        {
-                            endDate = endDateInput;
-                            room = null;
-                        }
                         else
-                            InputHelper.WaitForContinue();
+                            endDate = eDateInput;
                         break;
 
                     case BookingEditorMenuOption.RoomId:

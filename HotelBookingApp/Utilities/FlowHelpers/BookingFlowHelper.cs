@@ -21,7 +21,7 @@ namespace HotelBookingApp.Utilities.FlowHelpers
                 result.EndDateIsAfterStartDate = false;
             return result;
         }
-        internal static DateOnly? TryUpdateBookingStartDate(DateOnly newEndDate)
+        internal static DateOnly? TrySetBookingStartDate(DateOnly? newEndDate)
         {
             DateOnly? newStartDateInput = InputHelper.ReadDateOnly("Start date: ");
             if (newStartDateInput is not DateOnly nStartDateInput)
@@ -34,7 +34,7 @@ namespace HotelBookingApp.Utilities.FlowHelpers
                 InputHelper.WaitForContinue();
             return null;
         }
-        internal static DateOnly? TryUpdateBookingEndDate(DateOnly newStartDate)
+        internal static DateOnly? TrySetBookingEndDate(DateOnly? newStartDate)
         {
             DateOnly? newEndDateInput = InputHelper.ReadDateOnly("End date: ");
             if (newEndDateInput is not DateOnly nEndDateInput)
