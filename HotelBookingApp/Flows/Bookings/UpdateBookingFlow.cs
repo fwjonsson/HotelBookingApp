@@ -31,13 +31,13 @@ namespace HotelBookingApp.Flows.Bookings
                 return;
             DateOnly newStartDate = booking!.StartDate;
             DateOnly newEndDate = booking.EndDate;
-            int newCustomerId = booking.CustomerId;
-            int newRoomId = booking.RoomId;
+            Customer newCustomer = booking.Customer;
+            Room newRoom = booking.Room;
 
 
             while (true)
             {
-                BookingEditorMenuOption choice = _updateBookingMenu.Show(newStartDate, newEndDate, newRoomId, newCustomerId);
+                BookingEditorMenuOption choice = _updateBookingMenu.Show(newStartDate, newEndDate, newRoom.Id, newCustomer.Id);
 
                 switch (choice)
                 {
@@ -61,19 +61,19 @@ namespace HotelBookingApp.Flows.Bookings
 
 
                     case BookingEditorMenuOption.CustomerId:
-                        Customer? customer = _customerFlows.RunAndGetCustomer();
-                        if (customer is Customer)
-                            newCustomerId = customer.Id;
+                        Customer? selectedCustomer = _customerFlows.RunAndGetCustomer();
+                        if (selectedCustomer is not null)
+                            newCustomer = selectedCustomer;
                         break;
 
                     case BookingEditorMenuOption.RoomId:
-                        Room? room = _roomFlows.RunAndGetRoom(newStartDate, newEndDate);
-                        if (room is Room)
-                            newRoomId = room.Id;
+                        Room? selectedRoom = _roomFlows.RunAndGetRoom(newStartDate, newEndDate, newRoom);
+                        if (selectedRoom is not null)
+                            newRoom = selectedRoom;
                         break;
 
                     case BookingEditorMenuOption.Save:
-                        if (TrySave(bookingId, newCustomerId, newRoomId, newStartDate, newEndDate))
+                        if (TrySave(bookingId, newCustomer.Id, newRoom.Id, newStartDate, newEndDate))
                         {
                             _updateBookingMenu.ResetIndex();
                             return;

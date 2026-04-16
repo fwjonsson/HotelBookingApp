@@ -68,7 +68,7 @@ namespace HotelBookingApp.Flows.Bookings
                             InputHelper.WaitForContinue();
                             break;
                         }
-                        Room? selectedRoom = _roomFlows.RunAndGetRoom(sDate, eDate);
+                        Room? selectedRoom = _roomFlows.RunAndGetRoom(sDate, eDate, room);
                         if (selectedRoom is not null)
                             room = selectedRoom;
                         break;
