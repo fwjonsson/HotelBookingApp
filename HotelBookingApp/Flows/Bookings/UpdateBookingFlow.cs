@@ -67,7 +67,7 @@ namespace HotelBookingApp.Flows.Bookings
                         break;
 
                     case BookingEditorMenuOption.RoomId:
-                        Room? room = _roomFlows.RunAndGetRoom(newStartDate, newEndDate, newRoomId);
+                        Room? room = _roomFlows.RunAndGetRoom(newStartDate, newEndDate);
                         if (room is Room)
                             newRoomId = room.Id;
                         break;
