@@ -38,6 +38,13 @@ namespace HotelBookingApp
             {
                 Console.WriteLine("Startup failed.");
                 Console.WriteLine(exception.Message);
+
+                if (exception.InnerException is not null)
+                {
+                    Console.WriteLine("Inner exception:");
+                    Console.WriteLine(exception.InnerException.Message);
+                }
+
                 InputHelper.WaitForContinue();
             }
         }
