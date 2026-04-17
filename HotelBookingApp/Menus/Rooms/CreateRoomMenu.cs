@@ -20,8 +20,8 @@ namespace HotelBookingApp.Menus.Rooms
             {
                 new(RoomEditorMenuOption.RoomNumber, $"Room Number: {roomNumber?.ToString() ?? "Not set" }"),
                 new(RoomEditorMenuOption.RoomType, $"Room Type: Not set"),
-                new(RoomEditorMenuOption.RoomSizeSqm2, $"Room Size Sqm2:"),
-                new(RoomEditorMenuOption.ExtraBeds, $"Extra Beds: Enter Room Type And Size."),
+                new(RoomEditorMenuOption.RoomSizeSqm2, $"Room Size Sqm2: {roomSizeSqm2?.ToString() ?? "Not set"}"),
+                new(RoomEditorMenuOption.ExtraBeds, $"Extra Beds: Must Enter Room Type And Size First."),
                 new(RoomEditorMenuOption.Save, "Save")
             });
             }
