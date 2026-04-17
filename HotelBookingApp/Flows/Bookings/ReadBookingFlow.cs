@@ -23,7 +23,7 @@ namespace HotelBookingApp.Flows.Bookings
         private readonly BookingActionMenu<Booking> _bookingActionMenu;
         private readonly UpdateBookingFlow _updateBookingFlow;
         private readonly DeleteBookingFlow _deleteBookingFlow;
-        
+
 
         internal ReadBookingFlow(BookingService bookingService, CustomerFlows customerFlows, RoomFlows roomFlows)
         {

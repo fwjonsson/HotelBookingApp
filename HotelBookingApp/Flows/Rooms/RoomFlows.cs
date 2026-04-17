@@ -5,7 +5,6 @@ using HotelBookingApp.Services.Rooms;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
 using HotelBookingApp.Utilities.Printers.Rooms;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace HotelBookingApp.Flows.Rooms
 {
@@ -80,7 +79,7 @@ namespace HotelBookingApp.Flows.Rooms
             while (true)
             {
 
-    
+
 
                 var choice = _availableRoomsMenu.Show(room, selectedExtraBeds);
 

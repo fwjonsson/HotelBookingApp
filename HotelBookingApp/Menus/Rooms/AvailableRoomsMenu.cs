@@ -21,7 +21,7 @@ namespace HotelBookingApp.Menus.Rooms
                 new(RoomMenuOption.ShowAll, "Show All Available Rooms"),
                 new(RoomMenuOption.FindByRoomNr, "Find By Room Nr"),
                 new(RoomMenuOption.FindByRoomType, "Find Available Rooms By Size (1 or 2)"),
-                new(RoomMenuOption.ChangeExtraBeds, room is null ? "Extra Beds: (Must Select Room First)" : $"Extra Beds: {newExtraBeds}"), 
+                new(RoomMenuOption.ChangeExtraBeds, room is null ? "Extra Beds: (Must Select Room First)" : $"Extra Beds: {newExtraBeds}"),
                 new(RoomMenuOption.Save, "Save")
                 });
             var result = _menu.Show();

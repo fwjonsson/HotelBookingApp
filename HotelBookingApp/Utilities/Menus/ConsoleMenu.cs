@@ -1,6 +1,4 @@
-﻿using System.Windows.Markup;
-
-namespace HotelBookingApp.Utilities.Menus
+﻿namespace HotelBookingApp.Utilities.Menus
 {
     internal class ConsoleMenu<T>
     {

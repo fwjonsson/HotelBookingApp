@@ -15,7 +15,7 @@ namespace HotelBookingApp.Flows.Customers
         private readonly CustomerService _customerService;
 
         private readonly SelectObjectMenu<Customer> _selectCustomerMenu;
-        private readonly string _tableHeader = 
+        private readonly string _tableHeader =
             " Customer ID |           Full Name           | Birth Date |             Email             |       Phone Nr\n" + new string('-', 106);
 
         private readonly CustomerActionMenu<Customer> _customerActionMenu;
