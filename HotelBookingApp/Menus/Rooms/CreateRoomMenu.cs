@@ -30,7 +30,7 @@ namespace HotelBookingApp.Menus.Rooms
                 _menu.SetChoices(new List<MenuChoice<RoomEditorMenuOption>>
             {
                 new(RoomEditorMenuOption.RoomNumber, $"Room Number: {roomNumber?.ToString() ?? "Not set" }"),
-                new(RoomEditorMenuOption.RoomType, $"Room Type: Single"),
+                new(RoomEditorMenuOption.RoomType, $"Room Type: {roomType}"),
                 new(RoomEditorMenuOption.RoomSizeSqm2, $"Room Size Sqm2: {roomSizeSqm2?.ToString() ?? "Not set"}"),
                 new(RoomEditorMenuOption.ExtraBeds, $"Extra Beds Not Available For This Room Size."),
                 new(RoomEditorMenuOption.Save, "Save")
@@ -41,7 +41,7 @@ namespace HotelBookingApp.Menus.Rooms
                 _menu.SetChoices(new List<MenuChoice<RoomEditorMenuOption>>
             {
                 new(RoomEditorMenuOption.RoomNumber, $"Room Number: {roomNumber?.ToString() ?? "Not set" }"),
-                new(RoomEditorMenuOption.RoomType, $"Room Type: Double"),
+                new(RoomEditorMenuOption.RoomType, $"Room Type: {roomType}"),
                 new(RoomEditorMenuOption.RoomSizeSqm2, $"Room Size Sqm2: {roomSizeSqm2?.ToString() ?? "Not set"}"),
                 new(RoomEditorMenuOption.ExtraBeds, $"Extra Beds: {extraBeds?.ToString() ?? "Not set"} (Max 1) "),
                 new(RoomEditorMenuOption.Save, "Save")
@@ -53,7 +53,7 @@ namespace HotelBookingApp.Menus.Rooms
                 _menu.SetChoices(new List<MenuChoice<RoomEditorMenuOption>>
             {
                 new(RoomEditorMenuOption.RoomNumber, $"Room Number: {roomNumber?.ToString() ?? "Not set" }"),
-                new(RoomEditorMenuOption.RoomType, $"Room Type: Double"),
+                new(RoomEditorMenuOption.RoomType, $"Room Type: {roomType}"),
                 new(RoomEditorMenuOption.RoomSizeSqm2, $"Room Size Sqm2: {roomSizeSqm2?.ToString() ?? "Not set"}"),
                 new(RoomEditorMenuOption.ExtraBeds, $"Extra Beds: {extraBeds?.ToString() ?? "Not set"} (Max 2) "),
                 new(RoomEditorMenuOption.Save, "Save")
