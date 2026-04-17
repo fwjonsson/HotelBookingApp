@@ -44,7 +44,7 @@ namespace HotelBookingApp.Flows.Rooms
 
                     case RoomEditorMenuOption.RoomSizeSqm2:
                         roomSizeSqm2 = RoomFlowHelper.ValidateRoomSizeSqm2(roomSizeSqm2);
-                            extraBeds = 0;
+                        extraBeds = 0;
                         break;
 
                     case RoomEditorMenuOption.ExtraBeds:
@@ -78,7 +78,7 @@ namespace HotelBookingApp.Flows.Rooms
                 InputHelper.WaitForContinue();
                 return (false, null);
             }
-            (RoomValidationResult result, Room? createdRoom) = _roomService.CreateRoom(rNumber, rType, rSizeSqm2,eBeds);
+            (RoomValidationResult result, Room? createdRoom) = _roomService.CreateRoom(rNumber, rType, rSizeSqm2, eBeds);
             RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "Room created.");
             InputHelper.WaitForContinue();
             if (result.Success)

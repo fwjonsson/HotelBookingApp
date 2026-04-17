@@ -25,7 +25,7 @@ namespace HotelBookingApp.Utilities.Printers.Rooms
             if (!result.RoomTypeValid)
                 Console.WriteLine("Not valid room type. Must be 1 or 2.");
 
-            if(!result.RoomSizeSqm2Valid)
+            if (!result.RoomSizeSqm2Valid)
                 Console.WriteLine("Not valid room size. Must be > 0.");
 
             if (!result.ExtraBedsValid)

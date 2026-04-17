@@ -14,7 +14,7 @@ namespace HotelBookingApp.Menus.Rooms
         }
         internal RoomEditorMenuOption Show(int roomNumber, RoomType roomType, int roomSizeSqm2, int extraBeds)
         {
-            
+
             if (roomType == RoomType.Single || roomSizeSqm2 < 25)
             {
                 _menu.SetChoices(new List<MenuChoice<RoomEditorMenuOption>>

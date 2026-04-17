@@ -59,7 +59,7 @@ namespace HotelBookingApp.Menus.Rooms
                 new(RoomEditorMenuOption.Save, "Save")
             });
             }
-                var result = _menu.Show();
+            var result = _menu.Show();
             if (result.WasCancelled)
                 return RoomEditorMenuOption.Cancel;
             return result.Value;

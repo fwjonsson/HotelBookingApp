@@ -108,14 +108,14 @@ namespace HotelBookingApp.Utilities.FlowHelpers
                     case 1:
                         return RoomType.Single;
 
-                    case 2: 
+                    case 2:
                         return RoomType.Double;
 
                     default:
                         Console.WriteLine("Must enter 1 or 2.");
                         break;
                 }
-                    
+
             }
         }
     }
