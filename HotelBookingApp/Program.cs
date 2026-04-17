@@ -22,7 +22,7 @@ namespace HotelBookingApp
                 return;
             }
 
-            //DbSeeder.Seed(dbContext);
+            //DbSeeder.Seed(dbContext); seeda om dbn är tom
 
             var bookingService = new BookingService(dbContext);
             var customerService = new CustomerService(dbContext);
