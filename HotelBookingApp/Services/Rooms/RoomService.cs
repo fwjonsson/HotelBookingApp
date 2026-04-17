@@ -25,7 +25,7 @@ namespace HotelBookingApp.Services.Rooms
                 result.RoomNumberValid = false;
 
             if (!ValidRoomSize(rSizeSqm2))
-                result.RoomSizeSqM2Valid = false;
+                result.RoomSizeSqm2Valid = false;
 
             if (!ValidAmountOfExtraBeds(eBeds, rType, rSizeSqm2))
                 result.ExtraBedsValid = false;
@@ -64,7 +64,7 @@ namespace HotelBookingApp.Services.Rooms
                 result.RoomNumberValid = false;
 
             if (!ValidRoomSize(newRoomSizeSqm2))
-                result.RoomSizeSqM2Valid = false;
+                result.RoomSizeSqm2Valid = false;
 
             if (!ValidAmountOfExtraBeds(newExtraBeds, newRoomType, newRoomSizeSqm2))
                 result.ExtraBedsValid = false;

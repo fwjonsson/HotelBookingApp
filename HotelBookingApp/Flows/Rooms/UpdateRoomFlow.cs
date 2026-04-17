@@ -53,7 +53,7 @@ namespace HotelBookingApp.Flows.Rooms
                         break;
 
                     case RoomEditorMenuOption.RoomSizeSqm2:
-                        var newRoomSizeSqM2Input = RoomFlowHelper.ValidateRoomSizeSqM2(newRoomSizeSqM2);
+                        var newRoomSizeSqM2Input = RoomFlowHelper.ValidateRoomSizeSqm2(newRoomSizeSqM2);
                         if (newRoomSizeSqM2Input is int nRoomSizeSqM2Input)
                         {
                             newRoomSizeSqM2 = nRoomSizeSqM2Input;

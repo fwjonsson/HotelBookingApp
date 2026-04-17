@@ -17,9 +17,11 @@ namespace HotelBookingApp.Data.BogusSeeder
                 f.Random.Int(20, 45));
 
             RuleFor(r => r.ExtraBeds, (f, r) =>
-                r.RoomType == RoomType.Single
+                r.RoomType == RoomType.Single || r.RoomSizeSqm2 < 25
                     ? 0
-                    : f.Random.Int(0, 2));
+                    : r.RoomSizeSqm2 < 30 
+                    ? f.Random.Int(0,1) 
+                    : f.Random.Int(0,2));
         }
     }
 }

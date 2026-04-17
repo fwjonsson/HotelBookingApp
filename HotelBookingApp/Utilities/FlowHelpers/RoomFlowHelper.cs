@@ -20,7 +20,7 @@ namespace HotelBookingApp.Utilities.FlowHelpers
                 else return input;
             }
         }
-        internal static int? ValidateRoomSizeSqM2(int? roomSizeSqM2)
+        internal static int? ValidateRoomSizeSqm2(int? roomSizeSqM2)
         {
             while (true)
             {

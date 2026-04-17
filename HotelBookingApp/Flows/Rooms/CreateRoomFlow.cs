@@ -39,12 +39,12 @@ namespace HotelBookingApp.Flows.Rooms
 
                     case RoomEditorMenuOption.RoomType:
                         roomType = RoomFlowHelper.ValidateRoomType(roomType);
-                        extraBeds = null;
+                        extraBeds = 0;
                         break;
 
                     case RoomEditorMenuOption.RoomSizeSqm2:
-                        roomSizeSqm2 = RoomFlowHelper.ValidateRoomSizeSqM2(roomSizeSqm2);
-                            extraBeds = null;
+                        roomSizeSqm2 = RoomFlowHelper.ValidateRoomSizeSqm2(roomSizeSqm2);
+                            extraBeds = 0;
                         break;
 
                     case RoomEditorMenuOption.ExtraBeds:
