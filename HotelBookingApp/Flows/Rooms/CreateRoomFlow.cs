@@ -25,27 +25,34 @@ namespace HotelBookingApp.Flows.Rooms
         {
             int? roomNumber = null;
             RoomType? roomType = null;
+            int? roomSizeSqm2 = null;
             int? extraBeds = null;
 
             while (true)
             {
-                var choice = _createRoomMenu.Show(roomNumber, roomType, extraBeds);
+                var choice = _createRoomMenu.Show(roomNumber, roomType, roomSizeSqm2, extraBeds);
                 switch (choice)
                 {
                     case RoomEditorMenuOption.RoomNumber:
-                        roomNumber = RoomFlowHelper.ValidateRoomNumber();
+                        roomNumber = RoomFlowHelper.ValidateRoomNumber(roomNumber);
                         break;
 
                     case RoomEditorMenuOption.RoomType:
-                        (roomType, extraBeds) = RoomFlowHelper.ValidateRoomType(roomType, extraBeds);
+                        roomType = RoomFlowHelper.ValidateRoomType(roomType);
+                        extraBeds = null;
+                        break;
+
+                    case RoomEditorMenuOption.RoomSizeSqm2:
+                        roomSizeSqm2 = RoomFlowHelper.ValidateRoomSizeSqM2(roomSizeSqm2);
+                            extraBeds = null;
                         break;
 
                     case RoomEditorMenuOption.ExtraBeds:
-                        extraBeds = RoomFlowHelper.ValidateExtraBeds(extraBeds, roomType);
+                        extraBeds = RoomFlowHelper.ValidateExtraBeds(extraBeds, roomType, roomSizeSqm2);
                         break;
 
                     case RoomEditorMenuOption.Save:
-                        (bool saved, Room? createdRoom) = TrySave(roomNumber, roomType, extraBeds);
+                        (bool saved, Room? createdRoom) = TrySave(roomNumber, roomType, roomSizeSqm2, extraBeds);
                         if (saved)
                         {
                             _createRoomMenu.ResetMenu();
@@ -60,17 +67,18 @@ namespace HotelBookingApp.Flows.Rooms
             }
         }
 
-        private (bool, Room?) TrySave(int? roomNumber, RoomType? roomType, int? extraBeds)
+        private (bool, Room?) TrySave(int? roomNumber, RoomType? roomType, int? roomSizeSqm2, int? extraBeds)
         {
             if (roomNumber is not int rNumber ||
                 roomType is not RoomType rType ||
+                roomSizeSqm2 is not int rSizeSqm2 ||
                 extraBeds is not int eBeds)
             {
                 Console.WriteLine("You must fill in all values before creating.");
                 InputHelper.WaitForContinue();
                 return (false, null);
             }
-            (RoomValidationResult result, Room? createdRoom) = _roomService.CreateRoom(rNumber, rType, eBeds);
+            (RoomValidationResult result, Room? createdRoom) = _roomService.CreateRoom(rNumber, rType, rSizeSqm2,eBeds);
             RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "Room created.");
             InputHelper.WaitForContinue();
             if (result.Success)

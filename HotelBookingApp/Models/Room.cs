@@ -11,6 +11,7 @@ namespace HotelBookingApp.Models
         public RoomType RoomType { get; set; }
         [Range(0, 2)]
         public int ExtraBeds { get; set; }
+        public int RoomSizeSqm2 { get; set; }
         public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
     }
 }

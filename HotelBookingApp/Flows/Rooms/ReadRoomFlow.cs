@@ -16,7 +16,7 @@ namespace HotelBookingApp.Flows.Rooms
         private readonly RoomService _roomService;
         private readonly SelectObjectMenu<Room> _selectRoomMenu;
         private readonly string _tableHeader =
-            " Room ID |   Room Nr   | Extra Beds | Room Type\n" + new string('-', 47);
+            " Room ID |   Room Nr   | Room Type | Room Sqm2 | Extra Beds\n" + new string('-', 60);
 
         private readonly RoomActionMenu<Room> _roomActionMenu;
         private readonly UpdateRoomFlow _updateRoomFlow;

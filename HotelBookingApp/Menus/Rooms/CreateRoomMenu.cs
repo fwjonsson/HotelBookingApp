@@ -12,7 +12,7 @@ namespace HotelBookingApp.Menus.Rooms
         {
             _menu = new ConsoleMenu<RoomEditorMenuOption>("--Create New Room--", new List<MenuChoice<RoomEditorMenuOption>>());
         }
-        internal RoomEditorMenuOption Show(int? roomNumber, RoomType? roomType, int? extraBeds)
+        internal RoomEditorMenuOption Show(int? roomNumber, RoomType? roomType, int? roomSizeSqm2, int? extraBeds)
         {
             if (roomType == null)
             {
@@ -20,7 +20,8 @@ namespace HotelBookingApp.Menus.Rooms
             {
                 new(RoomEditorMenuOption.RoomNumber, $"Room Number: {roomNumber?.ToString() ?? "Not set" }"),
                 new(RoomEditorMenuOption.RoomType, $"Room Type: Not set"),
-                new(RoomEditorMenuOption.ExtraBeds, $"Extra Beds: Enter Room Type First (Single room: Max 1. Double room: Max 2)"),
+                new(RoomEditorMenuOption.RoomSizeSqm2, $"Room Size Sqn2: Enter Room Type First."),
+                new(RoomEditorMenuOption.ExtraBeds, $"Extra Beds: Enter Room Type And Size."),
                 new(RoomEditorMenuOption.Save, "Save")
             });
             }
@@ -30,7 +31,8 @@ namespace HotelBookingApp.Menus.Rooms
             {
                 new(RoomEditorMenuOption.RoomNumber, $"Room Number: {roomNumber?.ToString() ?? "Not set" }"),
                 new(RoomEditorMenuOption.RoomType, $"Room Type: Single"),
-                new(RoomEditorMenuOption.ExtraBeds, $"Extra Beds: {extraBeds?.ToString() ?? "Not set"} (Max 1)"),
+                new(RoomEditorMenuOption.RoomSizeSqm2, $"Room Size Sqm2: {roomSizeSqm2?.ToString() ?? "Not set"}"),
+                new(RoomEditorMenuOption.ExtraBeds, $"Extra Beds: Not Available For Single Rooms."),
                 new(RoomEditorMenuOption.Save, "Save")
             });
             }
@@ -40,6 +42,7 @@ namespace HotelBookingApp.Menus.Rooms
             {
                 new(RoomEditorMenuOption.RoomNumber, $"Room Number: {roomNumber?.ToString() ?? "Not set" }"),
                 new(RoomEditorMenuOption.RoomType, $"Room Type: Double"),
+                new(RoomEditorMenuOption.RoomSizeSqm2, $"Room Size Sqm2: {roomSizeSqm2?.ToString() ?? "Not set"}"),
                 new(RoomEditorMenuOption.ExtraBeds, $"Extra Beds: {extraBeds?.ToString() ?? "Not set"} (Max 2) "),
                 new(RoomEditorMenuOption.Save, "Save")
             });

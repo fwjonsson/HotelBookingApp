@@ -6,6 +6,7 @@
         public bool RoomNumberAvailable { get; set; } = true;
         public bool RoomNumberValid { get; set; } = true;
         public bool RoomTypeValid { get; set; } = true;
+        public bool RoomSizeSqM2Valid { get; set; } = true;
         public bool ExtraBedsValid { get; set; } = true;
         public bool ChoseRoomTypeBeforeExtraBeds { get; set; } = true;
         public bool BookingFound { get; set; } = true;
@@ -17,6 +18,7 @@
             RoomNumberAvailable &&
             RoomNumberValid &&
             RoomTypeValid &&
+            RoomSizeSqM2Valid &&
             ExtraBedsValid &&
             ChoseRoomTypeBeforeExtraBeds &&
             BookingFound &&

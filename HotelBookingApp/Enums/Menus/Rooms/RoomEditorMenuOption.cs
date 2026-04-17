@@ -4,6 +4,7 @@
     {
         RoomNumber,
         RoomType,
+        RoomSizeSqm2,
         ExtraBeds,
         Save,
         Cancel

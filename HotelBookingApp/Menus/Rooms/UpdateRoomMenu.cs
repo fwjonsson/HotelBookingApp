@@ -12,12 +12,13 @@ namespace HotelBookingApp.Menus.Rooms
         {
             _menu = new ConsoleMenu<RoomEditorMenuOption>("--Edit Room--", new List<MenuChoice<RoomEditorMenuOption>>());
         }
-        internal RoomEditorMenuOption Show(int roomNumber, RoomType roomType, int extraBeds)
+        internal RoomEditorMenuOption Show(int roomNumber, RoomType roomType, int roomSizeSqm2, int extraBeds)
         {
             _menu.SetChoices(new List<MenuChoice<RoomEditorMenuOption>>
             {
                 new(RoomEditorMenuOption.RoomNumber, $"Room Number: {roomNumber}"),
                 new(RoomEditorMenuOption.RoomType, $"Room Type: {roomType.ToString()}"),
+                new(RoomEditorMenuOption.RoomSizeSqm2, $"Room Size Sqm2: {roomSizeSqm2}"),
                 new(RoomEditorMenuOption.ExtraBeds, $"Extra Beds: {extraBeds}"),
                 new(RoomEditorMenuOption.Save, "Save")
             });

@@ -4,13 +4,29 @@ namespace HotelBookingApp.Utilities.FlowHelpers
 {
     internal static class RoomFlowHelper
     {
-        internal static int? ValidateRoomNumber()
+        internal static int? ValidateRoomNumber(int? roomNumber)
         {
             while (true)
             {
                 int? input = InputHelper.ReadInt("Room number: ");
                 if (input is not int)
-                    return null;
+                    return roomNumber;
+                if (input < 1)
+                {
+                    Console.WriteLine("Must be greater than 0");
+                    InputHelper.WaitForContinue();
+                    continue;
+                }
+                else return input;
+            }
+        }
+        internal static int? ValidateRoomSizeSqM2(int? roomSizeSqM2)
+        {
+            while (true)
+            {
+                int? input = InputHelper.ReadInt("Room Size In SqM2: ");
+                if (input is not int)
+                    return roomSizeSqM2;
                 if (input < 1)
                 {
                     Console.WriteLine("Must be greater than 0");
@@ -21,7 +37,7 @@ namespace HotelBookingApp.Utilities.FlowHelpers
             }
         }
 
-        internal static int? ValidateExtraBeds(int? extraBeds, RoomType? roomType)
+        internal static int? ValidateExtraBeds(int? extraBeds, RoomType? roomType, int? roomSizeSqm2)
         {
             if (roomType == null)
             {
@@ -29,14 +45,30 @@ namespace HotelBookingApp.Utilities.FlowHelpers
                 InputHelper.WaitForContinue();
                 return null;
             }
+            if (roomSizeSqm2 is null)
+            {
+                Console.WriteLine("Enter room size first.");
+                InputHelper.WaitForContinue();
+                return null;
+            }
+            if (roomType == RoomType.Single || roomSizeSqm2 < 25)
+            {
+                Console.WriteLine("Extra beds only allowed in double rooms which are 25 sqm2 or larger.");
+                InputHelper.WaitForContinue();
+                return 0;
+            }
             int? input = null;
             while (true)
             {
-                if (roomType == RoomType.Single)
-                    input = InputHelper.ReadInt($"Current extra beds: {extraBeds}\nExtra beds (Max 1): ");
+                if (roomSizeSqm2 < 30.0f)
+                    input = InputHelper.ReadInt(extraBeds is null ?
+                        $"Max 1 Extra Bed.\nExtra Beds:" :
+                        $"Max 1 Extra Bed.\n(Currently {extraBeds})\nExtra Beds: ");
 
                 else
-                    input = InputHelper.ReadInt($"Current extra beds: {extraBeds}\nExtra beds (Max 2): ");
+                    input = InputHelper.ReadInt(extraBeds is null ?
+                        $"Max 2 Extra Bed.\nExtra Beds:" :
+                        $"Max 2 Extra Bed.\n(Currently {extraBeds})\nExtra Beds: ");
                 if (input is not int)
                     return extraBeds;
 
@@ -48,9 +80,9 @@ namespace HotelBookingApp.Utilities.FlowHelpers
                         return 1;
 
                     case 2:
-                        if (roomType == RoomType.Single)
+                        if (roomSizeSqm2 < 30)
                         {
-                            Console.WriteLine("Max 1 extra bed in single rooms.");
+                            Console.WriteLine("Max 1 extra bed in this room.");
                             InputHelper.WaitForContinue();
                             continue;
                         }
@@ -63,37 +95,27 @@ namespace HotelBookingApp.Utilities.FlowHelpers
             }
         }
 
-        internal static (RoomType?, int?) ValidateRoomType(RoomType? roomType, int? extraBeds)
+        internal static RoomType? ValidateRoomType(RoomType? roomType)
         {
             while (true)
             {
                 int? input = InputHelper.ReadInt("Single or double room (Enter 1 or 2): ");
                 if (input is not int)
-                    return (roomType, extraBeds);
+                    return roomType;
 
                 switch (input)
                 {
                     case 1:
-                        if (extraBeds > 1)
-                        {
-                            Console.WriteLine("Too many extra beds for this room size.");
-                            InputHelper.WaitForContinue();
-                        }
-                        return (RoomType.Single, null);
+                        return RoomType.Single;
 
-                    case 2:
-                        if (extraBeds > 2)
-                        {
-                            Console.WriteLine("Too many extra beds for this room size.");
-                            InputHelper.WaitForContinue();
-                        }
-                        return (RoomType.Double, null);
+                    case 2: 
+                        return RoomType.Double;
 
                     default:
-                        Console.WriteLine("Must be 1 or 2.");
-                        InputHelper.WaitForContinue();
-                        continue;
+                        Console.WriteLine("Must enter 1 or 2.");
+                        break;
                 }
+                    
             }
         }
     }

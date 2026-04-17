@@ -30,29 +30,45 @@ namespace HotelBookingApp.Flows.Rooms
             int newRoomNumber = room!.RoomNumber;
             RoomType newRoomType = room.RoomType;
             int newExtraBeds = room.ExtraBeds;
-
+            int newRoomSizeSqM2 = room.RoomSizeSqm2;
             while (true)
             {
-                RoomEditorMenuOption choice = _updateRoomMenu.Show(newRoomNumber, newRoomType, newExtraBeds);
+                RoomEditorMenuOption choice = _updateRoomMenu.Show(newRoomNumber, newRoomType, newRoomSizeSqM2, newExtraBeds);
 
                 switch (choice)
                 {
                     case RoomEditorMenuOption.RoomNumber:
-                        int? newRoomNumberInput = RoomFlowHelper.ValidateRoomNumber();
-                        if (newRoomNumberInput is int nRoomNumber)
-                            newRoomNumber = nRoomNumber;
+                        var newRoomNumberInput = RoomFlowHelper.ValidateRoomNumber(newRoomNumber);
+                        if (newRoomNumberInput is int nRoomNumberInput)
+                            newRoomNumber = nRoomNumberInput;
                         break;
 
                     case RoomEditorMenuOption.RoomType:
-                        var (NewRoomType, NewExtraBeds) = RoomFlowHelper.ValidateRoomType(newRoomType, newExtraBeds);
+                        var newRoomTypeInput = RoomFlowHelper.ValidateRoomType(newRoomType);
+                        if (newRoomTypeInput is RoomType nRoomTypeInput)
+                        {
+                            newRoomType = nRoomTypeInput;
+                            newExtraBeds = 0;
+                        }
+                        break;
+
+                    case RoomEditorMenuOption.RoomSizeSqm2:
+                        var newRoomSizeSqM2Input = RoomFlowHelper.ValidateRoomSizeSqM2(newRoomSizeSqM2);
+                        if (newRoomSizeSqM2Input is int nRoomSizeSqM2Input)
+                        {
+                            newRoomSizeSqM2 = nRoomSizeSqM2Input;
+                            newExtraBeds = 0;
+                        }
                         break;
 
                     case RoomEditorMenuOption.ExtraBeds:
-                        newExtraBeds = RoomFlowHelper.ValidateExtraBeds(newExtraBeds, newRoomType) ?? newExtraBeds;
+                        var newExtraBedsInput = RoomFlowHelper.ValidateExtraBeds(newExtraBeds, newRoomType, newRoomSizeSqM2);
+                        if (newExtraBedsInput is int nExtraBedsInput)
+                            newExtraBeds = nExtraBedsInput;
                         break;
 
                     case RoomEditorMenuOption.Save:
-                        if (TrySave(room.Id, newRoomNumber, newRoomType, newExtraBeds))
+                        if (TrySave(room.Id, newRoomNumber, newRoomType, newRoomSizeSqM2, newExtraBeds))
                         {
                             _updateRoomMenu.ResetMenu();
                             return;
@@ -65,9 +81,9 @@ namespace HotelBookingApp.Flows.Rooms
                 }
             }
         }
-        private bool TrySave(int roomId, int newRoomNumber, RoomType newRoomType, int newExtraBeds)
+        private bool TrySave(int roomId, int newRoomNumber, RoomType newRoomType, int newRoomSizeSqM2, int newExtraBeds)
         {
-            RoomValidationResult result = _roomService.UpdateRoom(roomId, newRoomNumber, newRoomType, newExtraBeds);
+            RoomValidationResult result = _roomService.UpdateRoom(roomId, newRoomNumber, newRoomType, newRoomSizeSqM2, newExtraBeds);
             RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "Changes saved.");
             InputHelper.WaitForContinue();
 

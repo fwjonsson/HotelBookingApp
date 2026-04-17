@@ -101,6 +101,9 @@ namespace HotelBookingApp.Migrations
                     b.Property<int>("RoomNumber")
                         .HasColumnType("int");
 
+                    b.Property<int>("RoomSizeSqm2")
+                        .HasColumnType("int");
+
                     b.Property<int>("RoomType")
                         .HasColumnType("int");
 

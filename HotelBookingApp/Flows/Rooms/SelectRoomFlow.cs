@@ -12,6 +12,9 @@ namespace HotelBookingApp.Flows.Rooms
         private readonly RoomService _roomService;
         private readonly SelectObjectMenu<Room> _selectRoomMenu;
 
+        private readonly string _tableHeader =
+            " Room ID |   Room Nr   | Room Type | Room Sqm2 | Extra Beds\n" + new string('-', 60);
+
         internal SelectRoomFlow(RoomService roomService)
         {
             _roomService = roomService;
@@ -42,7 +45,7 @@ namespace HotelBookingApp.Flows.Rooms
         {
             return SelectRoom(() => _roomService.ListAllAvailable(startDate, endDate), RoomPrinter.MenuShowAllFormatRoom,
                 "--All Rooms--\n" +
-                "     ID | Room Number | Extra Beds | Room Type\n" + new string('-', 47));
+                _tableHeader);
         }
         internal Room? ReadByRoomNumberAndGetIfAvailable(DateOnly startDate, DateOnly endDate)
         {
@@ -91,7 +94,7 @@ namespace HotelBookingApp.Flows.Rooms
                 }
                 return SelectRoom(() => _roomService.GetByRoomTypeAndAvailable(roomType, startDate, endDate), RoomPrinter.MenuShowAllFormatRoom,
                     $"--All {roomType} Rooms--\n" +
-                    "     ID | Room Number | Extra Beds | Room Type\n" + new string('-', 47));
+                    _tableHeader);
             }
         }
     }

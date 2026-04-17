@@ -74,8 +74,7 @@ namespace HotelBookingApp.Flows.Rooms
         {
             Room? selectedRoom = room;
             int? selectedExtraBeds = selectedRoom?.ExtraBeds;
-
-
+            int? selectedRoomSizeSqM2 = selectedRoom?.RoomSizeSqm2;
             while (true)
             {
 
@@ -104,7 +103,7 @@ namespace HotelBookingApp.Flows.Rooms
                             InputHelper.WaitForContinue();
                             break;
                         }
-                        var extraBedsInput = RoomFlowHelper.ValidateExtraBeds(selectedExtraBeds, selectedRoom.RoomType);
+                        var extraBedsInput = RoomFlowHelper.ValidateExtraBeds(selectedExtraBeds, selectedRoom.RoomType, selectedRoom?.RoomSizeSqm2);
                         if (extraBedsInput is null)
                             break;
 
@@ -114,7 +113,7 @@ namespace HotelBookingApp.Flows.Rooms
                     case RoomMenuOption.Save:
                         if (room is not null && selectedExtraBeds is int newExtraBeds)
                         {
-                            RoomValidationResult result = _roomService.UpdateRoom(room.Id, room.RoomNumber, room.RoomType, newExtraBeds);
+                            RoomValidationResult result = _roomService.UpdateRoom(room.Id, room.RoomNumber, room.RoomType, room.RoomSizeSqm2, newExtraBeds);
                             if (!result.Success)
                             {
                                 RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "");

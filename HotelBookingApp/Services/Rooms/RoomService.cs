@@ -14,7 +14,7 @@ namespace HotelBookingApp.Services.Rooms
             _dbContext = dbContext;
         }
 
-        internal (RoomValidationResult, Room?) CreateRoom(int rNumber, RoomType rType, int eBeds)
+        internal (RoomValidationResult, Room?) CreateRoom(int rNumber, RoomType rType, int rSizeSqm2, int eBeds)
         {
             var result = new RoomValidationResult();
 
@@ -24,7 +24,10 @@ namespace HotelBookingApp.Services.Rooms
             if (!ValidRoomNumber(rNumber))
                 result.RoomNumberValid = false;
 
-            if (!ValidAmountOfExtraBeds(eBeds, rType))
+            if (!ValidRoomSize(rSizeSqm2))
+                result.RoomSizeSqM2Valid = false;
+
+            if (!ValidAmountOfExtraBeds(eBeds, rType, rSizeSqm2))
                 result.ExtraBedsValid = false;
 
             if (!result.Success)
@@ -34,6 +37,7 @@ namespace HotelBookingApp.Services.Rooms
             {
                 RoomNumber = rNumber,
                 RoomType = rType,
+                RoomSizeSqm2 = rSizeSqm2,
                 ExtraBeds = eBeds
             };
             _dbContext.Rooms
@@ -41,7 +45,7 @@ namespace HotelBookingApp.Services.Rooms
             _dbContext.SaveChanges();
             return (result, newRoom);
         }
-        internal RoomValidationResult UpdateRoom(int roomId, int newRoomNumber, RoomType newRoomType, int newExtraBeds)
+        internal RoomValidationResult UpdateRoom(int roomId, int newRoomNumber, RoomType newRoomType, int newRoomSizeSqm2, int newExtraBeds)
         {
             Room? room = _dbContext.Rooms
                 .FirstOrDefault(r => r.Id == roomId);
@@ -55,15 +59,22 @@ namespace HotelBookingApp.Services.Rooms
             }
             if (!RoomNumberAvailable(newRoomNumber, roomId))
                 result.RoomNumberAvailable = false;
+
             if (!ValidRoomNumber(newRoomNumber))
                 result.RoomNumberValid = false;
-            if (!ValidAmountOfExtraBeds(newExtraBeds, newRoomType))
+
+            if (!ValidRoomSize(newRoomSizeSqm2))
+                result.RoomSizeSqM2Valid = false;
+
+            if (!ValidAmountOfExtraBeds(newExtraBeds, newRoomType, newRoomSizeSqm2))
                 result.ExtraBedsValid = false;
+
             if (!result.Success)
                 return result;
 
             room!.RoomNumber = newRoomNumber;
             room.RoomType = newRoomType;
+            room.RoomSizeSqm2 = newRoomSizeSqm2;
             room.ExtraBeds = newExtraBeds;
 
             _dbContext.SaveChanges();
@@ -161,21 +172,26 @@ namespace HotelBookingApp.Services.Rooms
                 .Where(r => r.Bookings.Any(b => b.CustomerId == customerId))
                 .ToList();
         }
-
-        private bool ValidAmountOfExtraBeds(int extraBeds, RoomType roomType)
+        private bool ValidRoomSize(int roomSizeSqM2)
         {
-            if (extraBeds < 0) return false;
+            return roomSizeSqM2 > 0;
+        }
+
+        private bool ValidAmountOfExtraBeds(int extraBeds, RoomType roomType, int roomSizeSqm2)
+        {
+            if (extraBeds < 0 || extraBeds > 2) return false;
+            if (roomSizeSqm2 < 25 && extraBeds > 0) return false;
             switch (roomType)
             {
                 case RoomType.Single:
-                    if (extraBeds > 1)
-                        return false;
-                    break;
-                case RoomType.Double:
-                    if (extraBeds > 2)
+                    if (extraBeds > 0)
                         return false;
                     break;
 
+                case RoomType.Double:
+                    if (roomSizeSqm2 < 30 && extraBeds > 1)
+                        return false;
+                    break;
             }
             return true;
         }

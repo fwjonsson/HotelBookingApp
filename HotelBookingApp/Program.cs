@@ -1,4 +1,5 @@
 ﻿using HotelBookingApp.Data;
+using HotelBookingApp.Data.BogusSeeder;
 using HotelBookingApp.Flows.Bookings;
 using HotelBookingApp.Flows.Customers;
 using HotelBookingApp.Flows.Rooms;
@@ -22,7 +23,7 @@ namespace HotelBookingApp
                 return;
             }
 
-            //DbSeeder.Seed(dbContext); seeda om dbn är tom
+            //DbSeeder.Seed(dbContext);
 
             var bookingService = new BookingService(dbContext);
             var customerService = new CustomerService(dbContext);
