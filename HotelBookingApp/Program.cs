@@ -8,33 +8,38 @@ using HotelBookingApp.Services.Customers;
 using HotelBookingApp.Services.Rooms;
 using HotelBookingApp.Startup;
 using HotelBookingApp.Utilities;
+using Microsoft.EntityFrameworkCore;
 namespace HotelBookingApp
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            using ApplicationDbContext dbContext = AppStartup.CreateDbContext();
-
-            if (!dbContext.Database.CanConnect())
+            try
             {
-                Console.WriteLine("Could not connect to the database.");
-                InputHelper.WaitForContinue();
-                return;
+                using ApplicationDbContext dbContext = AppStartup.CreateDbContext();
+
+                dbContext.Database.Migrate();
+                DbSeeder.SeedIfNoData(dbContext);
+
+
+                var bookingService = new BookingService(dbContext);
+                var customerService = new CustomerService(dbContext);
+                var roomService = new RoomService(dbContext);
+
+                var customerFlows = new CustomerFlows(customerService);
+                var roomFlows = new RoomFlows(roomService);
+                var bookingFlows = new BookingFlows(bookingService, customerFlows, roomFlows);
+
+                var app = new App(bookingFlows, customerFlows, roomFlows);
+                app.Run();
             }
-
-            //DbSeeder.Seed(dbContext);
-
-            var bookingService = new BookingService(dbContext);
-            var customerService = new CustomerService(dbContext);
-            var roomService = new RoomService(dbContext);
-
-            var customerFlows = new CustomerFlows(customerService);
-            var roomFlows = new RoomFlows(roomService);
-            var bookingFlows = new BookingFlows(bookingService, customerFlows, roomFlows);
-
-            var app = new App(bookingFlows, customerFlows, roomFlows);
-            app.Run();
+            catch (Exception exception)
+            {
+                Console.WriteLine("Startup failed.");
+                Console.WriteLine(exception.Message);
+                InputHelper.WaitForContinue();
+            }
         }
     }
 }

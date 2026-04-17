@@ -2,8 +2,15 @@
 {
     internal static class DbSeeder
     {
-        internal static void Seed(ApplicationDbContext dbContext)
+        internal static void SeedIfNoData(ApplicationDbContext dbContext)
         {
+            if (!dbContext.Customers.Any() &&
+                        !dbContext.Rooms.Any() &&
+                        !dbContext.Bookings.Any())
+            {
+                return;
+            }
+
             var customers = new CustomerFaker().Generate(150);
             var rooms = new RoomFaker().Generate(40);
 
