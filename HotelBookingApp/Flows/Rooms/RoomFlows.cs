@@ -5,6 +5,7 @@ using HotelBookingApp.Services.Rooms;
 using HotelBookingApp.Utilities;
 using HotelBookingApp.Utilities.FlowHelpers;
 using HotelBookingApp.Utilities.Printers.Rooms;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace HotelBookingApp.Flows.Rooms
 {
@@ -73,18 +74,15 @@ namespace HotelBookingApp.Flows.Rooms
         internal Room? RunAndGetRoom(DateOnly startDate, DateOnly endDate, Room? room)
         {
             Room? selectedRoom = room;
-            int? newExtraBedsInput = null;
-            int newExtraBeds = 0;
+            int? selectedExtraBeds = selectedRoom?.ExtraBeds;
 
-            if (selectedRoom is not null)
-                newExtraBeds = selectedRoom.ExtraBeds;
-            
+
             while (true)
             {
-                if (selectedRoom is not null)
-                    room = selectedRoom;
 
-                var choice = _availableRoomsMenu.Show(room, newExtraBeds);
+    
+
+                var choice = _availableRoomsMenu.Show(room, selectedExtraBeds);
 
                 switch (choice)
                 {
@@ -101,25 +99,30 @@ namespace HotelBookingApp.Flows.Rooms
                         break;
 
                     case RoomMenuOption.ChangeExtraBeds:
-                        if (room is null)
+                        if (selectedRoom is null)
                         {
                             Console.WriteLine("Select a room first.");
                             InputHelper.WaitForContinue();
                             break;
                         }
-                        newExtraBedsInput = RoomFlowHelper.ValidateExtraBeds(newExtraBeds, room.RoomType);
-                        if (newExtraBedsInput is not int nExtraBeds)
+                        var extraBedsInput = RoomFlowHelper.ValidateExtraBeds(selectedExtraBeds, selectedRoom.RoomType);
+                        if (extraBedsInput is null)
                             break;
 
-                        newExtraBeds = nExtraBeds;
-                        break;
+                        selectedExtraBeds = extraBedsInput;
+                        continue;
 
                     case RoomMenuOption.Save:
-                        if (room is not null)
+                        if (room is not null && selectedExtraBeds is int newExtraBeds)
                         {
                             RoomValidationResult result = _roomService.UpdateRoom(room.Id, room.RoomNumber, room.RoomType, newExtraBeds);
-                            RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "Room updated.");
-                            InputHelper.WaitForContinue();
+                            if (!result.Success)
+                            {
+                                RoomValidationResultPrinter.PrintErrorsOrSuccess(result, "");
+                                InputHelper.WaitForContinue();
+                                continue;
+                            }
+                            _availableRoomsMenu.ResetMenu();
                             return room;
                         }
                         Console.WriteLine("Select room first.");
@@ -129,6 +132,11 @@ namespace HotelBookingApp.Flows.Rooms
                     case RoomMenuOption.Back:
                         _availableRoomsMenu.ResetMenu();
                         return null;
+                }
+                if (selectedRoom is not null)
+                {
+                    room = selectedRoom;
+                    selectedExtraBeds = room.ExtraBeds;
                 }
 
             }

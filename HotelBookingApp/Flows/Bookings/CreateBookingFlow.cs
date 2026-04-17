@@ -61,7 +61,7 @@ namespace HotelBookingApp.Flows.Bookings
                         room = null;
                         break;
 
-                    case BookingEditorMenuOption.RoomNr:
+                    case BookingEditorMenuOption.Room:
                         if (startDate is not DateOnly sDate || endDate is not DateOnly eDate)
                         {
                             Console.WriteLine("Must select dates first.");

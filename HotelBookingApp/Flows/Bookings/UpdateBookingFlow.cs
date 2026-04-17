@@ -66,7 +66,7 @@ namespace HotelBookingApp.Flows.Bookings
                             newCustomerId = selectedCustomer.Id;
                         break;
 
-                    case BookingEditorMenuOption.RoomNr:
+                    case BookingEditorMenuOption.Room:
                         Room? selectedRoom = _roomFlows.RunAndGetRoom(newStartDate, newEndDate, newRoom);
                         if (selectedRoom is not null)
                             newRoom = selectedRoom;

@@ -12,7 +12,7 @@ namespace HotelBookingApp.Menus.Rooms
             _menu = new ConsoleMenu<RoomMenuOption>("--Room Menu--",
                 new List<MenuChoice<RoomMenuOption>> { });
         }
-        internal RoomMenuOption Show(Room? room, int newExtraBeds)
+        internal RoomMenuOption Show(Room? room, int? newExtraBeds)
         {
             _menu.SetTitle(room is null ? "Select Room" : $"Selected Room Nr: {room.RoomNumber}");
             _menu.SetChoices
@@ -21,7 +21,7 @@ namespace HotelBookingApp.Menus.Rooms
                 new(RoomMenuOption.ShowAll, "Show All Available Rooms"),
                 new(RoomMenuOption.FindByRoomNr, "Find By Room Nr"),
                 new(RoomMenuOption.FindByRoomType, "Find Available Rooms By Size (1 or 2)"),
-                new(RoomMenuOption.ChangeExtraBeds, room is null ? "Must Select Room Before Adding Extra Beds" : $"Extra Beds: {newExtraBeds}"), 
+                new(RoomMenuOption.ChangeExtraBeds, room is null ? "Extra Beds: (Must Select Room First)" : $"Extra Beds: {newExtraBeds}"), 
                 new(RoomMenuOption.Save, "Save")
                 });
             var result = _menu.Show();
