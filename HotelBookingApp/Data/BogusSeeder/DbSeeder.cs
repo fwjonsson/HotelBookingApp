@@ -4,9 +4,9 @@
     {
         internal static void SeedIfNoData(ApplicationDbContext dbContext)
         {
-            if (!dbContext.Customers.Any() &&
-                        !dbContext.Rooms.Any() &&
-                        !dbContext.Bookings.Any())
+            if (dbContext.Customers.Any() &&
+                        dbContext.Rooms.Any() &&
+                        dbContext.Bookings.Any())
             {
                 return;
             }
