@@ -14,7 +14,7 @@ namespace HotelBookingApp
     internal class Program
     {
         static void Main(string[] args)
-        {
+        {//TODO pröva lägga in spectre
             try
             {
                 using ApplicationDbContext dbContext = AppStartup.CreateDbContext();
